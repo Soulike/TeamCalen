@@ -1,68 +1,62 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# TeamCalen
 
-## Available Scripts
+![logo of TeamCalen](./teamcalen.svg)
 
-In the project directory, you can run:
+## 项目简介
 
-### `npm start`
+TeamCalen 是针对个人与小型团队而设计的日程管理解决方案，本项目是前端部分，采用 React 实现。
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+项目主要针对以下用户痛点进行设计：
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+### 个人
 
-### `npm test`
+- 无法记录做过的事及要做的事；
+- 纸质记录日程不易携带与保存；
+- 日程表不能随时随地同步；
+- 现有产品太复杂；
+- 写了日程忘了做；
+- UI 不够美观。
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 小型团队
 
-### `npm run build`
+- 日程表不能共享、协作修改；
+- 不能随时修改日程表的查看权限；
+- 日程涉及的文件分享困难；
+- 不清楚项目的进度；
+- 不清楚团队成员个人的进度；
+- 日程表不能做权限分配。
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 项目进度
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+### 1.0 版本
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1.0 版本着重于基本功能的实现，具体功能如下：
 
-### `npm run eject`
+- [ ] 帐号的注册、登录与找回密码;
+- [ ] 新建项目日程；
+- [ ] 查看、修改自己的项目日程。
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 2.0 版本
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [ ] 日程支持文件上传；
+- [ ] 可邀请其他成员加入项目日程；
+- [ ] 好友列表。
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 3.0 版本
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- [ ] 共享文档；
+- [ ] 换肤功能。
 
-## Learn More
+### 长期
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [ ] 与手环等智能设备接入；
+- [ ] 小程序、移动版本。
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 维护方式
 
-### Code Splitting
+项目采用双分支维护。
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+- 主分支版本应始终保持稳定可运行状态，且功能完整；
+- 开发分支合并已稳定的功能。
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+新功能开发与 BUG 修复应当在新分支上进行，且每次 PR 的改动尽可能的小，以提高最终代码质量。
