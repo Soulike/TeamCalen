@@ -1,0 +1,70 @@
+@import "../../CONSTANT/RESIZE";
+
+.Index {
+
+    .topBar {
+        height: (106rem/$RESIZE_FACTOR);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 (161rem/$RESIZE_FACTOR);
+
+        .icon {
+            background: url("../../Static/teamcalen.svg") no-repeat center;
+            background-size: contain;
+            width: (161rem/$RESIZE_FACTOR);
+            height: (69rem/$RESIZE_FACTOR);
+        }
+
+        .linkWrapper {
+            font-size: (36rem/$RESIZE_FACTOR);
+
+            &, & a {
+                color: #FFF;
+            }
+
+            a {
+                text-decoration: none;
+            }
+        }
+    }
+
+    .entryWrapper {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        padding: (133rem/$RESIZE_FACTOR) (200rem/$RESIZE_FACTOR);
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+
+        .text {
+            font-size: (60rem/$RESIZE_FACTOR);
+            color: #438AFF;
+            font-weight: bolder;
+            text-align: center;
+        }
+
+        .enterButton {
+            width: 100%;
+            font-size: (40rem/$RESIZE_FACTOR);
+            color: #438AFF;
+            border: (1rem/$RESIZE_FACTOR) solid #BBB;
+            border-radius: (30rem/$RESIZE_FACTOR);
+            margin-top: (32rem/$RESIZE_FACTOR);
+        }
+    }
+
+    .background {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: url("../../Static/Index/background.png") no-repeat center;
+        background-size: cover;
+        z-index: -1;
+    }
+}
