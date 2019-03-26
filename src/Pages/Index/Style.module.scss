@@ -48,12 +48,14 @@
         }
 
         .enterButton {
-            width: 100%;
+            width: (355rem/$RESIZE_FACTOR);
+            height: (90rem/$RESIZE_FACTOR);
             font-size: (40rem/$RESIZE_FACTOR);
             color: #438AFF;
             border: (1rem/$RESIZE_FACTOR) solid #BBB;
             border-radius: (30rem/$RESIZE_FACTOR);
             margin-top: (32rem/$RESIZE_FACTOR);
+            background-color: #FFF;
         }
     }
 

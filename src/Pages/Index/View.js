@@ -4,6 +4,7 @@ import '../../Static/Index/background.png';
 import '../../Static/teamcalen.svg';
 import {Link} from 'react-router';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router';
+import Button from 'antd/lib/button';
 
 class Index extends React.Component
 {
@@ -24,7 +25,7 @@ class Index extends React.Component
                         <div className={Style.text}>TeamCalen</div>
                         <div className={Style.text}>日程管理系统</div>
                         <Link onlyActiveOnIndex={false} to={PAGE_ID_TO_ROUTE[PAGE_ID.ACCOUNT.LOGIN]}>
-                            <button className={`btn btn-lg ${Style.enterButton}`}>立即进入</button>
+                            <Button htmlType={'button'} className={Style.enterButton}>立即进入</Button>
                         </Link>
                     </div>
                 </main>
