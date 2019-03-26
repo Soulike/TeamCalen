@@ -1,3 +1,5 @@
+import {View as Index} from '../Pages/Index';
+
 const PAGE_ID = {
     INDEX: Symbol('index'),
 
@@ -62,7 +64,7 @@ const PAGE_ID_TO_ROUTE = {
 Object.freeze(PAGE_ID_TO_ROUTE);
 
 const PAGE_ID_TO_COMPONENT = {
-    [PAGE_ID.INDEX]: null,
+    [PAGE_ID.INDEX]: Index,
 
     [PAGE_ID.ACCOUNT.INDEX]: null,
     [PAGE_ID.ACCOUNT.LOGIN]: null,
