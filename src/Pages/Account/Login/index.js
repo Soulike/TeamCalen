@@ -1,3 +1,3 @@
-import View from './View';
+import LoginContainer from './Container';
 
-export {View};
+export default LoginContainer;

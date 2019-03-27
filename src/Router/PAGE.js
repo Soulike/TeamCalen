@@ -1,6 +1,6 @@
 import {View as Index} from '../Pages/Index';
 import {View as RootContainer} from '../ComponentContainer/RootContainer';
-import {View as Login} from '../Pages/Account/Login';
+import Login from '../Pages/Account/Login';
 
 const PAGE_ID = {
     INDEX: Symbol('index'),

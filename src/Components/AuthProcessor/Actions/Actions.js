@@ -1,7 +1,7 @@
 import * as ACTION_TYPE from './ACTION_TYPE';
 import Api from '../../../Api';
 
-export function loginAcion(username, password)
+export function loginAction(username, password)
 {
     return async dispatch =>
     {
