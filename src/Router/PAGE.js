@@ -1,5 +1,6 @@
 import {View as Index} from '../Pages/Index';
 import {View as RootContainer} from '../ComponentContainer/RootContainer';
+import {View as Login} from '../Pages/Account/Login';
 
 const PAGE_ID = {
     INDEX: Symbol('index'),
@@ -68,7 +69,7 @@ const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.INDEX]: Index,
 
     [PAGE_ID.ACCOUNT.INDEX]: RootContainer,
-    [PAGE_ID.ACCOUNT.LOGIN]: null,
+    [PAGE_ID.ACCOUNT.LOGIN]: Login,
     [PAGE_ID.ACCOUNT.SIGN_UP]: null,
     [PAGE_ID.ACCOUNT.RETRIEVE_PASSWORD]: null,
 
