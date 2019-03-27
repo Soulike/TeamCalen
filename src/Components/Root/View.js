@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {View as Header} from './Components/Header';
+import Header from './Components/Header';
 import PropTypes from 'prop-types';
 
 class Root extends React.Component

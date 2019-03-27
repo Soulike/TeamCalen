@@ -1,5 +1,5 @@
 import React from 'react';
-import {View as Root} from '../../Components/Root';
+import Root from '../../Components/Root';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router';
 import {connect} from 'react-redux';
 

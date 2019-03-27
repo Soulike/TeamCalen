@@ -1,3 +1,3 @@
-import View from './View';
+import Header from './View';
 
-export {View};
+export default Header;

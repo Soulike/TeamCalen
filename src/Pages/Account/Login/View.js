@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {View as AccountPanel} from '../../../Components/AccountPanel';
+import AccountPanel from '../../../Components/AccountPanel';
 import Input from 'antd/lib/input';
 import Button from 'antd/lib/button';
 import {Link} from 'react-router';

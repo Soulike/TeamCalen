@@ -1,3 +1,3 @@
-import View from './View';
+import RootContainer from './View';
 
-export {View};
+export default RootContainer;

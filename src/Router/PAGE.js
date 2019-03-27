@@ -1,5 +1,5 @@
-import {View as Index} from '../Pages/Index';
-import {View as RootContainer} from '../ComponentContainer/RootContainer';
+import Index from '../Pages/Index';
+import RootContainer from '../ComponentContainer/RootContainer';
 import Login from '../Pages/Account/Login';
 
 const PAGE_ID = {
