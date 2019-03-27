@@ -1,10 +1,14 @@
 import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import thunk from 'redux-thunk';
-
 // import 所有 Reducer
+import {Reducer as AuthProcessorReducer} from './Components/AuthProcessor';
 
 // Store 中的初始值，根据开发需要进行改变
-const initValues = {};
+const initValues = {
+    AuthProcessor: {
+        hasLoggedIn: false,
+    },
+};
 
 // 所有中间件放在此处
 const middleWares = [thunk];
@@ -14,6 +18,8 @@ const storeEnhancers = compose(
 );
 
 // 所有 Reducer 放在此处
-const Reducer = combineReducers({});
+const Reducer = combineReducers({
+    AuthProcessor: AuthProcessorReducer,
+});
 
 export default createStore(Reducer, initValues, storeEnhancers);
