@@ -1,3 +1,3 @@
-import View from './View';
+import SignUp from './View';
 
-export {View};
+export default SignUp;
