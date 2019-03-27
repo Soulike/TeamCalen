@@ -3,25 +3,22 @@ import Style from './Style.module.scss';
 import Header from './Components/Header';
 import PropTypes from 'prop-types';
 
-class Root extends React.Component
+function Root(props)
 {
-    render()
-    {
-        const {hasLoggedIn, loginLink, signUpLink, exitFunction, children} = this.props;
-        return (
-            <div className={Style.Root}>
-                <Header {...{
-                    hasLoggedIn,
-                    loginLink,
-                    signUpLink,
-                    exitFunction,
-                }} />
-                <main>{children}</main>
-                <div className={Style.backgroundLeft} />
-                <div className={Style.backgroundRight} />
-            </div>
-        );
-    }
+    const {hasLoggedIn, loginLink, signUpLink, exitFunction, children} = props;
+    return (
+        <div className={Style.Root}>
+            <Header {...{
+                hasLoggedIn,
+                loginLink,
+                signUpLink,
+                exitFunction,
+            }} />
+            <main>{children}</main>
+            <div className={Style.backgroundLeft} />
+            <div className={Style.backgroundRight} />
+        </div>
+    );
 }
 
 Root.propTypes = {
