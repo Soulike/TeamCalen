@@ -1,0 +1,27 @@
+@import "../../CONSTANT/RESIZE";
+
+.AccountPanel {
+    width: (1500rem/$RESIZE_FACTOR);
+    height: (800rem/$RESIZE_FACTOR);
+    border: (1rem/$RESIZE_FACTOR) solid #BBB;
+    background-color: #FFF;
+    padding: (76rem/$RESIZE_FACTOR) (55rem/$RESIZE_FACTOR);
+    display: flex;
+    justify-content: space-between;
+
+    .leftImage {
+        width: (760rem/$RESIZE_FACTOR);
+        height: (540rem/$RESIZE_FACTOR);
+        margin-top: (101rem/$RESIZE_FACTOR);
+        background: url("../../Static/Account/cardBackground.png") no-repeat center;
+        background-size: contain;
+    }
+
+    .rightChildren {
+        width: (630rem/$RESIZE_FACTOR);
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
