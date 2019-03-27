@@ -1,4 +1,5 @@
 import {View as Index} from '../Pages/Index';
+import {View as RootContainer} from '../ComponentContainer/RootContainer';
 
 const PAGE_ID = {
     INDEX: Symbol('index'),
@@ -66,12 +67,12 @@ Object.freeze(PAGE_ID_TO_ROUTE);
 const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.INDEX]: Index,
 
-    [PAGE_ID.ACCOUNT.INDEX]: null,
+    [PAGE_ID.ACCOUNT.INDEX]: RootContainer,
     [PAGE_ID.ACCOUNT.LOGIN]: null,
     [PAGE_ID.ACCOUNT.SIGN_UP]: null,
     [PAGE_ID.ACCOUNT.RETRIEVE_PASSWORD]: null,
 
-    [PAGE_ID.CONTROL_PANEL.INDEX]: null,
+    [PAGE_ID.CONTROL_PANEL.INDEX]: RootContainer,
     [PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE]: null,
     [PAGE_ID.CONTROL_PANEL.NEW_PROJECT]: null,
     [PAGE_ID.CONTROL_PANEL.MY_PROJECT]: null,
