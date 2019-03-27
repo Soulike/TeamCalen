@@ -6,11 +6,14 @@ class RootContainer extends React.Component
 {
     render()
     {
+        const {children} = this.props;
         return (
             <Root hasLoggedIn={false}
                   loginLink={PAGE_ID_TO_ROUTE[PAGE_ID.ACCOUNT.LOGIN]}
                   signUpLink={PAGE_ID_TO_ROUTE[PAGE_ID.ACCOUNT.SIGN_UP]}
-                  exitFunction={() => null} />
+                  exitFunction={() => null}>
+                {children}
+            </Root>
         );
     }
 }
