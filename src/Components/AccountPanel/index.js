@@ -1,3 +1,3 @@
-import View from './View';
+import AccountPanel from './View';
 
-export {View};
+export default AccountPanel;

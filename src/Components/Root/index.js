@@ -1,3 +1,3 @@
-import View from './View';
+import Root from './View';
 
-export {View};
+export default Root;

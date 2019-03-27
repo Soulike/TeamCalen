@@ -1,3 +1,3 @@
-import View from './View';
+import Index from './View';
 
-export {View};
+export default Index;

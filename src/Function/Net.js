@@ -34,8 +34,8 @@ async function postAsync(url, params = {}, config = {})
     {
         try
         {
-            const res = await axios.post(url, params, config);
-            resolve(res.data);
+            const res = await axios.post(url, JSON.stringify(params), config);
+            resolve(JSON.parse(res.data));
         }
         catch (e)
         {

@@ -1,6 +1,7 @@
 import React from 'react';
 import {browserHistory, IndexRedirect, Route, Router} from 'react-router';
 import {PAGE_ID, PAGE_ID_TO_COMPONENT, PAGE_ID_TO_ROUTE} from './PAGE';
+import {Function as AuthProcessorFunction} from '../Components/AuthProcessor';
 
 const Routes = () => (
     <Router history={browserHistory}>
@@ -21,7 +22,8 @@ const Routes = () => (
                 Object.values(PAGE_ID.CONTROL_PANEL).map(pageId =>
                     <Route path={PAGE_ID_TO_ROUTE[pageId]}
                            component={PAGE_ID_TO_COMPONENT[pageId]}
-                           key={PAGE_ID_TO_ROUTE[pageId]} />)
+                           key={PAGE_ID_TO_ROUTE[pageId]}
+                           onEnter={AuthProcessorFunction.requireLogin} />)
             }
         </Route>
     </Router>
