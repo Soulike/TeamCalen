@@ -1,7 +1,7 @@
 import Index from '../Pages/Index';
 import RootContainer from '../ComponentContainer/RootContainer';
 import Login from '../Pages/Account/Login';
-import SignUp from '../Pages/SignUp';
+import SignUp from '../Pages/Account/SignUp';
 
 const PAGE_ID = {
     INDEX: Symbol('index'),

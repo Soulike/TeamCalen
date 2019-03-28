@@ -1,13 +1,13 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import AccountPanel from '../../Components/AccountPanel';
-import Input from 'antd/lib/input';
+import AccountPanel from '../../../Components/AccountPanel';
+import Input from 'antd/lib/input/index';
 import {Link} from 'react-router';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router';
-import Button from 'antd/lib/button';
-import Tooltip from 'antd/lib/tooltip';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../Router';
+import Button from 'antd/lib/button/index';
+import Tooltip from 'antd/lib/tooltip/index';
 import PropTypes from 'prop-types';
-import {REGEX_TEXT} from '../../CONSTANT/REGEX';
+import {REGEX_TEXT} from '../../../CONSTANT/REGEX';
 
 function SignUp(props)
 {

@@ -1,10 +1,10 @@
 import React from 'react';
 import SignUp from './View';
-import {REGEX} from '../../CONSTANT/REGEX';
-import Api from '../../Api';
-import message from 'antd/lib/message';
+import {REGEX} from '../../../CONSTANT/REGEX';
+import Api from '../../../Api';
+import message from 'antd/lib/message/index';
 import {browserHistory} from 'react-router';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../Router';
 
 class SignUpContainer extends React.Component
 {
