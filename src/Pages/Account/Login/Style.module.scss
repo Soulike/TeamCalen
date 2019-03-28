@@ -1,24 +1,22 @@
-@import "../../../CONSTANT/RESIZE";
-
 .Login {
-    padding: (96rem/$RESIZE_FACTOR) (200rem/$RESIZE_FACTOR);
+    padding: (96rem/24) (200rem/24);
     display: flex;
     justify-content: center;
     align-items: center;
 
     .loginForm {
-        width: (450rem/$RESIZE_FACTOR);
+        width: (450rem/24);
 
         .title {
             text-align: center;
-            font-size: (36rem/$RESIZE_FACTOR);
+            font-size: (36rem/24);
         }
 
         .inputWrapper {
-            margin-top: (40rem/$RESIZE_FACTOR);
+            margin-top: (40rem/24);
 
             .input {
-                margin-bottom: (35rem/$RESIZE_FACTOR);
+                margin-bottom: (35rem/24);
 
                 &:last-child {
                     margin-bottom: 0;
@@ -30,7 +28,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: (23rem/$RESIZE_FACTOR);
+            margin-top: (23rem/24);
 
             .signUpTip {
 
@@ -44,13 +42,13 @@
         .submitButtonWrapper {
             display: flex;
             justify-content: center;
-            margin-top: (92rem/$RESIZE_FACTOR);
+            margin-top: (92rem/24);
 
             .submitButton {
-                font-size: (28rem/$RESIZE_FACTOR);
-                width: (147rem/$RESIZE_FACTOR);
-                height: (60rem/$RESIZE_FACTOR);
-                border-radius: (20rem/$RESIZE_FACTOR);
+                font-size: (28rem/24);
+                width: (147rem/24);
+                height: (60rem/24);
+                border-radius: (20rem/24);
             }
         }
     }
