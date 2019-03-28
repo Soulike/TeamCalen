@@ -1,0 +1,58 @@
+@import "../../CONSTANT/RESIZE";
+
+.SignUp {
+    padding: (96rem/$RESIZE_FACTOR) (200rem/$RESIZE_FACTOR);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .signUpForm {
+        width: (452rem/$RESIZE_FACTOR);
+
+        .title {
+            text-align: center;
+            font-size: (36rem/$RESIZE_FACTOR);
+        }
+
+        .inputWrapper {
+            margin-top: (40rem/$RESIZE_FACTOR);
+
+            .input {
+                margin-bottom: (35rem/$RESIZE_FACTOR);
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+
+            .getVerificationCodeButton {
+                cursor: pointer;
+                user-select: none;
+            }
+        }
+
+        .tipWrapper {
+            margin-top: (17rem/$RESIZE_FACTOR);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            .loginTip {
+
+            }
+        }
+
+        .buttonWrapper {
+            margin-top: (28rem/$RESIZE_FACTOR);
+            display: flex;
+            justify-content: center;
+
+            .submitButton {
+                font-size: (28rem/$RESIZE_FACTOR);
+                width: (147rem/$RESIZE_FACTOR);
+                height: (60rem/$RESIZE_FACTOR);
+                border-radius: (20rem/$RESIZE_FACTOR);
+            }
+        }
+    }
+}
