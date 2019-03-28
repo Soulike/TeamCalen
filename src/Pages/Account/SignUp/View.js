@@ -35,11 +35,16 @@ function SignUp(props)
                                    ref={usernameInputRef} />
                         </Tooltip>
                         <Tooltip title={REGEX_TEXT.PASSWORD}>
-                            <Input className={Style.input} size={'large'} placeholder={'密码'} ref={passwordInputRef} />
+                            <Input className={Style.input}
+                                   size={'large'}
+                                   placeholder={'密码'}
+                                   type={'password'}
+                                   ref={passwordInputRef} />
                         </Tooltip>
                         <Tooltip title={'重复输入密码'}>
                             <Input className={Style.input}
                                    size={'large'}
+                                   type={'password'}
                                    placeholder={'确认密码'}
                                    ref={confirmPasswordInputRef} />
                         </Tooltip>
