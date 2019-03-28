@@ -1,26 +1,26 @@
 import React from 'react';
-import SignUp from './View';
+import RetrievePassword from './View';
 import {REGEX} from '../../../CONSTANT/REGEX';
+import message from 'antd/lib/message';
 import Api from '../../../Api';
-import message from 'antd/lib/message/index';
 import {browserHistory} from 'react-router';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../Router';
 
-class SignUpContainer extends React.Component
+class RetrievePasswordContainer extends React.Component
 {
     constructor(props)
     {
         super(props);
-        this.usernameInputRef = React.createRef();
-        this.passwordInputRef = React.createRef();
-        this.confirmPasswordInputRef = React.createRef();
-        this.emailInputRef = React.createRef();
-        this.verificationCodeInputRef = React.createRef();
 
         this.state = {
             hasGetVerificationCodeButtonClicked: false,
             getVerificationCodeButtonText: '获取验证码',
         };
+
+        this.usernameInputRef = React.createRef();
+        this.verificationCodeInputRef = React.createRef();
+        this.passwordInputRef = React.createRef();
+        this.confirmPasswordInputRef = React.createRef();
     }
 
     onGetVerificationCodeButtonClick = async () =>
@@ -28,14 +28,14 @@ class SignUpContainer extends React.Component
         const {hasGetVerificationCodeButtonClicked} = this.state;
         if (!hasGetVerificationCodeButtonClicked)
         {
-            const email = this.emailInputRef.current.input.value;
-            if (!REGEX.EMAIL.test(email))
+            const username = this.usernameInputRef.current.input.value;
+            if (!REGEX.USERNAME.test(username))
             {
-                message.warning('邮箱不正确');
+                message.warning('用户名不正确');
             }
             else
             {
-                const requestIsSuccessful = await Api.sendPostSendVerificationCodeByEmailRequestAsync(email);
+                const requestIsSuccessful = await Api.sendPostSendVerificationCodeByUsernameRequestAsync(username);
                 if (requestIsSuccessful)
                 {
                     this.setState({
@@ -69,9 +69,7 @@ class SignUpContainer extends React.Component
         const username = this.usernameInputRef.current.input.value;
         const password = this.passwordInputRef.current.input.value;
         const confirmPassword = this.confirmPasswordInputRef.current.input.value;
-        const email = this.emailInputRef.current.input.value;
         const verificationCode = this.verificationCodeInputRef.current.input.value;
-
         if (!REGEX.USERNAME.test(username))
         {
             message.warning('用户名不正确');
@@ -84,37 +82,33 @@ class SignUpContainer extends React.Component
         {
             message.warning('两次输入密码不一致');
         }
-        else if (!REGEX.EMAIL.test(email))
-        {
-            message.warning('邮箱不正确');
-        }
         else if (!REGEX.VERIFICATION_CODE.test(verificationCode))
         {
             message.warning('验证码不正确');
         }
         else
         {
-            const requestIsSuccessful = await Api.sendPostSignUpRequestAsync(username, password, email, verificationCode);
+            const requestIsSuccessful = await Api.sendPostRetrievePasswordRequestAsync(username, verificationCode, password);
             if (requestIsSuccessful)
             {
                 browserHistory.push(PAGE_ID_TO_ROUTE[PAGE_ID.ACCOUNT.LOGIN]);
             }
         }
-
     };
 
     render()
     {
         const {getVerificationCodeButtonText} = this.state;
-        return <SignUp usernameInputRef={this.usernameInputRef}
-                       passwordInputRef={this.passwordInputRef}
-                       confirmPasswordInputRef={this.confirmPasswordInputRef}
-                       emailInputRef={this.emailInputRef}
-                       verificationCodeInputRef={this.verificationCodeInputRef}
-                       getVerificationCodeButtonText={getVerificationCodeButtonText}
-                       onGetVerificationCodeButtonClick={this.onGetVerificationCodeButtonClick}
-                       onSubmit={this.onSubmit} />;
+        return (
+            <RetrievePassword passwordInputRef={this.passwordInputRef}
+                              onSubmit={this.onSubmit}
+                              getVerificationCodeButtonText={getVerificationCodeButtonText}
+                              verificationCodeInputRef={this.verificationCodeInputRef}
+                              onGetVerificationCodeButtonClick={this.onGetVerificationCodeButtonClick}
+                              confirmPasswordInputRef={this.confirmPasswordInputRef}
+                              usernameInputRef={this.usernameInputRef} />
+        );
     }
 }
 
-export default SignUpContainer;
+export default RetrievePasswordContainer;

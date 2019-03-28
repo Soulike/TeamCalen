@@ -70,7 +70,7 @@ export const REGEX = {
 ```
 - 其他说明：无
 
-#### `/sendVerificationCode`
+#### `/sendVerificationCodeByEmail`
 
 - 功能说明：向指定邮箱发送验证码
 - 请求方法：POST
@@ -97,3 +97,33 @@ export const REGEX = {
 }
 ```
 - 其他说明：用户名不允许重复，如果发生重复返回 409
+
+#### `/sendVerificationCodeByUsername`
+
+- 功能说明：向指定用户名对应的邮箱发送验证码
+- 请求方法：POST
+- 请求体：
+```js
+{
+    username: String,
+}
+```
+- 响应体：无
+- 其他说明：如果用户名不存在，返回 404
+
+#### `/retrievePassword`
+
+- 功能说明：找回密码
+- 请求方法：POST
+- 请求体：
+```js
+{
+    username: String,
+    verificationCode: String,
+    password: String,           // 新密码
+}
+```
+- 响应体：无
+- 其他说明
+  - 如果用户名不存在，返回 404
+  - 如果验证码错误，返回 403
