@@ -127,3 +127,21 @@ export const REGEX = {
 - 其他说明
   - 如果用户名不存在，返回 404
   - 如果验证码错误，返回 403
+
+---
+
+### 控制面板部分（请求前缀为 `/controlPanel`）
+
+#### `/getUserInfo`
+
+- 功能说明：获取当前登录用户信息
+- 请求方法：GET
+- 请求体：无
+- 响应体：
+```js
+{
+    username: String,   // 用户名
+    avatarSrc: String,  // 头像文件的 URL，可以不存在
+}
+```
+- 其他说明：无

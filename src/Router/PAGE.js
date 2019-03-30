@@ -3,6 +3,7 @@ import RootContainer from '../ComponentContainer/RootContainer';
 import Login from '../Pages/Account/Login';
 import SignUp from '../Pages/Account/SignUp';
 import RetrievePassword from '../Pages/Account/RetrievePassword';
+import ControlPanelContainer from '../ComponentContainer/ControlPanelContainer';
 
 const PAGE_ID = {
     INDEX: Symbol('index'),
@@ -41,11 +42,17 @@ Object.keys(PAGE_ID).forEach(key =>
     Object.freeze(PAGE_ID[key]);
 });
 
-Object.freeze(PAGE_ID);
-
 const PREFIX = {
     ACCOUNT: '/account',
     CONTROL_PANEL: '/controlPanel',
+};
+
+const PAGE_ID_TO_NAME = {
+    [PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE]: '日程管理',
+    [PAGE_ID.CONTROL_PANEL.NEW_PROJECT]: '新建项目',
+    [PAGE_ID.CONTROL_PANEL.MY_PROJECT]: '我的项目',
+    [PAGE_ID.CONTROL_PANEL.FRIEND_LIST]: '好友列表',
+    [PAGE_ID.CONTROL_PANEL.ACCOUNT_MANAGEMENT]: '帐号管理',
 };
 
 const PAGE_ID_TO_ROUTE = {
@@ -65,7 +72,12 @@ const PAGE_ID_TO_ROUTE = {
     [PAGE_ID.CONTROL_PANEL.ACCOUNT_MANAGEMENT]: `${PREFIX.CONTROL_PANEL}/accountManagement`,
 };
 
-Object.freeze(PAGE_ID_TO_ROUTE);
+const ROUTE_TO_PAGE_ID = {};
+
+Object.getOwnPropertySymbols(PAGE_ID_TO_ROUTE).forEach(pageId =>
+{
+    ROUTE_TO_PAGE_ID[PAGE_ID_TO_ROUTE[pageId]] = pageId;
+});
 
 const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.INDEX]: Index,
@@ -75,7 +87,7 @@ const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.ACCOUNT.SIGN_UP]: SignUp,
     [PAGE_ID.ACCOUNT.RETRIEVE_PASSWORD]: RetrievePassword,
 
-    [PAGE_ID.CONTROL_PANEL.INDEX]: RootContainer,
+    [PAGE_ID.CONTROL_PANEL.INDEX]: ControlPanelContainer,
     [PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE]: null,
     [PAGE_ID.CONTROL_PANEL.NEW_PROJECT]: null,
     [PAGE_ID.CONTROL_PANEL.MY_PROJECT]: null,
@@ -84,10 +96,16 @@ const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.CONTROL_PANEL.ACCOUNT_MANAGEMENT]: null,
 };
 
+Object.freeze(PAGE_ID);
+Object.freeze(PAGE_ID_TO_NAME);
+Object.freeze(PAGE_ID_TO_ROUTE);
+Object.freeze(ROUTE_TO_PAGE_ID);
 Object.freeze(PAGE_ID_TO_COMPONENT);
 
 export {
     PAGE_ID,
     PAGE_ID_TO_ROUTE,
     PAGE_ID_TO_COMPONENT,
+    PAGE_ID_TO_NAME,
+    ROUTE_TO_PAGE_ID,
 };
