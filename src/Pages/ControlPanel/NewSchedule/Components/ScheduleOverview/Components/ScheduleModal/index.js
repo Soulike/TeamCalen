@@ -1,3 +1,3 @@
-import ScheduleModal from './View';
+import ScheduleModal from './Container';
 
 export default ScheduleModal;

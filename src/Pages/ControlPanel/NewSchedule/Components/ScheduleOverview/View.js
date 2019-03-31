@@ -4,10 +4,11 @@ import Calendar from 'antd/lib/calendar';
 import Badge from 'antd/lib/badge';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import ScheduleModal from './Components/ScheduleModal';
 import MODAL_ID from '../../../../../CONSTANT/MODAL_ID';
 import Timeline from 'antd/lib/timeline';
 import TimelineItem, {Object as TimelineItemObject} from './Components/TimelineItem';
+import ScheduleModal from './Components/ScheduleModal';
+import Empty from 'antd/lib/empty';
 
 function ScheduleOverview(props)
 {
@@ -62,11 +63,17 @@ function ScheduleOverview(props)
             </div>
             <div className={Style.timelineWrapper}>
                 <h1 className={Style.timelineTitle}>近期日程</h1>
-                <Timeline className={Style.timeline} pending={'通向未来……'}>
-                    {
-                        timelineItems.map(timelineItem => <TimelineItem key={timelineItem.id} {...timelineItem} />)
-                    }
-                </Timeline>
+                {
+                    timelineItems.length === 0 ?
+                        <Empty description={'暂无日程'} /> :
+                        <Timeline className={Style.timeline} pending={'通向未来……'}>
+                            {
+                                timelineItems.map(timelineItem =>
+                                    <TimelineItem key={timelineItem.id} {...timelineItem} />)
+                            }
+                        </Timeline>
+                }
+
             </div>
         </div>,
         <ScheduleModal key={MODAL_ID.SCHEDULE_MODAL.description}
