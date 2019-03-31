@@ -1,0 +1,19 @@
+.TimelineItem {
+    .itemContent {
+        word-wrap: break-word;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .scheduleText {
+            width: (325rem/24);
+        }
+
+        .scheduleOperation {
+            width: (210rem/24);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+}

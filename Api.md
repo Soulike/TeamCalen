@@ -145,3 +145,64 @@ export const REGEX = {
 }
 ```
 - 其他说明：无
+
+#### `/getEveryDayScheduleAmountInAMonth`
+
+- 功能说明：获取指定年月中每一天的日程数量
+- 请求方法：GET
+- 请求体：
+```js
+{
+    year: String,   // 年，如 '2019' 表示 2019 年
+    month: String,  // 月，如 '03' 表示 3 月
+}
+```
+- 响应体：
+```js
+{
+    scheduleAmount: Array,      // 数组，内容为整数
+
+    // 这个数组从 0 开始，放置指定月所有天的日程数量。下标 0 的数据代表 1 号的日程数量，下标 1 的数据代表 2 号的日程数量，以此类推
+}
+```
+- 其他说明：无
+
+#### `/getRecentSchedules`
+
+- 功能说明：返回用户从今天起到未来的特定条日程
+- 请求方法：GET
+- 请求体：
+```js
+{
+    amount: Number,     // 返回多少条
+}
+```
+- 响应体：
+```js
+{
+    schedules: [                    // 数组，内含日程信息
+        {
+            id: Number,             // 这条日程的唯一识别 ID
+            month: String,          // 月份，两位整数字符串
+            day: String,            // 日，两位整数字符串
+            startHour: Number,      // 开始小时，0-23 整数
+            startMinute: Number,    // 开始分钟，0-59 整数
+            endHour: Number,        // 结束小时，0-23 整数
+            endMinute: Number,      // 结束分钟，0-59 整数
+            scheduleText: String,   // 日程的具体内容
+            scheduleState: ENUM,    // 枚举值，日程的状态
+        }
+    ]
+}
+```
+- 其他说明：
+  - 数组中日程信息的顺序应当按照开始时间升序，即早的在前，晚的在后
+  - 如果存在的日程数量不够，就有多少个返回多少个
+  - 日程状态枚举值：
+```js
+export default {
+    FINISHED: 'finished',
+    UNFINISHED: 'unfinished',
+    CANCELED: 'canceled',
+};
+```

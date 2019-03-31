@@ -1,11 +1,6 @@
 import axios from 'axios';
 
-export default {
-    getAsync,
-    postAsync,
-};
-
-async function getAsync(url, allowCache = true, params = {}, config = {})
+export async function getAsync(url, allowCache = true, params = {}, config = {})
 {
     return new Promise(async (resolve, reject) =>
     {
@@ -28,7 +23,7 @@ async function getAsync(url, allowCache = true, params = {}, config = {})
 
 }
 
-async function postAsync(url, params = {}, config = {})
+export async function postAsync(url, params = {}, config = {})
 {
     return new Promise(async (resolve, reject) =>
     {
