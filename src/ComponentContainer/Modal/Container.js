@@ -21,8 +21,6 @@ class Modal extends React.Component
                 {
                     hideModal(modalId);
                 }}
-                okText={'确定'}
-                cancelText={'取消'}
                 {...rest} />
         );
     }
