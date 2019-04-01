@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import ScheduleModal from './View';
 import Api from '../../../../../../../Api';
 import {Object as TimelineItemObject} from '../TimelineItem';
+import {
+    onCancelClickFactory,
+    onDeleteClickFactory,
+    onModifyClickFactory,
+    onResumeClickFactory,
+    onSwitchChangeFactory,
+} from '../../Function';
 
 // import SCHEDULE_STATE from '../../../../../../../CONSTANT/SCHEDULE_STATE';
 
@@ -70,6 +77,7 @@ class ScheduleModalContainer extends React.Component
                         schedules.forEach(schedule =>
                         {
                             const {
+                                id,
                                 month,
                                 day,
                                 startHour,
@@ -82,7 +90,11 @@ class ScheduleModalContainer extends React.Component
                             timelineItems.push(
                                 new TimelineItemObject.TimelineItem(month, day, startHour, startMinute, endHour, endMinute,
                                     scheduleText, scheduleState,
-                                    () => null, () => null, () => null, () => null, () => null),
+                                    onSwitchChangeFactory(id),
+                                    onResumeClickFactory(id),
+                                    onCancelClickFactory(id),
+                                    onDeleteClickFactory(id),
+                                    onModifyClickFactory(id)),
                             );
                         });
                         this.setState({

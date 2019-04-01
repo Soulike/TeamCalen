@@ -183,6 +183,7 @@ export const REGEX = {
     schedules: [                    // 数组，内含日程信息
         {
             id: Number,             // 这条日程的唯一识别 ID
+            year: String,           // 年份，四位整数字符串
             month: String,          // 月份，两位整数字符串
             day: String,            // 日，两位整数字符串
             startHour: Number,      // 开始小时，0-23 整数
@@ -225,6 +226,7 @@ export default {
     schedules: [                    // 数组，内含日程信息
         {
             id: Number,             // 这条日程的唯一识别 ID
+            year: String,           // 年份，四位整数字符串
             month: String,          // 月份，两位整数字符串
             day: String,            // 日，两位整数字符串
             startHour: Number,      // 开始小时，0-23 整数
@@ -239,3 +241,78 @@ export default {
 ```
 - 其他说明
   - 数组中日程信息的顺序应当按照开始时间升序，即早的在前，晚的在后
+
+#### `/changeScheduleState`
+
+- 功能说明：切换日程完成状态
+- 请求方法：POST
+- 请求体：
+```js
+{
+    scheduleId: Number,     // 日程的唯一识别 ID
+    state: Boolean,         // 日程是否完成，true 为已完成，false 为未完成
+}
+```
+- 响应体：无
+- 其他说明：无
+
+#### `/resumeSchedule`
+
+- 功能说明：恢复已经被取消的日程
+- 请求方法：POST
+- 请求体：
+```js
+{
+    scheduleId: Number,     // 日程的唯一识别 ID
+}
+```
+- 响应体：无
+- 其他说明：日程恢复后进入未完成状态
+
+#### `/cancelSchedule`
+
+- 功能说明：取消日程
+- 请求方法：POST
+- 请求体：
+```js
+{
+    scheduleId: Number,     // 日程的唯一识别 ID
+}
+```
+- 响应体：无
+- 其他说明：无
+
+#### `/deleteSchedule`
+
+- 功能说明：删除日程
+- 请求方法：POST
+- 请求体：
+```js
+{
+    scheduleId: Number,     // 日程的唯一识别 ID
+}
+```
+- 响应体：无
+- 其他说明：
+  - 删除和取消的区别：删除后日程将不会再出现在日程列表中，而取消会显示取消状态
+
+#### `/modifySchedule`
+
+- 功能说明：编辑日程信息
+- 请求方法：POST
+- 请求体：
+```js
+{
+    id: Number,             // 这条日程的唯一识别 ID
+    year: String,           // 年份，四位整数字符串
+    month: String,          // 月份，两位整数字符串
+    day: String,            // 日，两位整数字符串
+    startHour: Number,      // 开始小时，0-23 整数
+    startMinute: Number,    // 开始分钟，0-59 整数
+    endHour: Number,        // 结束小时，0-23 整数
+    endMinute: Number,      // 结束分钟，0-59 整数
+    scheduleText: String,   // 日程的具体内容
+}
+```
+- 响应体：无
+- 其他说明：无

@@ -1,9 +1,14 @@
 import Function from '../../Function';
 import {
+    CANCEL_SCHEDULE,
+    CHANGE_SCHEDULE_STATE,
+    DELETE_SCHEDULE,
     GET_EVERY_DAY_SCHEDULE_AMOUNT_IN_A_MONTH,
     GET_RECENT_SCHEDULES,
     GET_SCHEDULES_BY_DAY,
     GET_USER_INFO,
+    MODIFY_SCHEDULE,
+    RESUME_SCHEDULE,
 } from './ROUTE';
 import STATUS_CODE from '../../CONSTANT/STATUS_CODE';
 import message from 'antd/lib/message';
@@ -234,6 +239,315 @@ export async function sendGetSchedulesByDayRequestAsync(year, month, day)
             default:
             {
                 message.error('未知原因的获取日程失败');
+                return null;
+            }
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        message.error('网络异常');
+        return null;
+    }
+}
+
+export async function sendPostChangeScheduleStateRequestAsync(scheduleId, state)
+{
+    try
+    {
+        const {code} = await Function.postAsync(CHANGE_SCHEDULE_STATE, {
+            scheduleId,
+            state,
+        });
+        switch (code)
+        {
+            case STATUS_CODE.OK:
+            {
+                message.success('修改日程状态成功');
+                return true;
+            }
+            case STATUS_CODE.BAD_REQUEST:
+            {
+                message.error('参数错误');
+                return null;
+            }
+            case STATUS_CODE.UNAUTHORIZED:
+            {
+                AuthProcessorFunction.setOffline();
+                message.error('未登录操作');
+                return null;
+            }
+            case STATUS_CODE.FORBIDDEN:
+            {
+                message.error('修改日程状态操作被拒绝');
+                return null;
+            }
+            case STATUS_CODE.NOT_FOUND:
+            {
+                message.error('日程不存在');
+                return null;
+            }
+            case STATUS_CODE.CONFLICT:
+            {
+                message.error('未知错误');
+                return null;
+            }
+            case STATUS_CODE.INTERNAL_SERVER_ERROR:
+            {
+                message.error('服务器出错');
+                return null;
+            }
+            default:
+            {
+                message.error('未知原因的修改日程状态失败');
+                return null;
+            }
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        message.error('网络异常');
+        return null;
+    }
+}
+
+export async function sendPostResumeScheduleRequestAsync(scheduleId)
+{
+    try
+    {
+        const {code} = await Function.postAsync(RESUME_SCHEDULE, {
+            scheduleId,
+        });
+        switch (code)
+        {
+            case STATUS_CODE.OK:
+            {
+                message.success('恢复日程成功');
+                return true;
+            }
+            case STATUS_CODE.BAD_REQUEST:
+            {
+                message.error('参数错误');
+                return null;
+            }
+            case STATUS_CODE.UNAUTHORIZED:
+            {
+                AuthProcessorFunction.setOffline();
+                message.error('未登录操作');
+                return null;
+            }
+            case STATUS_CODE.FORBIDDEN:
+            {
+                message.error('恢复日程操作被拒绝');
+                return null;
+            }
+            case STATUS_CODE.NOT_FOUND:
+            {
+                message.error('日程不存在');
+                return null;
+            }
+            case STATUS_CODE.CONFLICT:
+            {
+                message.error('未知错误');
+                return null;
+            }
+            case STATUS_CODE.INTERNAL_SERVER_ERROR:
+            {
+                message.error('服务器出错');
+                return null;
+            }
+            default:
+            {
+                message.error('未知原因的恢复日程失败');
+                return null;
+            }
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        message.error('网络异常');
+        return null;
+    }
+}
+
+export async function sendPostCancelScheduleRequestAsync(scheduleId)
+{
+    try
+    {
+        const {code} = await Function.postAsync(CANCEL_SCHEDULE, {
+            scheduleId,
+        });
+        switch (code)
+        {
+            case STATUS_CODE.OK:
+            {
+                message.success('取消日程成功');
+                return true;
+            }
+            case STATUS_CODE.BAD_REQUEST:
+            {
+                message.error('参数错误');
+                return null;
+            }
+            case STATUS_CODE.UNAUTHORIZED:
+            {
+                AuthProcessorFunction.setOffline();
+                message.error('未登录操作');
+                return null;
+            }
+            case STATUS_CODE.FORBIDDEN:
+            {
+                message.error('取消日程操作被拒绝');
+                return null;
+            }
+            case STATUS_CODE.NOT_FOUND:
+            {
+                message.error('日程不存在');
+                return null;
+            }
+            case STATUS_CODE.CONFLICT:
+            {
+                message.error('未知错误');
+                return null;
+            }
+            case STATUS_CODE.INTERNAL_SERVER_ERROR:
+            {
+                message.error('服务器出错');
+                return null;
+            }
+            default:
+            {
+                message.error('未知原因的取消日程失败');
+                return null;
+            }
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        message.error('网络异常');
+        return null;
+    }
+}
+
+export async function sendPostDeleteScheduleRequestAsync(scheduleId)
+{
+    try
+    {
+        const {code} = await Function.postAsync(DELETE_SCHEDULE, {
+            scheduleId,
+        });
+        switch (code)
+        {
+            case STATUS_CODE.OK:
+            {
+                message.success('删除日程成功');
+                return true;
+            }
+            case STATUS_CODE.BAD_REQUEST:
+            {
+                message.error('参数错误');
+                return null;
+            }
+            case STATUS_CODE.UNAUTHORIZED:
+            {
+                AuthProcessorFunction.setOffline();
+                message.error('未登录操作');
+                return null;
+            }
+            case STATUS_CODE.FORBIDDEN:
+            {
+                message.error('删除日程操作被拒绝');
+                return null;
+            }
+            case STATUS_CODE.NOT_FOUND:
+            {
+                message.error('日程不存在');
+                return null;
+            }
+            case STATUS_CODE.CONFLICT:
+            {
+                message.error('未知错误');
+                return null;
+            }
+            case STATUS_CODE.INTERNAL_SERVER_ERROR:
+            {
+                message.error('服务器出错');
+                return null;
+            }
+            default:
+            {
+                message.error('未知原因的删除日程失败');
+                return null;
+            }
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        message.error('网络异常');
+        return null;
+    }
+}
+
+export async function sendPostModifyScheduleRequestAsync(scheduleId, year, month, day, startHour, startMinute, endHour, endMinute, scheduleText)
+{
+    try
+    {
+        const {code} = await Function.postAsync(MODIFY_SCHEDULE, {
+            id: scheduleId,
+            year,
+            month,
+            day,
+            startHour,
+            startMinute,
+            endHour,
+            endMinute,
+            scheduleText,
+        });
+        switch (code)
+        {
+            case STATUS_CODE.OK:
+            {
+                message.success('修改日程成功');
+                return true;
+            }
+            case STATUS_CODE.BAD_REQUEST:
+            {
+                message.error('参数错误');
+                return null;
+            }
+            case STATUS_CODE.UNAUTHORIZED:
+            {
+                AuthProcessorFunction.setOffline();
+                message.error('未登录操作');
+                return null;
+            }
+            case STATUS_CODE.FORBIDDEN:
+            {
+                message.error('修改日程操作被拒绝');
+                return null;
+            }
+            case STATUS_CODE.NOT_FOUND:
+            {
+                message.error('日程不存在');
+                return null;
+            }
+            case STATUS_CODE.CONFLICT:
+            {
+                message.error('未知错误');
+                return null;
+            }
+            case STATUS_CODE.INTERNAL_SERVER_ERROR:
+            {
+                message.error('服务器出错');
+                return null;
+            }
+            default:
+            {
+                message.error('未知原因的修改日程失败');
                 return null;
             }
         }
