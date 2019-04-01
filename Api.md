@@ -312,6 +312,28 @@ export default {
     endHour: Number,        // 结束小时，0-23 整数
     endMinute: Number,      // 结束分钟，0-59 整数
     scheduleText: String,   // 日程的具体内容
+    hasReminder: Boolean,   // 是否开启提醒
+}
+```
+- 响应体：无
+- 其他说明：无
+
+#### `/createSchedule`
+
+- 功能说明：创建新日程
+- 请求方法：POST
+- 请求体：
+```js
+{
+    year: String,           // 年份，四位整数字符串
+    month: String,          // 月份，两位整数字符串
+    day: String,            // 日，两位整数字符串
+    startHour: Number,      // 开始小时，0-23 整数
+    startMinute: Number,    // 开始分钟，0-59 整数
+    endHour: Number,        // 结束小时，0-23 整数
+    endMinute: Number,      // 结束分钟，0-59 整数
+    scheduleText: String,   // 日程的具体内容
+    hasReminder: Boolean,   // 是否开启提醒
 }
 ```
 - 响应体：无

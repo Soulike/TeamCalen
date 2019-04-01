@@ -17,3 +17,5 @@ export const CANCEL_SCHEDULE = controlPanelPrefix('/cancelSchedule');
 export const DELETE_SCHEDULE = controlPanelPrefix('/deleteSchedule');
 
 export const MODIFY_SCHEDULE = controlPanelPrefix('/modifySchedule');
+
+export const CREATE_SCHEDULE = controlPanelPrefix('/createSchedule');
