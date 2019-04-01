@@ -19,3 +19,5 @@ export const DELETE_SCHEDULE = controlPanelPrefix('/deleteSchedule');
 export const MODIFY_SCHEDULE = controlPanelPrefix('/modifySchedule');
 
 export const CREATE_SCHEDULE = controlPanelPrefix('/createSchedule');
+
+export const GET_SCHEDULE_BY_ID = controlPanelPrefix('/getScheduleById');

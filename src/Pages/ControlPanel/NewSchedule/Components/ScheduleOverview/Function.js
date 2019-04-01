@@ -1,6 +1,8 @@
 import Api from '../../../../../Api';
-import {getRecentSchedules} from '../../Function';
+import {changeCurrentModifyingScheduleId, getRecentSchedules} from '../../Function';
 import Modal from 'antd/lib/modal';
+import {Function as ModalFunction} from '../../../../../ComponentContainer/Modal';
+import MODAL_ID from '../../../../../CONSTANT/MODAL_ID';
 
 export function onSwitchChangeFactory(scheduleId)
 {
@@ -64,6 +66,7 @@ export function onModifyClickFactory(scheduleId)
 {
     return () =>
     {
-
+        changeCurrentModifyingScheduleId(scheduleId);
+        ModalFunction.showModal(MODAL_ID.SCHEDULE_MODIFY_MODAL);
     };
 }

@@ -9,6 +9,7 @@ import Timeline from 'antd/lib/timeline';
 import TimelineItem, {Object as TimelineItemObject} from './Components/TimelineItem';
 import ScheduleModal from './Components/ScheduleModal';
 import Empty from 'antd/lib/empty';
+import ScheduleModifyModal from './Components/ScheduleModifyModal';
 
 function ScheduleOverview(props)
 {
@@ -80,6 +81,7 @@ function ScheduleOverview(props)
                        year={clickedYear}
                        month={clickedMonth}
                        day={clickedDay} />,
+        <ScheduleModifyModal key={MODAL_ID.SCHEDULE_MODIFY_MODAL.description} />,
     ];
 }
 

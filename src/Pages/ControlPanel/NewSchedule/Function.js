@@ -5,3 +5,8 @@ export function getRecentSchedules()
 {
     Store.dispatch(Actions.getRecentSchedulesAction());
 }
+
+export function changeCurrentModifyingScheduleId(scheduleId)
+{
+    Store.dispatch(Actions.changeCurrentModifyingScheduleIdAction(scheduleId));
+}
