@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ScheduleModal from './View';
+import Api from '../../../../../../../Api';
+import {Object as TimelineItemObject} from '../TimelineItem';
 
 // import SCHEDULE_STATE from '../../../../../../../CONSTANT/SCHEDULE_STATE';
 
@@ -44,10 +46,51 @@ class ScheduleModalContainer extends React.Component
         };
     }
 
-
-    componentDidMount()
+    shouldComponentUpdate(nextProps, nextState, nextContext)
     {
-        // TODO: 根据年月日请求日程表
+        const {year, month, day} = this.props;
+        const {year: nextYear, month: nextMonth, day: nextDay} = nextProps;
+        return year !== nextYear || month !== nextMonth || day !== nextDay;
+    }
+
+
+    componentDidUpdate(prevProps, prevState, snapshot)
+    {
+        const {year, month, day} = this.props;
+        const {year: prevYear, month: prevMonth, day: prevDay} = prevProps;
+        if (year !== prevYear || month !== prevMonth || day !== prevDay)
+        {
+            Api.sendGetSchedulesByDayRequestAsync(year, month, day)
+                .then(schedulesWrapper =>
+                {
+                    if (schedulesWrapper)
+                    {
+                        const {schedules} = schedulesWrapper;
+                        const timelineItems = [];
+                        schedules.forEach(schedule =>
+                        {
+                            const {
+                                month,
+                                day,
+                                startHour,
+                                startMinute,
+                                endHour,
+                                endMinute,
+                                scheduleText,
+                                scheduleState,
+                            } = schedule;
+                            timelineItems.push(
+                                new TimelineItemObject.TimelineItem(month, day, startHour, startMinute, endHour, endMinute,
+                                    scheduleText, scheduleState,
+                                    () => null, () => null, () => null, () => null, () => null),
+                            );
+                        });
+                        this.setState({
+                            timelineItems,
+                        });
+                    }
+                });
+        }
     }
 
     render()

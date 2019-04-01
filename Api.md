@@ -206,3 +206,36 @@ export default {
     CANCELED: 'canceled',
 };
 ```
+
+#### `/getSchedulesByDay`
+
+- 功能说明：得到某一天的所有日程
+- 请求方法：GET
+- 请求体：
+```js
+{
+    year: String,   // 年
+    month: String,  // 月
+    day: String,    // 日
+}
+```
+- 响应体：
+```js
+{
+    schedules: [                    // 数组，内含日程信息
+        {
+            id: Number,             // 这条日程的唯一识别 ID
+            month: String,          // 月份，两位整数字符串
+            day: String,            // 日，两位整数字符串
+            startHour: Number,      // 开始小时，0-23 整数
+            startMinute: Number,    // 开始分钟，0-59 整数
+            endHour: Number,        // 结束小时，0-23 整数
+            endMinute: Number,      // 结束分钟，0-59 整数
+            scheduleText: String,   // 日程的具体内容
+            scheduleState: ENUM,    // 枚举值，日程的状态
+        }
+    ]
+}
+```
+- 其他说明
+  - 数组中日程信息的顺序应当按照开始时间升序，即早的在前，晚的在后
