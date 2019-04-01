@@ -71,13 +71,15 @@ function TimelineItem(props)
                     <Dropdown overlay={
                         <Menu>
                             {
-                                scheduleState === SCHEDULE_STATE.CANCELED ?
-                                    <Menu.Item onClick={onResumeClick}>
-                                        <Icon type="plus-circle" theme="twoTone" />恢复
-                                    </Menu.Item> :
-                                    <Menu.Item onClick={onCancelClick}>
-                                        <Icon type="close-circle" theme="twoTone" twoToneColor={'#F00'} />取消
-                                    </Menu.Item>
+                                scheduleState === SCHEDULE_STATE.FINISHED ?
+                                    null :
+                                    scheduleState === SCHEDULE_STATE.CANCELED ?
+                                        <Menu.Item onClick={onResumeClick}>
+                                            <Icon type="plus-circle" theme="twoTone" />恢复
+                                        </Menu.Item> :
+                                        <Menu.Item onClick={onCancelClick}>
+                                            <Icon type="close-circle" theme="twoTone" twoToneColor={'#F00'} />取消
+                                        </Menu.Item>
                             }
                             <Menu.Divider />
                             <Menu.Item onClick={onModifyClick}>
