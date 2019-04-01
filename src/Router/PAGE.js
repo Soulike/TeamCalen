@@ -3,7 +3,7 @@ import RootContainer from '../ComponentContainer/RootContainer';
 import Login from '../Pages/Account/Login';
 import SignUp from '../Pages/Account/SignUp';
 import RetrievePassword from '../Pages/Account/RetrievePassword';
-import ControlPanelContainer from '../ComponentContainer/ControlPanelContainer';
+import NewSchedule from '../Pages/ControlPanel/NewSchedule';
 
 const PAGE_ID = {
     INDEX: Symbol('index'),
@@ -87,8 +87,8 @@ const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.ACCOUNT.SIGN_UP]: SignUp,
     [PAGE_ID.ACCOUNT.RETRIEVE_PASSWORD]: RetrievePassword,
 
-    [PAGE_ID.CONTROL_PANEL.INDEX]: ControlPanelContainer,
-    [PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE]: null,
+    [PAGE_ID.CONTROL_PANEL.INDEX]: null,
+    [PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE]: NewSchedule,
     [PAGE_ID.CONTROL_PANEL.NEW_PROJECT]: null,
     [PAGE_ID.CONTROL_PANEL.MY_PROJECT]: null,
     [PAGE_ID.CONTROL_PANEL.PROJECT_DETAIL]: null,

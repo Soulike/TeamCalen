@@ -1,0 +1,15 @@
+.ScheduleModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .timelineWrapper {
+        width: 100%;
+        max-height: (500rem/24);
+        overflow: auto;
+
+        .timeline {
+            padding: (10rem/24) (50rem/24);
+        }
+    }
+}
