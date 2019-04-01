@@ -2,6 +2,7 @@ import Function from '../../Function';
 import {
     CANCEL_SCHEDULE,
     CHANGE_SCHEDULE_STATE,
+    CREATE_SCHEDULE,
     DELETE_SCHEDULE,
     GET_EVERY_DAY_SCHEDULE_AMOUNT_IN_A_MONTH,
     GET_RECENT_SCHEDULES,
@@ -492,7 +493,7 @@ export async function sendPostDeleteScheduleRequestAsync(scheduleId)
     }
 }
 
-export async function sendPostModifyScheduleRequestAsync(scheduleId, year, month, day, startHour, startMinute, endHour, endMinute, scheduleText)
+export async function sendPostModifyScheduleRequestAsync(scheduleId, year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder)
 {
     try
     {
@@ -506,6 +507,7 @@ export async function sendPostModifyScheduleRequestAsync(scheduleId, year, month
             endHour,
             endMinute,
             scheduleText,
+            hasReminder,
         });
         switch (code)
         {
@@ -548,6 +550,74 @@ export async function sendPostModifyScheduleRequestAsync(scheduleId, year, month
             default:
             {
                 message.error('未知原因的修改日程失败');
+                return null;
+            }
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        message.error('网络异常');
+        return null;
+    }
+}
+
+export async function sendPostCreateScheduleRequestAsync(year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder)
+{
+    try
+    {
+        const {code} = await Function.postAsync(CREATE_SCHEDULE, {
+            year,
+            month,
+            day,
+            startHour,
+            startMinute,
+            endHour,
+            endMinute,
+            scheduleText,
+            hasReminder,
+        });
+        switch (code)
+        {
+            case STATUS_CODE.OK:
+            {
+                message.success('创建日程成功');
+                return true;
+            }
+            case STATUS_CODE.BAD_REQUEST:
+            {
+                message.error('参数错误');
+                return null;
+            }
+            case STATUS_CODE.UNAUTHORIZED:
+            {
+                AuthProcessorFunction.setOffline();
+                message.error('未登录操作');
+                return null;
+            }
+            case STATUS_CODE.FORBIDDEN:
+            {
+                message.error('创建日程操作被拒绝');
+                return null;
+            }
+            case STATUS_CODE.NOT_FOUND:
+            {
+                message.error('日程不存在');
+                return null;
+            }
+            case STATUS_CODE.CONFLICT:
+            {
+                message.error('未知错误');
+                return null;
+            }
+            case STATUS_CODE.INTERNAL_SERVER_ERROR:
+            {
+                message.error('服务器出错');
+                return null;
+            }
+            default:
+            {
+                message.error('未知原因的创建日程失败');
                 return null;
             }
         }

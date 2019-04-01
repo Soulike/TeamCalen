@@ -13,7 +13,7 @@ const {TextArea} = Input;
 
 function NewSchedulePanel(props)
 {
-    const {onStartDateChange, onStartTimeChange, onEndDateChange, onEndTimeChange, scheduleTextRef, onReminderSwitchChange, onSubmit} = props;
+    const {onStartDateChange, onStartTimeChange, onEndTimeChange, scheduleTextRef, onReminderSwitchChange, onSubmit} = props;
     return (
         <div className={Style.NewSchedulePanel}>
             <div className={Style.title}>
@@ -33,11 +33,8 @@ function NewSchedulePanel(props)
             <div className={Style.timeWrapper}>
                 <div className={Style.label}>结束时间</div>
                 <div className={Style.pickerWrapper}>
-                    <div className={Style.startDateWrapper}>
-                        <DatePicker className={Style.startDate} defaultValue={moment()} onChange={onEndDateChange} />
-                    </div>
-                    <div className={Style.startTimeWrapper}>
-                        <TimePicker className={Style.startTime} format={'HH:mm'} onChange={onEndTimeChange} />
+                    <div className={Style.endTimeWrapper}>
+                        <TimePicker className={Style.endTime} format={'HH:mm'} onChange={onEndTimeChange} />
                     </div>
                 </div>
             </div>
@@ -59,7 +56,6 @@ function NewSchedulePanel(props)
 NewSchedulePanel.propTypes = {
     onStartDateChange: PropTypes.func.isRequired,
     onStartTimeChange: PropTypes.func.isRequired,
-    onEndDateChange: PropTypes.func.isRequired,
     onEndTimeChange: PropTypes.func.isRequired,
     scheduleTextRef: PropTypes.object.isRequired,
     onReminderSwitchChange: PropTypes.func.isRequired,
