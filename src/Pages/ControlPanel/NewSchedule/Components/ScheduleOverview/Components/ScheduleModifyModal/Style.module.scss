@@ -1,0 +1,74 @@
+.ScheduleModifyModal {
+    .timeWrapper {
+        width: 100%;
+        margin-top: (30rem/24);
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        .label {
+            font-size: (28rem/24);
+            text-align: center;
+        }
+
+        .pickerWrapper {
+            margin-top: (28rem/24);
+            display: flex;
+            justify-content: space-between;
+
+            .startDateWrapper {
+                width: 48%;
+
+                .startDate {
+                    width: 100%;
+                }
+            }
+
+            .startTimeWrapper {
+                width: 48%;
+
+                .startTime {
+                    width: 100%;
+                }
+            }
+
+            .endTimeWrapper {
+                width: 100%;
+
+                .endTime {
+                    width: 100%;
+                }
+            }
+        }
+
+
+    }
+
+    .scheduleTextWrapper {
+        width: 100%;
+        margin-top: (30rem/24);
+
+        .title {
+            font-size: (28rem/24);
+            text-align: center;
+        }
+
+        .scheduleText {
+            margin-top: (28rem/24);
+            resize: none;
+            width: 100%;
+        }
+    }
+
+    .reminderSwitchWrapper {
+        margin-top: (28rem/24);
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+
+        .label {
+            font-size: (28rem/24);
+        }
+    }
+}

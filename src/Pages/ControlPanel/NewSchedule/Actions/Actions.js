@@ -64,3 +64,11 @@ function getRecentSchedulesFailedAction()
         type: ACTION_TYPE.GET_RECENT_SCHEDULES_FAILED,
     };
 }
+
+export function changeCurrentModifyingScheduleIdAction(scheduleId)
+{
+    return {
+        type: ACTION_TYPE.CHANGE_CURRENT_MODIFYING_SCHEDULE_ID,
+        scheduleId,
+    };
+}

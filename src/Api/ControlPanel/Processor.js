@@ -6,6 +6,7 @@ import {
     DELETE_SCHEDULE,
     GET_EVERY_DAY_SCHEDULE_AMOUNT_IN_A_MONTH,
     GET_RECENT_SCHEDULES,
+    GET_SCHEDULE_BY_ID,
     GET_SCHEDULES_BY_DAY,
     GET_USER_INFO,
     MODIFY_SCHEDULE,
@@ -618,6 +619,65 @@ export async function sendPostCreateScheduleRequestAsync(year, month, day, start
             default:
             {
                 message.error('未知原因的创建日程失败');
+                return null;
+            }
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        message.error('网络异常');
+        return null;
+    }
+}
+
+export async function sendGetScheduleByIdRequestAsync(scheduleId)
+{
+    try
+    {
+        const {code, data} = await Function.getAsync(GET_SCHEDULE_BY_ID, false, {
+            scheduleId,
+        });
+        switch (code)
+        {
+            case STATUS_CODE.OK:
+            {
+                return data;
+            }
+            case STATUS_CODE.BAD_REQUEST:
+            {
+                message.error('参数错误');
+                return null;
+            }
+            case STATUS_CODE.UNAUTHORIZED:
+            {
+                AuthProcessorFunction.setOffline();
+                message.error('未登录操作');
+                return null;
+            }
+            case STATUS_CODE.FORBIDDEN:
+            {
+                message.error('获取日程信息操作被拒绝');
+                return null;
+            }
+            case STATUS_CODE.NOT_FOUND:
+            {
+                message.error('日程不存在');
+                return null;
+            }
+            case STATUS_CODE.CONFLICT:
+            {
+                message.error('未知错误');
+                return null;
+            }
+            case STATUS_CODE.INTERNAL_SERVER_ERROR:
+            {
+                message.error('服务器出错');
+                return null;
+            }
+            default:
+            {
+                message.error('未知原因的获取日程信息失败');
                 return null;
             }
         }

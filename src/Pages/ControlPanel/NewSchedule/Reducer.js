@@ -21,6 +21,14 @@ export default (state = {}, action) =>
                 recentSchedules,
             };
         }
+        case ACTION_TYPE.CHANGE_CURRENT_MODIFYING_SCHEDULE_ID:
+        {
+            const {scheduleId} = action;
+            return {
+                ...state,
+                currentModifyingScheduleId: scheduleId,
+            };
+        }
         case ACTION_TYPE.GET_EVERY_DAY_SCHEDULE_AMOUNT_IN_A_MONTH_FAILED:
         case ACTION_TYPE.GET_RECENT_SCHEDULES_FAILED:
         default:
