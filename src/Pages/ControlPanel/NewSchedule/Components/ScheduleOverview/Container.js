@@ -6,6 +6,13 @@ import {connect} from 'react-redux';
 import {Actions as ModalActions} from '../../../../../ComponentContainer/Modal';
 import MODAL_ID from '../../../../../CONSTANT/MODAL_ID';
 import {Object as TimelineItemObject} from './Components/TimelineItem';
+import {
+    onCancelClickFactory,
+    onDeleteClickFactory,
+    onModifyClickFactory,
+    onResumeClickFactory,
+    onSwitchChangeFactory,
+} from './Function';
 
 class ScheduleOverviewContainer extends React.Component
 {
@@ -67,6 +74,7 @@ class ScheduleOverviewContainer extends React.Component
         recentSchedules.forEach(schedule =>
         {
             const {
+                id,
                 month,
                 day,
                 startHour,
@@ -79,7 +87,11 @@ class ScheduleOverviewContainer extends React.Component
             timelineItems.push(
                 new TimelineItemObject.TimelineItem(month, day, startHour, startMinute, endHour, endMinute,
                     scheduleText, scheduleState,
-                    () => null, () => null, () => null, () => null, () => null),
+                    onSwitchChangeFactory(id),
+                    onResumeClickFactory(id),
+                    onCancelClickFactory(id),
+                    onDeleteClickFactory(id),
+                    onModifyClickFactory(id)),
             );
         });
 

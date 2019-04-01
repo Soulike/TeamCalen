@@ -7,3 +7,13 @@ export const GET_EVERY_DAY_SCHEDULE_AMOUNT_IN_A_MONTH = controlPanelPrefix('/get
 export const GET_RECENT_SCHEDULES = controlPanelPrefix('/getRecentSchedules');
 
 export const GET_SCHEDULES_BY_DAY = controlPanelPrefix('/getSchedulesByDay');
+
+export const CHANGE_SCHEDULE_STATE = controlPanelPrefix('/changeScheduleState');
+
+export const RESUME_SCHEDULE = controlPanelPrefix('/resumeSchedule');
+
+export const CANCEL_SCHEDULE = controlPanelPrefix('/cancelSchedule');
+
+export const DELETE_SCHEDULE = controlPanelPrefix('/deleteSchedule');
+
+export const MODIFY_SCHEDULE = controlPanelPrefix('/modifySchedule');
