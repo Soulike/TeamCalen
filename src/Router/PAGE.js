@@ -4,6 +4,7 @@ import Login from '../Pages/Account/Login';
 import SignUp from '../Pages/Account/SignUp';
 import RetrievePassword from '../Pages/Account/RetrievePassword';
 import NewSchedule from '../Pages/ControlPanel/NewSchedule';
+import AccountManagement from '../Pages/ControlPanel/AccountManagement';
 
 const PAGE_ID = {
     INDEX: Symbol('index'),
@@ -93,7 +94,7 @@ const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.CONTROL_PANEL.MY_PROJECT]: null,
     [PAGE_ID.CONTROL_PANEL.PROJECT_DETAIL]: null,
     [PAGE_ID.CONTROL_PANEL.FRIEND_LIST]: null,
-    [PAGE_ID.CONTROL_PANEL.ACCOUNT_MANAGEMENT]: null,
+    [PAGE_ID.CONTROL_PANEL.ACCOUNT_MANAGEMENT]: AccountManagement,
 };
 
 Object.freeze(PAGE_ID);
