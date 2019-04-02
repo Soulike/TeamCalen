@@ -3,8 +3,9 @@ import ControlPanel from '../../Components/ControlPanel';
 import {PAGE_ID} from '../../Router';
 import {withRouter} from 'react-router';
 import {ROUTE_TO_PAGE_ID} from '../../Router/PAGE';
-import Api from '../../Api';
 import PropTypes from 'prop-types';
+import * as Actions from './Actions/Actions';
+import {connect} from 'react-redux';
 
 class ControlPanelContainer extends React.Component
 {
@@ -16,6 +17,9 @@ class ControlPanelContainer extends React.Component
             username: undefined,
             avatarSrc: undefined,
         };
+
+        const {getUserInfo} = this.props;
+        getUserInfo();
     }
 
     componentDidMount()
@@ -25,18 +29,11 @@ class ControlPanelContainer extends React.Component
             currentActivePageId: ROUTE_TO_PAGE_ID[route],
         });
 
-        Api.sendGetUserInfoRequestAsync()
-            .then(userInfo =>
-            {
-                if (userInfo)
-                {
-                    const {username, avatarSrc} = userInfo;
-                    this.setState({
-                        username,
-                        avatarSrc,
-                    });
-                }
-            });
+        const {userInfo: {username, avatarSrc}} = this.props;
+        this.setState({
+            username,
+            avatarSrc,
+        });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot)
@@ -70,4 +67,14 @@ ControlPanelContainer.propTypes = {
     rightPartComponent: PropTypes.element,
 };
 
-export default withRouter(ControlPanelContainer);
+const mapStateToProps = state =>
+{
+    const {ControlPanel: {userInfo}} = state;
+    return {userInfo};
+};
+
+const mapDispatchToProps = {
+    getUserInfo: Actions.getUserInfoAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ControlPanelContainer));

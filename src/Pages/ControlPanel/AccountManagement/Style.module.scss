@@ -3,8 +3,24 @@
     justify-content: space-between;
     align-items: stretch;
     height: 100%;
+    padding: (80rem/24) (65rem/24);
 
     .leftPart, .rightPart {
         width: 50%;
+    }
+
+    .leftPart {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: stretch;
+        border-right: (1rem/24) solid #DDD;
+    }
+
+
+    .avatarUploaderWrapper {
+        height: 50%;
+        padding: 0 0 (24rem/24);
+        border-bottom: (1rem/24) solid #DDD;
     }
 }

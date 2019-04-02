@@ -1,0 +1,42 @@
+.AvatarUploader {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+
+    .title {
+        font-size: (36rem/24);
+        text-align: center;
+    }
+
+    .uploadWrapper {
+        display: flex;
+        justify-content: center;
+
+        .uploaderButton, .preview {
+            width: (175rem/24);
+            height: (175rem/24);
+            cursor: pointer;
+            border-radius: (6rem/24);
+        }
+
+        .uploaderButton {
+            color: #666;
+            background-color: #EEE;
+            border: (1rem/24) dashed #BBB;
+
+            .iconInButton {
+                font-size: (48rem/24);
+            }
+
+            .textInButton {
+
+            }
+        }
+    }
+
+    .submitButtonWrapper {
+        display: flex;
+        justify-content: center;
+    }
+}
