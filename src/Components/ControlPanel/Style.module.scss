@@ -1,6 +1,6 @@
 .ControlPanel {
     display: flex;
-    justify-content: center;
+    justify-content: stretch;
     align-items: stretch;
     width: (1695rem/24);
     height: (868rem/24);
@@ -9,8 +9,10 @@
     border: (1rem/24) solid #BBB;
 
     .leftPart {
+        flex-grow: 0;
         width: (380rem/24);
         border-right: (1rem/24) solid #BBB;
+        box-sizing: border-box;
 
         .userInfoWrapper {
             display: flex;
@@ -55,10 +57,13 @@
     }
 
     .midPart {
+        flex-grow: 1;
         width: (855rem/24);
+        box-sizing: border-box;
     }
 
     .rightPart {
+        box-sizing: border-box;
         width: (460rem/24);
         border-left: (1rem/24) solid #BBB;
     }
