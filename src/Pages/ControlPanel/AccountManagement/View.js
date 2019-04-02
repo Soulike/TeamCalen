@@ -2,6 +2,8 @@ import React from 'react';
 import Style from './Style.module.scss';
 import ControlPanel from '../../../ComponentContainer/ControlPanelContainer';
 import AvatarUploader from './Components/AvatarUploader';
+import ReminderSetting from './Components/ReminderSetting';
+import PasswordChange from './Components/PasswordChange';
 
 function AccountManagement()
 {
@@ -12,9 +14,14 @@ function AccountManagement()
                     <div className={Style.avatarUploaderWrapper}>
                         <AvatarUploader />
                     </div>
+                    <div className={Style.reminderSettingWrapper}>
+                        <ReminderSetting />
+                    </div>
                 </div>
                 <div className={Style.rightPart}>
-
+                    <div className={Style.passwordChangeWrapper}>
+                        <PasswordChange />
+                    </div>
                 </div>
             </div>
         } />

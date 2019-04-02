@@ -18,9 +18,21 @@
     }
 
 
+    .avatarUploaderWrapper, .passwordChangeWrapper {
+        padding: 0 (48rem/24) (24rem/24);
+        border-bottom: (1rem/24) solid #DDD;
+    }
+
     .avatarUploaderWrapper {
         height: 50%;
-        padding: 0 0 (24rem/24);
-        border-bottom: (1rem/24) solid #DDD;
+    }
+
+    .reminderSettingWrapper {
+        height: 50%;
+        padding: (24rem/24) (48rem/24) 0;
+    }
+
+    .passwordChangeWrapper {
+        height: 65%;
     }
 }

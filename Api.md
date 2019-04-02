@@ -373,3 +373,21 @@ export default {
   - `avatar`：文件的二进制内容
 - 响应体：无
 - 其他说明：无
+
+#### `/changePassword`
+
+- 功能说明：修改密码
+- 请求方法：POST
+- 请求体：
+```js
+{
+    password: String,           // 原密码
+    newPassword: String,        // 新密码
+    verificationCode: String,   // 验证码
+}
+```
+- 响应体：无
+- 其他说明：
+  - 如果原密码错误，返回 409
+  - 如果验证码错误，返回 403
+  - 如果新密码不合法，返回 403

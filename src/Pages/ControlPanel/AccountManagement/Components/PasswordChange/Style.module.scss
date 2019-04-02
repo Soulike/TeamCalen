@@ -1,0 +1,28 @@
+.PasswordChange {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .title {
+        font-size: (36rem/24);
+        text-align: center;
+    }
+
+    .inputWrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        height: (250rem/24);
+    }
+
+    .getVerificationCodeButton {
+        cursor: pointer;
+    }
+
+    .submitButtonWrapper {
+        display: flex;
+        justify-content: center;
+    }
+}

@@ -1,6 +1,7 @@
 import Function from '../../Function';
 import {
     CANCEL_SCHEDULE,
+    CHANGE_PASSWORD,
     CHANGE_SCHEDULE_STATE,
     CREATE_SCHEDULE,
     DELETE_SCHEDULE,
@@ -739,6 +740,68 @@ export async function sendPostUploadAvatarRequestAsync(fileObject)
             default:
             {
                 message.error('未知原因的上传头像失败');
+                return null;
+            }
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        message.error('网络异常');
+        return null;
+    }
+}
+
+export async function sendPostChangePasswordRequestAsync(password, newPassword, verificationCode)
+{
+    try
+    {
+        const {code} = await Function.postAsync(CHANGE_PASSWORD, {
+            password,
+            newPassword,
+            verificationCode,
+        });
+        switch (code)
+        {
+            case STATUS_CODE.OK:
+            {
+                message.success('修改密码成功，请重新登录');
+                return true;
+            }
+            case STATUS_CODE.BAD_REQUEST:
+            {
+                message.error('参数错误');
+                return null;
+            }
+            case STATUS_CODE.UNAUTHORIZED:
+            {
+                AuthProcessorFunction.setOffline();
+                message.error('未登录操作');
+                return null;
+            }
+            case STATUS_CODE.FORBIDDEN:
+            {
+                message.error('新密码不合法或验证码错误');
+                return null;
+            }
+            case STATUS_CODE.NOT_FOUND:
+            {
+                message.error('用户不存在');
+                return null;
+            }
+            case STATUS_CODE.CONFLICT:
+            {
+                message.error('原密码错误');
+                return null;
+            }
+            case STATUS_CODE.INTERNAL_SERVER_ERROR:
+            {
+                message.error('服务器出错');
+                return null;
+            }
+            default:
+            {
+                message.error('未知原因的修改密码失败');
                 return null;
             }
         }
