@@ -5,11 +5,16 @@ import ControlPanel from '../../../ComponentContainer/ControlPanelContainer';
 function AccountManagement(props)
 {
     return (
-        <ControlPanel>
+        <ControlPanel midPartComponent={
             <div className={Style.AccountManagement}>
+                <div className={Style.leftPart}>
 
+                </div>
+                <div className={Style.rightPart}>
+
+                </div>
             </div>
-        </ControlPanel>
+        } />
     );
 }
 
