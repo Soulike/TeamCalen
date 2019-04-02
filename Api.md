@@ -144,7 +144,7 @@ export const REGEX = {
     avatarSrc: String,  // 头像文件的 URL，可以不存在
 }
 ```
-- 其他说明：无
+- 其他说明：这一接口以后可能会根据需要增加其他的项
 
 #### `/getEveryDayScheduleAmountInAMonth`
 
@@ -391,3 +391,18 @@ export default {
   - 如果原密码错误，返回 409
   - 如果验证码错误，返回 403
   - 如果新密码不合法，返回 403
+
+#### `/changeEmail`
+
+- 功能说明：修改邮箱
+- 请求方法：POST
+- 请求体：
+```js
+{
+    email: String,              // 新邮箱
+    verificationCode: String,   // 验证码
+}
+```
+- 响应体：无
+- 其他说明：
+  - 邮箱不合法或验证码错误均返回 403

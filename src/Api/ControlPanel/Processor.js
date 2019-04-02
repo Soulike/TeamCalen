@@ -1,6 +1,7 @@
 import Function from '../../Function';
 import {
     CANCEL_SCHEDULE,
+    CHANGE_EMAIL,
     CHANGE_PASSWORD,
     CHANGE_SCHEDULE_STATE,
     CREATE_SCHEDULE,
@@ -802,6 +803,67 @@ export async function sendPostChangePasswordRequestAsync(password, newPassword, 
             default:
             {
                 message.error('未知原因的修改密码失败');
+                return null;
+            }
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        message.error('网络异常');
+        return null;
+    }
+}
+
+export async function sendPostChangeEmailRequestAsync(email, verificationCode)
+{
+    try
+    {
+        const {code} = await Function.postAsync(CHANGE_EMAIL, {
+            email,
+            verificationCode,
+        });
+        switch (code)
+        {
+            case STATUS_CODE.OK:
+            {
+                message.success('修改邮箱成功');
+                return true;
+            }
+            case STATUS_CODE.BAD_REQUEST:
+            {
+                message.error('参数错误');
+                return null;
+            }
+            case STATUS_CODE.UNAUTHORIZED:
+            {
+                AuthProcessorFunction.setOffline();
+                message.error('未登录操作');
+                return null;
+            }
+            case STATUS_CODE.FORBIDDEN:
+            {
+                message.error('新邮箱不合法或验证码错误');
+                return null;
+            }
+            case STATUS_CODE.NOT_FOUND:
+            {
+                message.error('用户不存在');
+                return null;
+            }
+            case STATUS_CODE.CONFLICT:
+            {
+                message.error('与服务器现有资源冲突');
+                return null;
+            }
+            case STATUS_CODE.INTERNAL_SERVER_ERROR:
+            {
+                message.error('服务器出错');
+                return null;
+            }
+            default:
+            {
+                message.error('未知原因的修改邮箱失败');
                 return null;
             }
         }
