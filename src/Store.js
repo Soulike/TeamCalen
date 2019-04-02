@@ -10,7 +10,7 @@ import {Reducer as ControlPanelReducer} from './ComponentContainer/ControlPanelC
 // Store 中的初始值，根据开发需要进行改变
 const initValues = {
     AuthProcessor: {
-        hasLoggedIn: false,
+        hasLoggedIn: true,
     },
     Modal: {
         currentVisibleModalIdSet: new Set(),
