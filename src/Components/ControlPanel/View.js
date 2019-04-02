@@ -35,9 +35,13 @@ function ControlPanel(props)
                 <div className={Style.midPart}>
                     {midPartComponent}
                 </div>
-                <div className={Style.rightPart}>
-                    {rightPartComponent}
-                </div>
+                {
+                    rightPartComponent ?
+                        <div className={Style.rightPart}>
+                            {rightPartComponent}
+                        </div> :
+                        null
+                }
             </div>
         </RootContainer>
     );
