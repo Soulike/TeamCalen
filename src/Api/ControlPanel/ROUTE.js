@@ -21,3 +21,9 @@ export const MODIFY_SCHEDULE = controlPanelPrefix('/modifySchedule');
 export const CREATE_SCHEDULE = controlPanelPrefix('/createSchedule');
 
 export const GET_SCHEDULE_BY_ID = controlPanelPrefix('/getScheduleById');
+
+export const UPLOAD_AVATAR = controlPanelPrefix('/uploadAvatar');
+
+export const CHANGE_PASSWORD = controlPanelPrefix('/changePassword');
+
+export const CHANGE_EMAIL = controlPanelPrefix('/changeEmail');

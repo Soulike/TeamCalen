@@ -1,6 +1,8 @@
 import Function from '../../Function';
 import {
     CANCEL_SCHEDULE,
+    CHANGE_EMAIL,
+    CHANGE_PASSWORD,
     CHANGE_SCHEDULE_STATE,
     CREATE_SCHEDULE,
     DELETE_SCHEDULE,
@@ -11,6 +13,7 @@ import {
     GET_USER_INFO,
     MODIFY_SCHEDULE,
     RESUME_SCHEDULE,
+    UPLOAD_AVATAR,
 } from './ROUTE';
 import STATUS_CODE from '../../CONSTANT/STATUS_CODE';
 import message from 'antd/lib/message';
@@ -678,6 +681,189 @@ export async function sendGetScheduleByIdRequestAsync(scheduleId)
             default:
             {
                 message.error('未知原因的获取日程信息失败');
+                return null;
+            }
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        message.error('网络异常');
+        return null;
+    }
+}
+
+export async function sendPostUploadAvatarRequestAsync(fileObject)
+{
+    try
+    {
+        const formData = new FormData();
+        formData.append('avatar', fileObject);
+
+        const {code} = await Function.postAsync(UPLOAD_AVATAR, formData);
+        switch (code)
+        {
+            case STATUS_CODE.OK:
+            {
+                return true;
+            }
+            case STATUS_CODE.BAD_REQUEST:
+            {
+                message.error('参数错误');
+                return null;
+            }
+            case STATUS_CODE.UNAUTHORIZED:
+            {
+                AuthProcessorFunction.setOffline();
+                message.error('未登录操作');
+                return null;
+            }
+            case STATUS_CODE.FORBIDDEN:
+            {
+                message.error('上传头像操作被拒绝');
+                return null;
+            }
+            case STATUS_CODE.NOT_FOUND:
+            {
+                message.error('用户不存在');
+                return null;
+            }
+            case STATUS_CODE.CONFLICT:
+            {
+                message.error('与服务器现有资源冲突');
+                return null;
+            }
+            case STATUS_CODE.INTERNAL_SERVER_ERROR:
+            {
+                message.error('服务器出错');
+                return null;
+            }
+            default:
+            {
+                message.error('未知原因的上传头像失败');
+                return null;
+            }
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        message.error('网络异常');
+        return null;
+    }
+}
+
+export async function sendPostChangePasswordRequestAsync(password, newPassword, verificationCode)
+{
+    try
+    {
+        const {code} = await Function.postAsync(CHANGE_PASSWORD, {
+            password,
+            newPassword,
+            verificationCode,
+        });
+        switch (code)
+        {
+            case STATUS_CODE.OK:
+            {
+                message.success('修改密码成功，请重新登录');
+                return true;
+            }
+            case STATUS_CODE.BAD_REQUEST:
+            {
+                message.error('参数错误');
+                return null;
+            }
+            case STATUS_CODE.UNAUTHORIZED:
+            {
+                AuthProcessorFunction.setOffline();
+                message.error('未登录操作');
+                return null;
+            }
+            case STATUS_CODE.FORBIDDEN:
+            {
+                message.error('新密码不合法或验证码错误');
+                return null;
+            }
+            case STATUS_CODE.NOT_FOUND:
+            {
+                message.error('用户不存在');
+                return null;
+            }
+            case STATUS_CODE.CONFLICT:
+            {
+                message.error('原密码错误');
+                return null;
+            }
+            case STATUS_CODE.INTERNAL_SERVER_ERROR:
+            {
+                message.error('服务器出错');
+                return null;
+            }
+            default:
+            {
+                message.error('未知原因的修改密码失败');
+                return null;
+            }
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        message.error('网络异常');
+        return null;
+    }
+}
+
+export async function sendPostChangeEmailRequestAsync(email, verificationCode)
+{
+    try
+    {
+        const {code} = await Function.postAsync(CHANGE_EMAIL, {
+            email,
+            verificationCode,
+        });
+        switch (code)
+        {
+            case STATUS_CODE.OK:
+            {
+                message.success('修改邮箱成功');
+                return true;
+            }
+            case STATUS_CODE.BAD_REQUEST:
+            {
+                message.error('参数错误');
+                return null;
+            }
+            case STATUS_CODE.UNAUTHORIZED:
+            {
+                AuthProcessorFunction.setOffline();
+                message.error('未登录操作');
+                return null;
+            }
+            case STATUS_CODE.FORBIDDEN:
+            {
+                message.error('新邮箱不合法或验证码错误');
+                return null;
+            }
+            case STATUS_CODE.NOT_FOUND:
+            {
+                message.error('用户不存在');
+                return null;
+            }
+            case STATUS_CODE.CONFLICT:
+            {
+                message.error('与服务器现有资源冲突');
+                return null;
+            }
+            case STATUS_CODE.INTERNAL_SERVER_ERROR:
+            {
+                message.error('服务器出错');
+                return null;
+            }
+            default:
+            {
+                message.error('未知原因的修改邮箱失败');
                 return null;
             }
         }
