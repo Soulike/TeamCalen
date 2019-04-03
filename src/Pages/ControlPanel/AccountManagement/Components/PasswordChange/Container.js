@@ -13,10 +13,6 @@ class PasswordChangeContainer extends React.Component
     constructor(props)
     {
         super(props);
-        this.state = {
-            getVerificationCodeButtonText: '获取验证码',
-            hasSendVerificationCode: false,
-        };
 
         this.passwordInputRef = React.createRef();
         this.newPasswordInputRef = React.createRef();
@@ -26,35 +22,8 @@ class PasswordChangeContainer extends React.Component
 
     onGetVerificationCodeButtonClick = async () =>
     {
-        const {hasSendVerificationCode} = this.state;
-        if (!hasSendVerificationCode)
-        {
-            const {username} = this.props;
-            const requestIsSuccessful = await Api.sendPostSendVerificationCodeByUsernameRequestAsync(username);
-            if (requestIsSuccessful)
-            {
-                this.setState({
-                    hasSendVerificationCode: true,
-                });
-                const WAIT_SECONDS = 30;
-                let secondsLeft = WAIT_SECONDS;
-                const interval = setInterval(() =>
-                {
-                    this.setState({
-                        getVerificationCodeButtonText: (--secondsLeft).toString(),
-                    });
-                }, 1000);
-
-                setTimeout(() =>
-                {
-                    clearInterval(interval);
-                    this.setState({
-                        getVerificationCodeButtonText: '获取验证码',
-                        hasSendVerificationCode: false,
-                    });
-                }, WAIT_SECONDS * 1000);
-            }
-        }
+        const {username} = this.props;
+        return await Api.sendPostSendVerificationCodeByUsernameRequestAsync(username);
     };
 
     onSubmit = async () =>
@@ -94,13 +63,11 @@ class PasswordChangeContainer extends React.Component
 
     render()
     {
-        const {getVerificationCodeButtonText} = this.state;
         return (
             <PasswordChange passwordInputRef={this.passwordInputRef}
                             newPasswordInputRef={this.newPasswordInputRef}
                             verificationCodeInputRef={this.verificationCodeInputRef}
                             confirmNewPasswordInputRef={this.confirmNewPasswordInputRef}
-                            getVerificationCodeButtonText={getVerificationCodeButtonText}
                             onGetVerificationCodeButtonClick={this.onGetVerificationCodeButtonClick}
                             onSubmit={this.onSubmit} />
         );

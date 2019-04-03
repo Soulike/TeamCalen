@@ -8,6 +8,7 @@ import Button from 'antd/lib/button/index';
 import Tooltip from 'antd/lib/tooltip/index';
 import PropTypes from 'prop-types';
 import {REGEX_TEXT} from '../../../CONSTANT/REGEX';
+import GetVerificationCodeButton from '../../../ComponentContainer/GetVerificationCodeButtonContainer';
 
 function SignUp(props)
 {
@@ -17,7 +18,6 @@ function SignUp(props)
         confirmPasswordInputRef,
         emailInputRef,
         verificationCodeInputRef,
-        getVerificationCodeButtonText,
         onGetVerificationCodeButtonClick,
         onSubmit,
     } = props;
@@ -57,9 +57,7 @@ function SignUp(props)
                                    placeholder={'验证码'}
                                    ref={verificationCodeInputRef}
                                    addonAfter={
-                                       <div className={Style.getVerificationCodeButton}
-                                            onClick={onGetVerificationCodeButtonClick}>{getVerificationCodeButtonText}</div>
-                                   } />
+                                       <GetVerificationCodeButton onClick={onGetVerificationCodeButtonClick} />} />
                         </Tooltip>
                     </div>
                     <div className={Style.tipWrapper}>
@@ -87,13 +85,8 @@ SignUp.propTypes = {
     confirmPasswordInputRef: PropTypes.object.isRequired,
     emailInputRef: PropTypes.object.isRequired,
     verificationCodeInputRef: PropTypes.object.isRequired,
-    getVerificationCodeButtonText: PropTypes.string.isRequired,
     onGetVerificationCodeButtonClick: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-};
-
-SignUp.defaultProps = {
-    getVerificationCodeButtonText: '获取验证码',
 };
 
 export default SignUp;

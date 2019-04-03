@@ -16,18 +16,10 @@ class SignUpContainer extends React.Component
         this.confirmPasswordInputRef = React.createRef();
         this.emailInputRef = React.createRef();
         this.verificationCodeInputRef = React.createRef();
-
-        this.state = {
-            hasGetVerificationCodeButtonClicked: false,
-            getVerificationCodeButtonText: '获取验证码',
-        };
     }
 
     onGetVerificationCodeButtonClick = async () =>
     {
-        const {hasGetVerificationCodeButtonClicked} = this.state;
-        if (!hasGetVerificationCodeButtonClicked)
-        {
             const email = this.emailInputRef.current.input.value;
             if (!REGEX.EMAIL.test(email))
             {
@@ -35,32 +27,8 @@ class SignUpContainer extends React.Component
             }
             else
             {
-                const requestIsSuccessful = await Api.sendPostSendVerificationCodeByEmailRequestAsync(email);
-                if (requestIsSuccessful)
-                {
-                    this.setState({
-                        hasGetVerificationCodeButtonClicked: true,
-                    });
-                    const WAIT_SECONDS = 30;
-                    let secondsLeft = WAIT_SECONDS;
-                    const interval = setInterval(() =>
-                    {
-                        this.setState({
-                            getVerificationCodeButtonText: (--secondsLeft).toString(),
-                        });
-                    }, 1000);
-
-                    setTimeout(() =>
-                    {
-                        clearInterval(interval);
-                        this.setState({
-                            getVerificationCodeButtonText: '获取验证码',
-                            hasGetVerificationCodeButtonClicked: false,
-                        });
-                    }, WAIT_SECONDS * 1000);
-                }
+                return await Api.sendPostSendVerificationCodeByEmailRequestAsync(email);
             }
-        }
     };
 
     onSubmit = async e =>
@@ -100,18 +68,15 @@ class SignUpContainer extends React.Component
                 browserHistory.push(PAGE_ID_TO_ROUTE[PAGE_ID.ACCOUNT.LOGIN]);
             }
         }
-
     };
 
     render()
     {
-        const {getVerificationCodeButtonText} = this.state;
         return <SignUp usernameInputRef={this.usernameInputRef}
                        passwordInputRef={this.passwordInputRef}
                        confirmPasswordInputRef={this.confirmPasswordInputRef}
                        emailInputRef={this.emailInputRef}
                        verificationCodeInputRef={this.verificationCodeInputRef}
-                       getVerificationCodeButtonText={getVerificationCodeButtonText}
                        onGetVerificationCodeButtonClick={this.onGetVerificationCodeButtonClick}
                        onSubmit={this.onSubmit} />;
     }

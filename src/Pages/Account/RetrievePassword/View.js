@@ -6,6 +6,7 @@ import Input from 'antd/lib/input';
 import Tooltip from 'antd/lib/tooltip';
 import {REGEX_TEXT} from '../../../CONSTANT/REGEX';
 import Button from 'antd/lib/button';
+import GetVerificationCodeButton from '../../../ComponentContainer/GetVerificationCodeButtonContainer';
 
 function RetrievePassword(props)
 {
@@ -15,7 +16,6 @@ function RetrievePassword(props)
         passwordInputRef,
         confirmPasswordInputRef,
         onGetVerificationCodeButtonClick,
-        getVerificationCodeButtonText,
         onSubmit,
     } = props;
     return (
@@ -36,8 +36,9 @@ function RetrievePassword(props)
                                    size={'large'}
                                    placeholder={'验证码'}
                                    ref={verificationCodeInputRef}
-                                   addonAfter={<div className={Style.getVerificationCodeButton}
-                                                    onClick={onGetVerificationCodeButtonClick}>{getVerificationCodeButtonText}</div>} />
+                                   addonAfter={
+                                       <GetVerificationCodeButton onClick={onGetVerificationCodeButtonClick} />
+                                   } />
                         </Tooltip>
                         <Tooltip title={REGEX_TEXT.PASSWORD}>
                             <Input className={Style.input}
@@ -72,12 +73,7 @@ RetrievePassword.propTypes = {
     passwordInputRef: PropTypes.object.isRequired,
     confirmPasswordInputRef: PropTypes.object.isRequired,
     onGetVerificationCodeButtonClick: PropTypes.func.isRequired,
-    getVerificationCodeButtonText: PropTypes.string.isRequired,
     onSubmit: PropTypes.func.isRequired,
-};
-
-RetrievePassword.defaultProps = {
-    getVerificationCodeButtonText: '获取验证码',
 };
 
 export default RetrievePassword;

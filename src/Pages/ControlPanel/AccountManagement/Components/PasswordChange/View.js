@@ -5,6 +5,7 @@ import Tooltip from 'antd/lib/tooltip';
 import Button from 'antd/lib/button';
 import {REGEX_TEXT} from '../../../../../CONSTANT/REGEX';
 import PropTypes from 'prop-types';
+import GetVerificationCodeButton from '../../../../../ComponentContainer/GetVerificationCodeButtonContainer';
 
 function PasswordChange(props)
 {
@@ -13,7 +14,6 @@ function PasswordChange(props)
         newPasswordInputRef,
         confirmNewPasswordInputRef,
         verificationCodeInputRef,
-        getVerificationCodeButtonText,
         onGetVerificationCodeButtonClick,
         onSubmit,
     } = props;
@@ -28,8 +28,7 @@ function PasswordChange(props)
                 <Input placeholder={'确认新密码'} ref={confirmNewPasswordInputRef} type={'password'} />
                 <Input placeholder={'验证码'} ref={verificationCodeInputRef}
                        addonAfter={
-                           <div onClick={onGetVerificationCodeButtonClick}
-                                className={Style.getVerificationCodeButton}>{getVerificationCodeButtonText}</div>} />
+                           <GetVerificationCodeButton onClick={onGetVerificationCodeButtonClick} />} />
             </div>
             <div className={Style.submitButtonWrapper}>
                 <Button htmlType={'button'} type={'primary'} onClick={onSubmit}>确认</Button>
@@ -43,13 +42,8 @@ PasswordChange.propTypes = {
     newPasswordInputRef: PropTypes.object.isRequired,
     confirmNewPasswordInputRef: PropTypes.object.isRequired,
     verificationCodeInputRef: PropTypes.object.isRequired,
-    getVerificationCodeButtonText: PropTypes.string.isRequired,
     onGetVerificationCodeButtonClick: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-};
-
-PasswordChange.defaultProps = {
-    getVerificationCodeButtonText: '获取验证码',
 };
 
 export default PasswordChange;

@@ -12,11 +12,6 @@ class RetrievePasswordContainer extends React.Component
     {
         super(props);
 
-        this.state = {
-            hasGetVerificationCodeButtonClicked: false,
-            getVerificationCodeButtonText: '获取验证码',
-        };
-
         this.usernameInputRef = React.createRef();
         this.verificationCodeInputRef = React.createRef();
         this.passwordInputRef = React.createRef();
@@ -25,41 +20,14 @@ class RetrievePasswordContainer extends React.Component
 
     onGetVerificationCodeButtonClick = async () =>
     {
-        const {hasGetVerificationCodeButtonClicked} = this.state;
-        if (!hasGetVerificationCodeButtonClicked)
+        const username = this.usernameInputRef.current.input.value;
+        if (!REGEX.USERNAME.test(username))
         {
-            const username = this.usernameInputRef.current.input.value;
-            if (!REGEX.USERNAME.test(username))
-            {
-                message.warning('用户名不正确');
-            }
-            else
-            {
-                const requestIsSuccessful = await Api.sendPostSendVerificationCodeByUsernameRequestAsync(username);
-                if (requestIsSuccessful)
-                {
-                    this.setState({
-                        hasGetVerificationCodeButtonClicked: true,
-                    });
-                    const WAIT_SECONDS = 30;
-                    let secondsLeft = WAIT_SECONDS;
-                    const interval = setInterval(() =>
-                    {
-                        this.setState({
-                            getVerificationCodeButtonText: (--secondsLeft).toString(),
-                        });
-                    }, 1000);
-
-                    setTimeout(() =>
-                    {
-                        clearInterval(interval);
-                        this.setState({
-                            getVerificationCodeButtonText: '获取验证码',
-                            hasGetVerificationCodeButtonClicked: false,
-                        });
-                    }, WAIT_SECONDS * 1000);
-                }
-            }
+            message.warning('用户名不正确');
+        }
+        else
+        {
+            return await Api.sendPostSendVerificationCodeByUsernameRequestAsync(username);
         }
     };
 
@@ -98,11 +66,9 @@ class RetrievePasswordContainer extends React.Component
 
     render()
     {
-        const {getVerificationCodeButtonText} = this.state;
         return (
             <RetrievePassword passwordInputRef={this.passwordInputRef}
                               onSubmit={this.onSubmit}
-                              getVerificationCodeButtonText={getVerificationCodeButtonText}
                               verificationCodeInputRef={this.verificationCodeInputRef}
                               onGetVerificationCodeButtonClick={this.onGetVerificationCodeButtonClick}
                               confirmPasswordInputRef={this.confirmPasswordInputRef}
