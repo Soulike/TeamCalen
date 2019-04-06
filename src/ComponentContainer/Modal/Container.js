@@ -13,7 +13,7 @@ class Modal extends React.Component
         return (
             <OriginalModal
                 visible={currentVisibleModalIdSet.has(modalId)}
-                onOk={rest.onOk ? rest.onOk : () =>
+                onOk={rest.onExitConfirm ? rest.onExitConfirm : () =>
                 {
                     hideModal(modalId);
                 }}

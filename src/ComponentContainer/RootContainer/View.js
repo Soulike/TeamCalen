@@ -2,13 +2,14 @@ import React from 'react';
 import Root from '../../Components/Root';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../Router';
 import {connect} from 'react-redux';
+import {Actions as AuthProcessorActions} from '../../Components/AuthProcessor';
+import Modal from 'antd/lib/modal';
 import Api from '../../Api';
 import {browserHistory} from 'react-router';
-import {Actions as AuthProcessorActions} from '../../Components/AuthProcessor';
 
 class RootContainer extends React.Component
 {
-    onExitClick = async () =>
+    onExitConfirm = async () =>
     {
         const requestIsSuccessful = await Api.sendPostLogoutRequestAsync();
         if (requestIsSuccessful)
@@ -17,6 +18,14 @@ class RootContainer extends React.Component
             setOffline();
             browserHistory.push(PAGE_ID_TO_ROUTE[PAGE_ID.ACCOUNT.LOGIN]);
         }
+    };
+
+    onExitClick = () =>
+    {
+        Modal.confirm({
+            content: '确认退出 TeamCalen？',
+            onOk: this.onExitConfirm,
+        });
     };
 
     render()
