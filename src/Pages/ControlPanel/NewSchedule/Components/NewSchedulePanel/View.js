@@ -39,7 +39,7 @@ function NewSchedulePanel(props)
                 </div>
             </div>
             <div className={Style.scheduleTextWrapper}>
-                <div className={Style.title}>日程内容</div>
+                <div className={Style.label}>日程内容</div>
                 <TextArea className={Style.scheduleText} placeholder={'输入日程的具体内容'} ref={scheduleTextRef} />
             </div>
             <div className={Style.reminderSwitchWrapper}>

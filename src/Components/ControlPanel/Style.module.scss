@@ -48,9 +48,12 @@
                 }
 
                 &.active, &:hover {
-                    font-weight: bold;
                     color: #005BE7;
                     border-left: (4rem/24) solid #005BE7;
+                }
+
+                &.active {
+                    font-weight: bold;
                 }
             }
         }

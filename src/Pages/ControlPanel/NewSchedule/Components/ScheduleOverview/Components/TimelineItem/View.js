@@ -81,7 +81,11 @@ function TimelineItem(props)
                                             <Icon type="close-circle" theme="twoTone" twoToneColor={'#F00'} />取消
                                         </Menu.Item>
                             }
-                            <Menu.Divider />
+                            {
+                                scheduleState === SCHEDULE_STATE.FINISHED ?
+                                    null :
+                                    <Menu.Divider />
+                            }
                             <Menu.Item onClick={onModifyClick}>
                                 <Icon type="edit" theme="twoTone" />修改
                             </Menu.Item>
