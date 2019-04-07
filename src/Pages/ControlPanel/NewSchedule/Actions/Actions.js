@@ -33,7 +33,7 @@ function getEveryDayScheduleAmountInAMonthFailedAction()
     };
 }
 
-export function getRecentSchedulesAction(amount)
+export function getRecentSchedulesAction(amount = 10)
 {
     return async dispatch =>
     {
@@ -70,5 +70,14 @@ export function changeCurrentModifyingScheduleIdAction(scheduleId)
     return {
         type: ACTION_TYPE.CHANGE_CURRENT_MODIFYING_SCHEDULE_ID,
         scheduleId,
+    };
+}
+
+export function changeSelectedYearAndMonthAction(selectedYear, selectedMonth)
+{
+    return {
+        type: ACTION_TYPE.CHANGE_SELECTED_YEAR_AND_MONTH,
+        selectedYear,
+        selectedMonth,
     };
 }

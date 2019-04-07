@@ -25,7 +25,11 @@ export function onResumeClickFactory(scheduleId)
             content: '确认恢复该日程吗？',
             onOk: async () =>
             {
-                await Api.sendPostResumeScheduleRequestAsync(scheduleId);
+                const requestIsSuccessful = await Api.sendPostResumeScheduleRequestAsync(scheduleId);
+                if (requestIsSuccessful)
+                {
+                    getRecentSchedules();
+                }
             },
         });
     };
@@ -40,7 +44,11 @@ export function onCancelClickFactory(scheduleId)
             content: '确认取消该日程吗？',
             onOk: async () =>
             {
-                await Api.sendPostCancelScheduleRequestAsync(scheduleId);
+                const requestIsSuccessful = await Api.sendPostCancelScheduleRequestAsync(scheduleId);
+                if (requestIsSuccessful)
+                {
+                    getRecentSchedules();
+                }
             },
         });
     };
@@ -56,7 +64,11 @@ export function onDeleteClickFactory(scheduleId)
             okType: 'danger',
             onOk: async () =>
             {
-                await Api.sendPostDeleteScheduleRequestAsync(scheduleId);
+                const requestIsSuccessful = await Api.sendPostDeleteScheduleRequestAsync(scheduleId);
+                if (requestIsSuccessful)
+                {
+                    getRecentSchedules();
+                }
             },
         });
     };

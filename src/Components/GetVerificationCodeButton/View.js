@@ -17,8 +17,4 @@ GetVerificationCodeButton.propTypes = {
     className: PropTypes.string,
 };
 
-GetVerificationCodeButton.defaultProps = {
-    textInButton: '获取验证码',
-};
-
 export default GetVerificationCodeButton;

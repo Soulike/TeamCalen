@@ -30,7 +30,7 @@ class GetVerificationCodeButtonContainer extends React.Component
                 const interval = setInterval(() =>
                 {
                     this.setState({
-                        getVerificationCodeButtonText: (--secondsLeft).toString(),
+                        textInButton: (--secondsLeft).toString(),
                     });
                 }, 1000);
 
@@ -38,7 +38,7 @@ class GetVerificationCodeButtonContainer extends React.Component
                 {
                     clearInterval(interval);
                     this.setState({
-                        getVerificationCodeButtonText: '获取验证码',
+                        textInButton: '获取验证码',
                         hasSendVerificationCode: false,
                     });
                 }, WAIT_SECONDS * 1000);

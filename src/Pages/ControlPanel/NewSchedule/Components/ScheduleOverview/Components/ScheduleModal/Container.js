@@ -55,55 +55,67 @@ class ScheduleModalContainer extends React.Component
 
     shouldComponentUpdate(nextProps, nextState, nextContext)
     {
+        const {timelineItems} = this.state;
         const {year, month, day} = this.props;
+        const {timelineItems: nextTimelineItems} = nextState;
         const {year: nextYear, month: nextMonth, day: nextDay} = nextProps;
-        return year !== nextYear || month !== nextMonth || day !== nextDay;
+        return timelineItems !== nextTimelineItems || year !== nextYear || month !== nextMonth || nextDay !== day;
     }
 
+    componentDidMount()
+    {
+        this.getTimelineItems();
+    }
 
     componentDidUpdate(prevProps, prevState, snapshot)
     {
         const {year, month, day} = this.props;
         const {year: prevYear, month: prevMonth, day: prevDay} = prevProps;
-        if (year !== prevYear || month !== prevMonth || day !== prevDay)
+        if (year !== prevYear || month !== prevMonth || prevDay !== day)
         {
-            Api.sendGetSchedulesByDayRequestAsync(year, month, day)
-                .then(schedulesWrapper =>
-                {
-                    if (schedulesWrapper)
-                    {
-                        const {schedules} = schedulesWrapper;
-                        const timelineItems = [];
-                        schedules.forEach(schedule =>
-                        {
-                            const {
-                                id,
-                                month,
-                                day,
-                                startHour,
-                                startMinute,
-                                endHour,
-                                endMinute,
-                                scheduleText,
-                                scheduleState,
-                            } = schedule;
-                            timelineItems.push(
-                                new TimelineItemObject.TimelineItem(month, day, startHour, startMinute, endHour, endMinute,
-                                    scheduleText, scheduleState,
-                                    onSwitchChangeFactory(id),
-                                    onResumeClickFactory(id),
-                                    onCancelClickFactory(id),
-                                    onDeleteClickFactory(id),
-                                    onModifyClickFactory(id)),
-                            );
-                        });
-                        this.setState({
-                            timelineItems,
-                        });
-                    }
-                });
+            this.getTimelineItems();
         }
     }
+
+    getTimelineItems = () =>
+    {
+        const {year, month, day} = this.props;
+        Api.sendGetSchedulesByDayRequestAsync(year, month, day)
+            .then(schedulesWrapper =>
+            {
+                if (schedulesWrapper)
+                {
+                    const {schedules} = schedulesWrapper;
+                    const timelineItems = [];
+                    schedules.forEach(schedule =>
+                    {
+                        const {
+                            id,
+                            month,
+                            day,
+                            startHour,
+                            startMinute,
+                            endHour,
+                            endMinute,
+                            scheduleText,
+                            scheduleState,
+                        } = schedule;
+                        timelineItems.push(
+                            new TimelineItemObject.TimelineItem(month, day, startHour, startMinute, endHour, endMinute,
+                                scheduleText, scheduleState,
+                                onSwitchChangeFactory(id),
+                                onResumeClickFactory(id),
+                                onCancelClickFactory(id),
+                                onDeleteClickFactory(id),
+                                onModifyClickFactory(id)),
+                        );
+                    });
+                    this.setState({
+                        timelineItems,
+                    });
+                }
+            });
+    };
 
     render()
     {

@@ -7,3 +7,5 @@ export const GET_RECENT_SCHEDULES_SUCCESSFUL = Symbol('getRecentSchedulesSuccess
 export const GET_RECENT_SCHEDULES_FAILED = Symbol('getRecentSchedulesSuccessful');
 
 export const CHANGE_CURRENT_MODIFYING_SCHEDULE_ID = Symbol('changeCurrentModifyingScheduleId');
+
+export const CHANGE_SELECTED_YEAR_AND_MONTH = Symbol('changeSelectedYearAndMonth');

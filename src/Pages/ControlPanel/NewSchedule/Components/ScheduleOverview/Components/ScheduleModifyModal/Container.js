@@ -16,10 +16,10 @@ class ScheduleModifyModalContainer extends React.Component
             year: '',           // 年份，四位整数字符串
             month: '',          // 月份，两位整数字符串
             day: '',            // 日，两位整数字符串
-            startHour: -1,      // 开始小时，0-23 整数
-            startMinute: -1,    // 开始分钟，0-59 整数
-            endHour: -1,        // 结束小时，0-23 整数
-            endMinute: -1,      // 结束分钟，0-59 整数
+            startHour: 0,      // 开始小时，0-23 整数
+            startMinute: 0,    // 开始分钟，0-59 整数
+            endHour: 0,        // 结束小时，0-23 整数
+            endMinute: 0,      // 结束分钟，0-59 整数
             scheduleText: '',   // 日程的具体内容
             hasReminder: false,   // 是否开启提醒
             hasGotData: false,   // 是否已经从服务器获取了数据
@@ -28,19 +28,13 @@ class ScheduleModifyModalContainer extends React.Component
         this.scheduleTextRef = React.createRef();
     }
 
-
-    shouldComponentUpdate(nextProps, nextState, nextContext)
-    {
-        return this.props.currentModifyingScheduleId !== nextProps.currentModifyingScheduleId;
-    }
-
     componentDidUpdate(prevProps, prevState, snapshot)
     {
-        this.setState({
-            hasGotData: false,
-        }, async () =>
+        if (this.props.currentModifyingScheduleId !== prevProps.currentModifyingScheduleId)
         {
-            if (this.props.currentModifyingScheduleId !== prevProps.currentModifyingScheduleId)
+            this.setState({
+                hasGotData: false,
+            }, async () =>
             {
                 const {currentModifyingScheduleId} = this.props;
                 const schedule = await Api.sendGetScheduleByIdRequestAsync(currentModifyingScheduleId);
@@ -55,9 +49,8 @@ class ScheduleModifyModalContainer extends React.Component
                 {
                     hideModal(MODAL_ID.SCHEDULE_MODIFY_MODAL);
                 }
-            }
-        });
-
+            });
+        }
     }
 
     onStartDateChange = date =>
@@ -92,8 +85,8 @@ class ScheduleModifyModalContainer extends React.Component
         else
         {
             this.setState({
-                startHour: -1,
-                startMinute: -1,
+                startHour: 0,
+                startMinute: 0,
             });
         }
     };
@@ -110,8 +103,8 @@ class ScheduleModifyModalContainer extends React.Component
         else
         {
             this.setState({
-                endHour: -1,
-                endMinute: -1,
+                endHour: 0,
+                endMinute: 0,
             });
         }
     };

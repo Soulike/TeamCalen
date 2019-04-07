@@ -26,6 +26,15 @@ class LoginContainer extends React.Component
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot)
+    {
+        const {hasLoggedIn} = this.props;
+        if (hasLoggedIn)
+        {
+            browserHistory.push(PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.INDEX]);
+        }
+    }
+
     onSubmit = async e =>
     {
         e.preventDefault();

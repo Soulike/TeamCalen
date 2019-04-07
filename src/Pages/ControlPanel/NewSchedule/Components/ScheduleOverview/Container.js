@@ -20,9 +20,8 @@ class ScheduleOverviewContainer extends React.Component
     {
         super(props);
         const nowMoment = moment();
+
         this.state = {
-            selectedYear: nowMoment.format('YYYY'), // 当前被选择的日期，用于获取每月数量
-            selectedMonth: nowMoment.format('MM'),
             clickedYear: nowMoment.format('YYYY'),  // 当前被点击的日期，用于获取具体日程列表
             clickedMonth: nowMoment.format('MM'),
             clickedDay: nowMoment.format('DD'),
@@ -31,24 +30,18 @@ class ScheduleOverviewContainer extends React.Component
 
     componentDidMount()
     {
-        const {selectedYear, selectedMonth} = this.state;
-        const {getEveryDayScheduleAmountInAMonth, getRecentSchedules} = this.props;
+        const {getEveryDayScheduleAmountInAMonth, getRecentSchedules, selectedYear, selectedMonth} = this.props;
         getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
         getRecentSchedules(10);
     }
 
     onPanelChange = date =>
     {
-        const {getEveryDayScheduleAmountInAMonth} = this.props;
+        const {getEveryDayScheduleAmountInAMonth, changeSelectedYearAndMonth} = this.props;
         const selectedYear = date.format('YYYY');
         const selectedMonth = date.format('MM');
-        this.setState({
-            selectedYear,
-            selectedMonth,
-        }, () =>
-        {
-            getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
-        });
+        changeSelectedYearAndMonth(selectedYear, selectedMonth);
+        getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
     };
 
     onSelect = date =>
@@ -67,8 +60,8 @@ class ScheduleOverviewContainer extends React.Component
 
     render()
     {
-        const {scheduleAmount, recentSchedules} = this.props;
-        const {selectedYear, selectedMonth, clickedYear, clickedMonth, clickedDay} = this.state;
+        const {selectedYear, selectedMonth, scheduleAmount, recentSchedules} = this.props;
+        const {clickedYear, clickedMonth, clickedDay} = this.state;
 
         const timelineItems = [];
         recentSchedules.forEach(schedule =>
@@ -111,10 +104,12 @@ class ScheduleOverviewContainer extends React.Component
 
 const mapStateToProps = state =>
 {
-    const {NewSchedule: {scheduleAmount, recentSchedules}} = state;
+    const {NewSchedule: {scheduleAmount, recentSchedules, selectedYear, selectedMonth}} = state;
     return {
         scheduleAmount,
         recentSchedules,
+        selectedYear,
+        selectedMonth,
     };
 };
 
@@ -122,6 +117,7 @@ const mapDispatchToProps = {
     getEveryDayScheduleAmountInAMonth: newScheduleActions.getEveryDayScheduleAmountInAMonthAction,
     getRecentSchedules: newScheduleActions.getRecentSchedulesAction,
     showModal: ModalActions.showModalAction,
+    changeSelectedYearAndMonth: newScheduleActions.changeSelectedYearAndMonthAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleOverviewContainer);

@@ -117,8 +117,9 @@ class NewSchedulePanelContainer extends React.Component
                 startHour, startMinute, endHour, endMinute, scheduleText, hasReminder);
             if (requestIsSuccessful)
             {
+                const {selectedYear, selectedMonth} = this.props;
                 getRecentSchedules();
-                getEveryDayScheduleAmountInAMonth();
+                getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
             }
         }
     };
@@ -137,9 +138,18 @@ class NewSchedulePanelContainer extends React.Component
     }
 }
 
+const mapStateToProps = state =>
+{
+    const {NewSchedule: {selectedYear, selectedMonth}} = state;
+    return {
+        selectedYear,
+        selectedMonth,
+    };
+};
+
 const mapDispatchToProps = {
-    getRecentSchedules: Actions.getEveryDayScheduleAmountInAMonthAction,
+    getRecentSchedules: Actions.getRecentSchedulesAction,
     getEveryDayScheduleAmountInAMonth: Actions.getEveryDayScheduleAmountInAMonthAction,
 };
 
-export default connect(null, mapDispatchToProps)(NewSchedulePanelContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(NewSchedulePanelContainer);

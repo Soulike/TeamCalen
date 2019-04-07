@@ -12,6 +12,7 @@ class Modal extends React.Component
         const {modalId, visible, currentVisibleModalIdSet, hideModal, ...rest} = this.props;
         return (
             <OriginalModal
+                destroyOnClose={true}
                 visible={currentVisibleModalIdSet.has(modalId)}
                 onOk={rest.onExitConfirm ? rest.onExitConfirm : () =>
                 {

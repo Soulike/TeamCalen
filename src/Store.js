@@ -5,7 +5,10 @@ import {Reducer as AuthProcessorReducer} from './Components/AuthProcessor';
 import {Reducer as ModalReducer} from './ComponentContainer/Modal';
 import {Reducer as NewScheduleReducer} from './Pages/ControlPanel/NewSchedule';
 import {Reducer as ControlPanelReducer} from './ComponentContainer/ControlPanelContainer';
+import moment from 'moment';
 // import SCHEDULE_STATE from './CONSTANT/SCHEDULE_STATE';
+
+const nowMoment = moment();
 
 // Store 中的初始值，根据开发需要进行改变
 const initValues = {
@@ -16,6 +19,8 @@ const initValues = {
         currentVisibleModalIdSet: new Set(),
     },
     NewSchedule: {
+        selectedYear: nowMoment.format('YYYY'),
+        selectedMonth: nowMoment.format('MM'),
         scheduleAmount: [/*
             ...(() =>
             {
