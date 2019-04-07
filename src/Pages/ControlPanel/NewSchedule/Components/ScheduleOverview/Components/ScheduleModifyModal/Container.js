@@ -13,9 +13,9 @@ class ScheduleModifyModalContainer extends React.Component
     {
         super(props);
         this.state = {
-            year: '',           // 年份，四位整数字符串
-            month: '',          // 月份，两位整数字符串
-            day: '',            // 日，两位整数字符串
+            year: '0000',           // 年份，四位整数字符串
+            month: '01',          // 月份，两位整数字符串
+            day: '01',            // 日，两位整数字符串
             startHour: 0,      // 开始小时，0-23 整数
             startMinute: 0,    // 开始分钟，0-59 整数
             endHour: 0,        // 结束小时，0-23 整数
@@ -24,8 +24,6 @@ class ScheduleModifyModalContainer extends React.Component
             hasReminder: false,   // 是否开启提醒
             hasGotData: false,   // 是否已经从服务器获取了数据
         };
-
-        this.scheduleTextRef = React.createRef();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot)
@@ -66,9 +64,9 @@ class ScheduleModifyModalContainer extends React.Component
         else        // 如果用户清空了选框
         {
             this.setState({
-                year: '',
-                month: '',
-                day: '',
+                year: '0000',
+                month: '01',
+                day: '01',
             });
         }
     };
@@ -150,6 +148,13 @@ class ScheduleModifyModalContainer extends React.Component
         }
     };
 
+    onScheduleTextChange = e =>
+    {
+        this.setState({
+            scheduleText: e.target.value,
+        });
+    };
+
     render()
     {
         const {year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder, hasGotData} = this.state;
@@ -165,10 +170,10 @@ class ScheduleModifyModalContainer extends React.Component
                                  initScheduleText={scheduleText}
                                  initHasReminder={hasReminder}
                                  currentModifyingScheduleId={currentModifyingScheduleId}
-                                 scheduleTextRef={this.scheduleTextRef}
                                  onStartDateChange={this.onStartDateChange}
                                  onStartTimeChange={this.onStartTimeChange}
                                  onEndTimeChange={this.onEndTimeChange}
+                                 onScheduleTextChange={this.onScheduleTextChange}
                                  onReminderSwitchChange={this.onReminderSwitchChange}
                                  onSubmit={this.onSubmit}
                                  hasGotData={hasGotData} />

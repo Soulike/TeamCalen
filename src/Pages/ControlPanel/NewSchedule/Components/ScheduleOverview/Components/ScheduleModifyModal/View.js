@@ -26,7 +26,7 @@ function ScheduleModifyModal(props)
         onStartDateChange,
         onStartTimeChange,
         onEndTimeChange,
-        scheduleTextRef,
+        onScheduleTextChange,
         onReminderSwitchChange,
         onSubmit,
         hasGotData,
@@ -34,15 +34,14 @@ function ScheduleModifyModal(props)
     return (
         <Modal modalId={MODAL_ID.SCHEDULE_MODIFY_MODAL}
                title={'修改日程'}
-               onOk={onSubmit}
-               destroyOnClose={true}>
+               onOk={onSubmit}>
             <div className={Style.ScheduleModifyModal}>
                 <div className={Style.timeWrapper}>
                     <div className={Style.label}>开始时间</div>
                     <div className={Style.pickerWrapper}>
                         <div className={Style.startDateWrapper}>
                             <DatePicker className={Style.startDate}
-                                        defaultValue={moment(`${initYear}-${initMonth}-${initDay}`, 'YYYY-MM-DD')}
+                                        value={moment(`${initYear}-${initMonth}-${initDay}`, 'YYYY-MM-DD')}
                                         onChange={onStartDateChange}
                                         disabled={!hasGotData} />
                         </div>
@@ -50,7 +49,7 @@ function ScheduleModifyModal(props)
                             <TimePicker className={Style.startTime}
                                         format={'HH:mm'}
                                         onChange={onStartTimeChange}
-                                        defaultValue={moment(`${initStartHour}:${initStartMinute}`, 'HH:mm')}
+                                        value={moment(`${initStartHour}:${initStartMinute}`, 'HH:mm')}
                                         disabled={!hasGotData} />
                         </div>
                     </div>
@@ -62,7 +61,7 @@ function ScheduleModifyModal(props)
                             <TimePicker className={Style.endTime}
                                         format={'HH:mm'}
                                         onChange={onEndTimeChange}
-                                        defaultValue={moment(`${initEndHour}:${initEndMinute}`, 'HH:mm')}
+                                        value={moment(`${initEndHour}:${initEndMinute}`, 'HH:mm')}
                                         disabled={!hasGotData} />
                         </div>
                     </div>
@@ -71,13 +70,13 @@ function ScheduleModifyModal(props)
                     <div className={Style.title}>日程内容</div>
                     <TextArea className={Style.scheduleText}
                               placeholder={'输入日程的具体内容'}
-                              ref={scheduleTextRef}
-                              defaultValue={initScheduleText}
+                              onChange={onScheduleTextChange}
+                              value={initScheduleText}
                               disabled={!hasGotData} />
                 </div>
                 <div className={Style.reminderSwitchWrapper}>
                     <div className={Style.label}>开启提醒</div>
-                    <Switch onChange={onReminderSwitchChange} defaultChecked={initHasReminder} disabled={!hasGotData} />
+                    <Switch onChange={onReminderSwitchChange} checked={initHasReminder} disabled={!hasGotData} />
                 </div>
             </div>
         </Modal>
@@ -98,7 +97,7 @@ ScheduleModifyModal.propTypes = {   // props 里面全部都是初始值
     onStartDateChange: PropTypes.func.isRequired,
     onStartTimeChange: PropTypes.func.isRequired,
     onEndTimeChange: PropTypes.func.isRequired,
-    scheduleTextRef: PropTypes.object.isRequired,
+    onScheduleTextChange: PropTypes.func.isRequired,
     onReminderSwitchChange: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     hasGotData: PropTypes.bool.isRequired,
