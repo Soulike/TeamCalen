@@ -84,7 +84,7 @@ class ScheduleModalContainer extends React.Component
                     scheduleState,
                 } = schedule;
                 timelineItems.push(
-                    new TimelineItemObject.TimelineItem(month, day, startHour, startMinute, endHour, endMinute,
+                    new TimelineItemObject.TimelineItem(id, month, day, startHour, startMinute, endHour, endMinute,
                         scheduleText, scheduleState,
                         onSwitchChangeFactory(id),
                         onResumeClickFactory(id),

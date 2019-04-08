@@ -74,9 +74,9 @@ function NewSchedulePanel(props)
 }
 
 NewSchedulePanel.propTypes = {
-    startDate: PropTypes.string.isRequired,
-    startTime: PropTypes.string.isRequired,
-    endTime: PropTypes.string.isRequired,
+    startDate: PropTypes.object.isRequired,
+    startTime: PropTypes.object.isRequired,
+    endTime: PropTypes.object.isRequired,
     scheduleText: PropTypes.string.isRequired,
     reminderSwitch: PropTypes.bool.isRequired,
     onStartDateChange: PropTypes.func.isRequired,

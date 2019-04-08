@@ -38,7 +38,6 @@ class LoginContainer extends React.Component
     onSubmit = async e =>
     {
         e.preventDefault();
-        console.log(this.usernameInputRef.current);
         const username = this.usernameInputRef.current.input.value;
         const password = this.passwordInputRef.current.input.value;
         if (!REGEX.USERNAME.test(username) || !REGEX.PASSWORD.test(password))

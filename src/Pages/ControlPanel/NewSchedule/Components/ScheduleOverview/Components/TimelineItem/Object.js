@@ -1,9 +1,10 @@
 export class TimelineItem
 {
-    constructor(month, day, startHour, startMinute, endHour, endMinute,
+    constructor(scheduleId, month, day, startHour, startMinute, endHour, endMinute,
                 scheduleText, scheduleState,
                 onSwitchChange, onResumeClick, onCancelClick, onDeleteClick, onModifyClick)
     {
+        this.scheduleId = scheduleId;
         this.month = month;
         this.day = day;
         this.startHour = startHour;

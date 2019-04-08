@@ -21,6 +21,7 @@ const initValues = {
     NewSchedule: {
         selectedYear: nowMoment.format('YYYY'), // 首页日历显示日程数量的年和月，默认是当前年和月（和 Antd 组件一致）
         selectedMonth: nowMoment.format('MM'),
+        currentModifyingScheduleId: 0,  // 目前在编辑框中编辑的日程 ID
         scheduleAmount: [/*
             ...(() =>
             {
