@@ -20,7 +20,7 @@ function ScheduleModal(props)
                             <Timeline className={Style.timeline} pending={'通向未来……'}>
                                 {
                                     timelineItems.map(timelineItem =>
-                                        <TimelineItem key={timelineItem.id} {...timelineItem} />)
+                                        <TimelineItem key={timelineItem.scheduleId} {...timelineItem} />)
                                 }
                             </Timeline>
                     }
