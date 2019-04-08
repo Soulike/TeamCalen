@@ -17,13 +17,13 @@ class NewSchedulePanelContainer extends React.Component
             year: now.format('YYYY'),
             month: now.format('MM'),
             day: now.format('DD'),
-            startHour: now.format('HH'),
-            startMinute: now.format('mm'),
-            endHour: now.format('HH'),
-            endMinute: now.format('mm'),
+            startHour: Number.parseInt(now.format('HH')),
+            startMinute: Number.parseInt(now.format('mm')),
+            endHour: Number.parseInt(now.format('HH')),
+            endMinute: Number.parseInt(now.format('mm')),
             hasReminder: false,
+            scheduleText: '',
         };
-        this.scheduleTextRef = React.createRef();
     }
 
     onStartDateChange = date =>
@@ -38,10 +38,11 @@ class NewSchedulePanelContainer extends React.Component
         }
         else        // 如果用户清空了选框
         {
+            const now = moment();
             this.setState({
-                year: '',
-                month: '',
-                day: '',
+                year: now.format('YYYY'),
+                month: now.format('MM'),
+                day: now.format('DD'),
             });
         }
     };
@@ -57,9 +58,10 @@ class NewSchedulePanelContainer extends React.Component
         }
         else
         {
+            const now = moment();
             this.setState({
-                startHour: -1,
-                startMinute: -1,
+                startHour: Number.parseInt(now.format('HH')),
+                startMinute: Number.parseInt(now.format('mm')),
             });
         }
     };
@@ -75,11 +77,19 @@ class NewSchedulePanelContainer extends React.Component
         }
         else
         {
+            const now = moment();
             this.setState({
-                endHour: -1,
-                endMinute: -1,
+                endHour: Number.parseInt(now.format('HH')),
+                endMinute: Number.parseInt(now.format('mm')),
             });
         }
+    };
+
+    onScheduleTextInputChange = e =>
+    {
+        this.setState({
+            scheduleText: e.target.value,
+        });
     };
 
     onReminderSwitchChange = checked =>
@@ -91,21 +101,12 @@ class NewSchedulePanelContainer extends React.Component
 
     onSubmit = async () =>
     {
-        const {year, month, day, startHour, startMinute, endHour, endMinute, hasReminder} = this.state;
-        const scheduleText = this.scheduleTextRef.current.textAreaRef.value;
+        const {year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder} = this.state;
         const {getRecentSchedules, getEveryDayScheduleAmountInAMonth} = this.props;
 
-        if (!REGEX.YEAR.test(year) || !REGEX.MONTH.test(month) || !REGEX.DAY.test(day))
+        if (startHour > endHour || (startHour === endHour && startMinute > endMinute))
         {
-            message.warning('选择日期无效');
-        }
-        else if (startHour === -1 || startMinute === -1)
-        {
-            message.warning('开始时间无效');
-        }
-        else if (endHour === -1 || endMinute === -1)
-        {
-            message.warning('结束时间无效');
+            message.warning('结束时间不能早于开始时间');
         }
         else if (!REGEX.SCHEDULE_TEXT.test(scheduleText))
         {
@@ -118,6 +119,18 @@ class NewSchedulePanelContainer extends React.Component
             if (requestIsSuccessful)
             {
                 const {selectedYear, selectedMonth} = this.props;
+                const now = moment();
+                this.setState({
+                    year: now.format('YYYY'),
+                    month: now.format('MM'),
+                    day: now.format('DD'),
+                    startHour: Number.parseInt(now.format('HH')),
+                    startMinute: Number.parseInt(now.format('mm')),
+                    endHour: Number.parseInt(now.format('HH')),
+                    endMinute: Number.parseInt(now.format('mm')),
+                    hasReminder: false,
+                    scheduleText: '',
+                });
                 getRecentSchedules();
                 getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
             }
@@ -127,13 +140,20 @@ class NewSchedulePanelContainer extends React.Component
 
     render()
     {
+        const {year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder} = this.state;
         return (
-            <NewSchedulePanel onStartDateChange={this.onStartDateChange}
+            <NewSchedulePanel startDate={moment(`${year}-${month}-${day}`, 'YYYY-MM-DD')}
+                              startTime={moment(`${startHour}:${startMinute}`, 'HH:mm')}
+                              endTime={moment(`${endHour}:${endMinute}`, 'HH:mm')}
+                              reminderSwitch={hasReminder}
+                              scheduleText={scheduleText}
+                              onScheduleTextInputChange={this.onScheduleTextInputChange}
+                              onStartDateChange={this.onStartDateChange}
                               onStartTimeChange={this.onStartTimeChange}
                               onEndTimeChange={this.onEndTimeChange}
                               onReminderSwitchChange={this.onReminderSwitchChange}
                               onSubmit={this.onSubmit}
-                              scheduleTextRef={this.scheduleTextRef} />
+            />
         );
     }
 }

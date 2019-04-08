@@ -7,22 +7,25 @@ import message from 'antd/lib/message';
 import {Actions as ModalActions} from '../../../../../../../ComponentContainer/Modal';
 import MODAL_ID from '../../../../../../../CONSTANT/MODAL_ID';
 import * as newScheduleActions from '../../../../Actions/Actions';
+import moment from 'moment';
 
 class ScheduleModifyModalContainer extends React.Component
 {
     constructor(props)
     {
         super(props);
+        const now = moment();
         this.state = {
-            year: '0000',           // 年份，四位整数字符串
-            month: '01',          // 月份，两位整数字符串
-            day: '01',            // 日，两位整数字符串
-            startHour: 0,      // 开始小时，0-23 整数
-            startMinute: 0,    // 开始分钟，0-59 整数
-            endHour: 0,        // 结束小时，0-23 整数
-            endMinute: 0,      // 结束分钟，0-59 整数
-            scheduleText: '',   // 日程的具体内容
-            hasReminder: false,   // 是否开启提醒
+            year: now.format('YYYY'),
+            month: now.format('MM'),
+            day: now.format('DD'),
+            startHour: Number.parseInt(now.format('HH')),
+            startMinute: Number.parseInt(now.format('mm')),
+            endHour: Number.parseInt(now.format('HH')),
+            endMinute: Number.parseInt(now.format('mm')),
+            hasReminder: false,
+            scheduleText: '',
+
             hasGotData: false,   // 是否已经从服务器获取了数据
 
             confirmLoading: false,  // 是否还未提交完成
@@ -63,10 +66,11 @@ class ScheduleModifyModalContainer extends React.Component
         }
         else        // 如果用户清空了选框
         {
+            const now = moment();
             this.setState({
-                year: '0000',
-                month: '01',
-                day: '01',
+                year: now.format('YYYY'),
+                month: now.format('MM'),
+                day: now.format('DD'),
             });
         }
     };
@@ -77,14 +81,15 @@ class ScheduleModifyModalContainer extends React.Component
         {
             this.setState({
                 startHour: Number.parseInt(date.format('HH')),
-                startMinute: Number.parseInt(date.format('ss')),
+                startMinute: Number.parseInt(date.format('mm')),
             });
         }
         else
         {
+            const now = moment();
             this.setState({
-                startHour: 0,
-                startMinute: 0,
+                startHour: Number.parseInt(now.format('HH')),
+                startMinute: Number.parseInt(now.format('mm')),
             });
         }
     };
@@ -100,11 +105,19 @@ class ScheduleModifyModalContainer extends React.Component
         }
         else
         {
+            const now = moment();
             this.setState({
-                endHour: 0,
-                endMinute: 0,
+                endHour: Number.parseInt(now.format('HH')),
+                endMinute: Number.parseInt(now.format('mm')),
             });
         }
+    };
+
+    onScheduleTextInputChange = e =>
+    {
+        this.setState({
+            scheduleText: e.target.value,
+        });
     };
 
     onReminderSwitchChange = checked =>
@@ -119,17 +132,9 @@ class ScheduleModifyModalContainer extends React.Component
         const {year, month, day, startHour, startMinute, endHour, endMinute, hasReminder, scheduleText} = this.state;
         const {getRecentSchedules, getEveryDayScheduleAmountInAMonth, currentModifyingScheduleId} = this.props;
 
-        if (!REGEX.YEAR.test(year) || !REGEX.MONTH.test(month) || !REGEX.DAY.test(day))
+        if (startHour > endHour || (startHour === endHour && startMinute > endMinute))
         {
-            message.warning('选择日期无效');
-        }
-        else if (startHour === -1 || startMinute === -1)
-        {
-            message.warning('开始时间无效');
-        }
-        else if (endHour === -1 || endMinute === -1)
-        {
-            message.warning('结束时间无效');
+            message.warning('结束时间不能早于开始时间');
         }
         else if (!REGEX.SCHEDULE_TEXT.test(scheduleText))
         {
@@ -155,13 +160,6 @@ class ScheduleModifyModalContainer extends React.Component
         }
     };
 
-    onScheduleTextChange = e =>
-    {
-        this.setState({
-            scheduleText: e.target.value,
-        });
-    };
-
     render()
     {
         const {year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder, hasGotData} = this.state;
@@ -180,7 +178,7 @@ class ScheduleModifyModalContainer extends React.Component
                                  onStartDateChange={this.onStartDateChange}
                                  onStartTimeChange={this.onStartTimeChange}
                                  onEndTimeChange={this.onEndTimeChange}
-                                 onScheduleTextChange={this.onScheduleTextChange}
+                                 onScheduleTextInputChange={this.onScheduleTextInputChange}
                                  onReminderSwitchChange={this.onReminderSwitchChange}
                                  onSubmit={this.onSubmit}
                                  hasGotData={hasGotData}

@@ -26,7 +26,7 @@ function ScheduleModifyModal(props)
         onStartDateChange,
         onStartTimeChange,
         onEndTimeChange,
-        onScheduleTextChange,
+        onScheduleTextInputChange,
         onReminderSwitchChange,
         onSubmit,
         onOpen,
@@ -74,7 +74,7 @@ function ScheduleModifyModal(props)
                     <div className={Style.title}>日程内容</div>
                     <TextArea className={Style.scheduleText}
                               placeholder={'输入日程的具体内容'}
-                              onChange={onScheduleTextChange}
+                              onChange={onScheduleTextInputChange}
                               value={initScheduleText}
                               disabled={!hasGotData} />
                 </div>
@@ -101,7 +101,7 @@ ScheduleModifyModal.propTypes = {   // props 里面全部都是初始值
     onStartDateChange: PropTypes.func.isRequired,
     onStartTimeChange: PropTypes.func.isRequired,
     onEndTimeChange: PropTypes.func.isRequired,
-    onScheduleTextChange: PropTypes.func.isRequired,
+    onScheduleTextInputChange: PropTypes.func.isRequired,
     onReminderSwitchChange: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     confirmLoading: PropTypes.bool,
