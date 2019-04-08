@@ -17,10 +17,10 @@ class NewSchedulePanelContainer extends React.Component
             year: now.format('YYYY'),
             month: now.format('MM'),
             day: now.format('DD'),
-            startHour: -1,
-            startMinute: -1,
-            endHour: -1,
-            endMinute: -1,
+            startHour: now.format('HH'),
+            startMinute: now.format('mm'),
+            endHour: now.format('HH'),
+            endMinute: now.format('mm'),
             hasReminder: false,
         };
         this.scheduleTextRef = React.createRef();
@@ -52,7 +52,7 @@ class NewSchedulePanelContainer extends React.Component
         {
             this.setState({
                 startHour: Number.parseInt(date.format('HH')),
-                startMinute: Number.parseInt(date.format('ss')),
+                startMinute: Number.parseInt(date.format('mm')),
             });
         }
         else

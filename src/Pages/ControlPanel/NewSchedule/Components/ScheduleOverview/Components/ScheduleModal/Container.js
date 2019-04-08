@@ -53,27 +53,18 @@ class ScheduleModalContainer extends React.Component
         };
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext)
-    {
-        const {timelineItems} = this.state;
-        const {year, month, day} = this.props;
-        const {timelineItems: nextTimelineItems} = nextState;
-        const {year: nextYear, month: nextMonth, day: nextDay} = nextProps;
-        return timelineItems !== nextTimelineItems || year !== nextYear || month !== nextMonth || nextDay !== day;
-    }
-
-    componentDidMount()
-    {
-        this.getTimelineItems();
-    }
-
     componentDidUpdate(prevProps, prevState, snapshot)
     {
         const {year, month, day} = this.props;
         const {year: prevYear, month: prevMonth, day: prevDay} = prevProps;
-        if (year !== prevYear || month !== prevMonth || prevDay !== day)
+        if (year !== prevYear || month !== prevMonth || prevDay !== day)    // 日期变了，执行更新
         {
-            this.getTimelineItems();
+            this.setState({
+                timelineItems: [],
+            }, () =>
+            {
+                this.getTimelineItems();
+            });
         }
     }
 
@@ -122,7 +113,10 @@ class ScheduleModalContainer extends React.Component
         const {year, month, day} = this.props;
         const {timelineItems} = this.state;
         return (
-            <ScheduleModal year={year} month={month} day={day} timelineItems={timelineItems} />
+            <ScheduleModal year={year}
+                           month={month}
+                           day={day}
+                           timelineItems={timelineItems} />
         );
     }
 }

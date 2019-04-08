@@ -4,8 +4,9 @@ import {connect} from 'react-redux';
 import Api from '../../../../../../../Api';
 import {REGEX} from '../../../../../../../CONSTANT/REGEX';
 import message from 'antd/lib/message';
-import {hideModal} from '../../../../../../../ComponentContainer/Modal/Function';
+import {Actions as ModalActions} from '../../../../../../../ComponentContainer/Modal';
 import MODAL_ID from '../../../../../../../CONSTANT/MODAL_ID';
+import * as newScheduleActions from '../../../../Actions/Actions';
 
 class ScheduleModifyModalContainer extends React.Component
 {
@@ -23,33 +24,42 @@ class ScheduleModifyModalContainer extends React.Component
             scheduleText: '',   // 日程的具体内容
             hasReminder: false,   // 是否开启提醒
             hasGotData: false,   // 是否已经从服务器获取了数据
+
+            confirmLoading: false,  // 是否还未提交完成
         };
     }
 
     componentDidUpdate(prevProps, prevState, snapshot)
     {
-        if (this.props.currentModifyingScheduleId !== prevProps.currentModifyingScheduleId)
+        const {currentModifyingScheduleId} = this.props;
+        const {currentModifyingScheduleId: prevCurrentModifyingScheduleId} = prevProps;
+        if (currentModifyingScheduleId !== prevCurrentModifyingScheduleId)
         {
             this.setState({
                 hasGotData: false,
             }, async () =>
             {
-                const {currentModifyingScheduleId} = this.props;
-                const schedule = await Api.sendGetScheduleByIdRequestAsync(currentModifyingScheduleId);
-                if (schedule)
-                {
-                    this.setState({
-                        ...schedule,
-                        hasGotData: true,
-                    });
-                }
-                else
-                {
-                    hideModal(MODAL_ID.SCHEDULE_MODIFY_MODAL);
-                }
+                await this.getScheduleByIdAsync();
+                this.setState({
+                    hasGotData: true,
+                });
             });
         }
+
     }
+
+    // 获取日程信息
+    getScheduleByIdAsync = async () =>
+    {
+        const {currentModifyingScheduleId} = this.props;
+        const schedule = await Api.sendGetScheduleByIdRequestAsync(currentModifyingScheduleId);
+        if (schedule)
+        {
+            this.setState({
+                ...schedule,
+            });
+        }
+    };
 
     onStartDateChange = date =>
     {
@@ -116,9 +126,8 @@ class ScheduleModifyModalContainer extends React.Component
 
     onSubmit = async () =>
     {
-        const {year, month, day, startHour, startMinute, endHour, endMinute, hasReminder} = this.state;
-        const scheduleText = this.scheduleTextRef.current.textAreaRef.value;
-        const {getRecentSchedules, getEveryDayScheduleAmountInAMonth} = this.props;
+        const {year, month, day, startHour, startMinute, endHour, endMinute, hasReminder, scheduleText} = this.state;
+        const {getRecentSchedules, getEveryDayScheduleAmountInAMonth, currentModifyingScheduleId} = this.props;
 
         if (!REGEX.YEAR.test(year) || !REGEX.MONTH.test(month) || !REGEX.DAY.test(day))
         {
@@ -138,12 +147,20 @@ class ScheduleModifyModalContainer extends React.Component
         }
         else
         {
-            const requestIsSuccessful = await Api.sendPostModifyScheduleRequestAsync(year, month, day,
+            this.setState({
+                confirmLoading: true,
+            });
+            const requestIsSuccessful = await Api.sendPostModifyScheduleRequestAsync(currentModifyingScheduleId, year, month, day,
                 startHour, startMinute, endHour, endMinute, scheduleText, hasReminder);
             if (requestIsSuccessful)
             {
+                const {selectedYear, selectedMonth, hideModal} = this.props;
+                this.setState({
+                    confirmLoading: false,
+                });
+                hideModal(MODAL_ID.SCHEDULE_MODIFY_MODAL);
                 getRecentSchedules();
-                getEveryDayScheduleAmountInAMonth();
+                getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
             }
         }
     };
@@ -183,8 +200,18 @@ class ScheduleModifyModalContainer extends React.Component
 
 const mapStateToProps = state =>
 {
-    const {NewSchedule: {currentModifyingScheduleId}} = state;
-    return {currentModifyingScheduleId};
+    const {NewSchedule: {currentModifyingScheduleId, selectedYear, selectedMonth}} = state;
+    return {
+        currentModifyingScheduleId,
+        selectedYear,
+        selectedMonth,
+    };
 };
 
-export default connect(mapStateToProps)(ScheduleModifyModalContainer);
+const mapDispatchToProps = {
+    getEveryDayScheduleAmountInAMonth: newScheduleActions.getEveryDayScheduleAmountInAMonthAction,
+    getRecentSchedules: newScheduleActions.getRecentSchedulesAction,
+    hideModal: ModalActions.hideModalAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleModifyModalContainer);
