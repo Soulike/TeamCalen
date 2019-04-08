@@ -58,6 +58,12 @@ class ScheduleOverviewContainer extends React.Component
         });
     };
 
+    loadRecentSchedules = () =>
+    {
+        const {getRecentSchedules} = this.props;
+        getRecentSchedules(10);
+    };
+
     render()
     {
         const {selectedYear, selectedMonth, scheduleAmount, recentSchedules} = this.props;
@@ -80,10 +86,10 @@ class ScheduleOverviewContainer extends React.Component
             timelineItems.push(
                 new TimelineItemObject.TimelineItem(id, month, day, startHour, startMinute, endHour, endMinute,
                     scheduleText, scheduleState,
-                    onSwitchChangeFactory(id),
-                    onResumeClickFactory(id),
-                    onCancelClickFactory(id),
-                    onDeleteClickFactory(id),
+                    onSwitchChangeFactory(id, this.loadRecentSchedules),
+                    onResumeClickFactory(id, this.loadRecentSchedules),
+                    onCancelClickFactory(id, this.loadRecentSchedules),
+                    onDeleteClickFactory(id, this.loadRecentSchedules),
                     onModifyClickFactory(id)),
             );
         });

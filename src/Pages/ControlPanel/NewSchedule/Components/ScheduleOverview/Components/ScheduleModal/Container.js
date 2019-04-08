@@ -61,40 +61,48 @@ class ScheduleModalContainer extends React.Component
         });
     };
 
+    loadSchedulesByDayFactory = () =>
+    {
+        return async () =>
+        {
+            const {year, month, day} = this.props;
+            const schedulesWrapper = await Api.sendGetSchedulesByDayRequestAsync(year, month, day);
+            if (schedulesWrapper)
+            {
+                const {schedules} = schedulesWrapper;
+                const timelineItems = [];
+                schedules.forEach(schedule =>
+                {
+                    const {
+                        id,
+                        month,
+                        day,
+                        startHour,
+                        startMinute,
+                        endHour,
+                        endMinute,
+                        scheduleText,
+                        scheduleState,
+                    } = schedule;
+                    timelineItems.push(
+                        new TimelineItemObject.TimelineItem(id, month, day, startHour, startMinute, endHour, endMinute,
+                            scheduleText, scheduleState,
+                            onSwitchChangeFactory(id, this.loadSchedulesByDayFactory()),
+                            onResumeClickFactory(id, this.loadSchedulesByDayFactory()),
+                            onCancelClickFactory(id, this.loadSchedulesByDayFactory()),
+                            onDeleteClickFactory(id, this.loadSchedulesByDayFactory()),
+                            onModifyClickFactory(id)),
+                    );
+                });
+                await this.setStateAsync({timelineItems});
+            }
+        };
+    };
+
     onOpen = async () =>
     {
         await this.setStateAsync({timelineItems: []});
-        const {year, month, day} = this.props;
-        const schedulesWrapper = await Api.sendGetSchedulesByDayRequestAsync(year, month, day);
-        if (schedulesWrapper)
-        {
-            const {schedules} = schedulesWrapper;
-            const timelineItems = [];
-            schedules.forEach(schedule =>
-            {
-                const {
-                    id,
-                    month,
-                    day,
-                    startHour,
-                    startMinute,
-                    endHour,
-                    endMinute,
-                    scheduleText,
-                    scheduleState,
-                } = schedule;
-                timelineItems.push(
-                    new TimelineItemObject.TimelineItem(id, month, day, startHour, startMinute, endHour, endMinute,
-                        scheduleText, scheduleState,
-                        onSwitchChangeFactory(id),
-                        onResumeClickFactory(id),
-                        onCancelClickFactory(id),
-                        onDeleteClickFactory(id),
-                        onModifyClickFactory(id)),
-                );
-            });
-            await this.setStateAsync({timelineItems});
-        }
+        await this.loadSchedulesByDayFactory()();
     };
 
     render()

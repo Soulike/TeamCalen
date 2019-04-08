@@ -1,22 +1,22 @@
 import Api from '../../../../../Api';
-import {changeCurrentModifyingScheduleId, getRecentSchedules} from '../../Function';
+import {changeCurrentModifyingScheduleId} from '../../Function';
 import Modal from 'antd/lib/modal';
 import {Function as ModalFunction} from '../../../../../ComponentContainer/Modal';
 import MODAL_ID from '../../../../../CONSTANT/MODAL_ID';
 
-export function onSwitchChangeFactory(scheduleId)
+export function onSwitchChangeFactory(scheduleId, onOk)
 {
     return async checked =>
     {
         const requestIsSuccessful = await Api.sendPostChangeScheduleStateRequestAsync(scheduleId, checked);
         if (requestIsSuccessful)
         {
-            getRecentSchedules();
+            onOk();
         }
     };
 }
 
-export function onResumeClickFactory(scheduleId)
+export function onResumeClickFactory(scheduleId, onOk)
 {
     return () =>
     {
@@ -28,14 +28,14 @@ export function onResumeClickFactory(scheduleId)
                 const requestIsSuccessful = await Api.sendPostResumeScheduleRequestAsync(scheduleId);
                 if (requestIsSuccessful)
                 {
-                    getRecentSchedules();
+                    onOk();
                 }
             },
         });
     };
 }
 
-export function onCancelClickFactory(scheduleId)
+export function onCancelClickFactory(scheduleId, onOk)
 {
     return () =>
     {
@@ -47,14 +47,14 @@ export function onCancelClickFactory(scheduleId)
                 const requestIsSuccessful = await Api.sendPostCancelScheduleRequestAsync(scheduleId);
                 if (requestIsSuccessful)
                 {
-                    getRecentSchedules();
+                    onOk();
                 }
             },
         });
     };
 }
 
-export function onDeleteClickFactory(scheduleId)
+export function onDeleteClickFactory(scheduleId, onOk)
 {
     return () =>
     {
@@ -67,7 +67,7 @@ export function onDeleteClickFactory(scheduleId)
                 const requestIsSuccessful = await Api.sendPostDeleteScheduleRequestAsync(scheduleId);
                 if (requestIsSuccessful)
                 {
-                    getRecentSchedules();
+                    await onOk();
                 }
             },
         });
@@ -76,7 +76,7 @@ export function onDeleteClickFactory(scheduleId)
 
 export function onModifyClickFactory(scheduleId)
 {
-    return () =>
+    return async () =>
     {
         changeCurrentModifyingScheduleId(scheduleId);
         ModalFunction.showModal(MODAL_ID.SCHEDULE_MODIFY_MODAL);
