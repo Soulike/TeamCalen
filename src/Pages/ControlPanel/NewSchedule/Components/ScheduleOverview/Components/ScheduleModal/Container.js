@@ -53,59 +53,48 @@ class ScheduleModalContainer extends React.Component
         };
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot)
+    setStateAsync = async state =>
     {
-        const {year, month, day} = this.props;
-        const {year: prevYear, month: prevMonth, day: prevDay} = prevProps;
-        if (year !== prevYear || month !== prevMonth || prevDay !== day)    // 日期变了，执行更新
+        return new Promise(resolve =>
         {
-            this.setState({
-                timelineItems: [],
-            }, () =>
-            {
-                this.getTimelineItems();
-            });
-        }
-    }
+            this.setState(state, resolve);
+        });
+    };
 
-    getTimelineItems = () =>
+    onOpen = async () =>
     {
+        await this.setStateAsync({timelineItems: []});
         const {year, month, day} = this.props;
-        Api.sendGetSchedulesByDayRequestAsync(year, month, day)
-            .then(schedulesWrapper =>
+        const schedulesWrapper = await Api.sendGetSchedulesByDayRequestAsync(year, month, day);
+        if (schedulesWrapper)
+        {
+            const {schedules} = schedulesWrapper;
+            const timelineItems = [];
+            schedules.forEach(schedule =>
             {
-                if (schedulesWrapper)
-                {
-                    const {schedules} = schedulesWrapper;
-                    const timelineItems = [];
-                    schedules.forEach(schedule =>
-                    {
-                        const {
-                            id,
-                            month,
-                            day,
-                            startHour,
-                            startMinute,
-                            endHour,
-                            endMinute,
-                            scheduleText,
-                            scheduleState,
-                        } = schedule;
-                        timelineItems.push(
-                            new TimelineItemObject.TimelineItem(month, day, startHour, startMinute, endHour, endMinute,
-                                scheduleText, scheduleState,
-                                onSwitchChangeFactory(id),
-                                onResumeClickFactory(id),
-                                onCancelClickFactory(id),
-                                onDeleteClickFactory(id),
-                                onModifyClickFactory(id)),
-                        );
-                    });
-                    this.setState({
-                        timelineItems,
-                    });
-                }
+                const {
+                    id,
+                    month,
+                    day,
+                    startHour,
+                    startMinute,
+                    endHour,
+                    endMinute,
+                    scheduleText,
+                    scheduleState,
+                } = schedule;
+                timelineItems.push(
+                    new TimelineItemObject.TimelineItem(month, day, startHour, startMinute, endHour, endMinute,
+                        scheduleText, scheduleState,
+                        onSwitchChangeFactory(id),
+                        onResumeClickFactory(id),
+                        onCancelClickFactory(id),
+                        onDeleteClickFactory(id),
+                        onModifyClickFactory(id)),
+                );
             });
+            await this.setStateAsync({timelineItems});
+        }
     };
 
     render()
@@ -116,7 +105,7 @@ class ScheduleModalContainer extends React.Component
             <ScheduleModal year={year}
                            month={month}
                            day={day}
-                           timelineItems={timelineItems} />
+                           timelineItems={timelineItems} onOpen={this.onOpen} />
         );
     }
 }

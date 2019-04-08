@@ -29,6 +29,7 @@ function ScheduleModifyModal(props)
         onScheduleTextChange,
         onReminderSwitchChange,
         onSubmit,
+        onOpen,
         confirmLoading,
         hasGotData,
     } = props;
@@ -36,7 +37,8 @@ function ScheduleModifyModal(props)
         <Modal modalId={MODAL_ID.SCHEDULE_MODIFY_MODAL}
                title={'修改日程'}
                onOk={onSubmit}
-               confirmLoading={confirmLoading}>
+               confirmLoading={confirmLoading}
+               onOpen={onOpen}>
             <div className={Style.ScheduleModifyModal}>
                 <div className={Style.timeWrapper}>
                     <div className={Style.label}>开始时间</div>
@@ -103,6 +105,7 @@ ScheduleModifyModal.propTypes = {   // props 里面全部都是初始值
     onReminderSwitchChange: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     confirmLoading: PropTypes.bool,
+    onOpen: PropTypes.func,
     hasGotData: PropTypes.bool.isRequired,
 };
 

@@ -1,6 +1,7 @@
 {
   "name": "teamcalen",
   "version": "0.1.0",
+  "proxy": "http://172.6.1.120:8080",
   "private": true,
   "dependencies": {
     "antd": "^3.15.2",

@@ -10,3 +10,22 @@ export function prefixZero(number)
         return number;
     }
 }
+
+export function isSetsEqual(a, b)
+{
+    if (a.size !== b.size)
+    {
+        return false;
+    }
+    else
+    {
+        a.forEach(value =>
+        {
+            if (!b.has(value))
+            {
+                return false;
+            }
+        });
+        return true;
+    }
+}

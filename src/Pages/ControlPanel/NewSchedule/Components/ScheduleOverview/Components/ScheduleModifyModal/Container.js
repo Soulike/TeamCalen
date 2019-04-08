@@ -29,34 +29,24 @@ class ScheduleModifyModalContainer extends React.Component
         };
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot)
+    setStateAsync = async state =>
     {
-        const {currentModifyingScheduleId} = this.props;
-        const {currentModifyingScheduleId: prevCurrentModifyingScheduleId} = prevProps;
-        if (currentModifyingScheduleId !== prevCurrentModifyingScheduleId)
+        return new Promise(resolve =>
         {
-            this.setState({
-                hasGotData: false,
-            }, async () =>
-            {
-                await this.getScheduleByIdAsync();
-                this.setState({
-                    hasGotData: true,
-                });
-            });
-        }
+            this.setState(state, resolve);
+        });
+    };
 
-    }
-
-    // 获取日程信息
-    getScheduleByIdAsync = async () =>
+    onOpen = async () =>
     {
+        await this.setStateAsync({hasGotData: false});
         const {currentModifyingScheduleId} = this.props;
         const schedule = await Api.sendGetScheduleByIdRequestAsync(currentModifyingScheduleId);
         if (schedule)
         {
-            this.setState({
+            await this.setStateAsync({
                 ...schedule,
+                hasGotData: true,
             });
         }
     };
@@ -193,7 +183,8 @@ class ScheduleModifyModalContainer extends React.Component
                                  onScheduleTextChange={this.onScheduleTextChange}
                                  onReminderSwitchChange={this.onReminderSwitchChange}
                                  onSubmit={this.onSubmit}
-                                 hasGotData={hasGotData} />
+                                 hasGotData={hasGotData}
+                                 onOpen={this.onOpen} />
         );
     }
 }
