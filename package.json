@@ -4,8 +4,10 @@
   "proxy": "http://172.6.1.120:8080",
   "private": true,
   "dependencies": {
+    "@babel/polyfill": "^7.4.3",
     "antd": "^3.15.2",
     "axios": "^0.18.0",
+    "moment": "latest",
     "node-sass": "^4.11.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.5",
@@ -14,8 +16,7 @@
     "react-router": "^3.2.1",
     "react-scripts": "2.1.8",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
-    "moment": "latest"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,7 +30,7 @@
   "browserslist": [
     ">0.2%",
     "not dead",
-    "not ie <= 11",
+    "not ie <= 9",
     "not op_mini all"
   ]
 }
