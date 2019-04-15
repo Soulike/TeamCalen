@@ -58,8 +58,8 @@ class EmailSettingModalContainer extends React.Component
             const requestIsSuccessful = await Api.sendPostChangeEmailRequestAsync(email, verificationCode);
             if (requestIsSuccessful)
             {
-                const {hideModal} = this.props;
-                hideModal(MODAL_ID.EMAIL_SETTING_MODAL);
+                const {closeModal} = this.props;
+                closeModal(MODAL_ID.EMAIL_SETTING_MODAL);
             }
         }
     };
@@ -77,7 +77,7 @@ class EmailSettingModalContainer extends React.Component
 }
 
 const mapDispatchToProps = {
-    hideModal: ModalActions.hideModalAction,
+    closeModal: ModalActions.closeModalAction,
 };
 
 export default connect(null, mapDispatchToProps)(EmailSettingModalContainer);

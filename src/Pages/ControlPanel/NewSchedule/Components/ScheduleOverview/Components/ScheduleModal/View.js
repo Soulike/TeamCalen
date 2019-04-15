@@ -9,9 +9,9 @@ import Empty from 'antd/lib/empty';
 
 function ScheduleModal(props)
 {
-    const {year, month, day, timelineItems, onOpen} = props;
+    const {year, month, day, timelineItems, onShow} = props;
     return (
-        <Modal modalId={MODAL_ID.SCHEDULE_MODAL} title={`${year} 年 ${month} 月 ${day} 日日程列表`} onOpen={onOpen}>
+        <Modal modalId={MODAL_ID.SCHEDULE_MODAL} title={`${year} 年 ${month} 月 ${day} 日日程列表`} onShow={onShow}>
             <div className={Style.ScheduleModal}>
                 <div className={Style.timelineWrapper}>
                     {
@@ -36,7 +36,7 @@ ScheduleModal.propTypes = {
     month: PropTypes.string.isRequired,
     day: PropTypes.string.isRequired,
     timelineItems: PropTypes.arrayOf(PropTypes.instanceOf(TimelineItemObject.TimelineItem)).isRequired,
-    onOpen: PropTypes.func,
+    onShow: PropTypes.func,
 };
 
 export default ScheduleModal;

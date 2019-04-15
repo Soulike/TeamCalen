@@ -15,7 +15,7 @@ export default (state = {}, action) =>
                 currentVisibleModalIdSet: new Set(currentVisibleModalIdSet),
             };
         }
-        case ACTION_TYPE.HIDE_MODAL:
+        case ACTION_TYPE.CLOSE_MODAL:
         {
             const {currentVisibleModalIdSet} = state;
             const {modalId} = action;

@@ -61,7 +61,7 @@ function TimelineItem(props)
                 </span>
                 <div className={Style.scheduleOperation}>
                     <Switch disabled={scheduleState === SCHEDULE_STATE.CANCELED}
-                            defaultChecked={scheduleState === SCHEDULE_STATE.FINISHED}
+                            checked={scheduleState === SCHEDULE_STATE.FINISHED}
                             checkedChildren={
                                 <Icon type="check-circle" theme={'outlined'} twoToneColor={'#0F0'} />}
                             unCheckedChildren={

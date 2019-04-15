@@ -4,19 +4,19 @@ import Modal from 'antd/lib/modal';
 import {Function as ModalFunction} from '../../../../../ComponentContainer/Modal';
 import MODAL_ID from '../../../../../CONSTANT/MODAL_ID';
 
-export function onSwitchChangeFactory(scheduleId, onOk)
+export function onSwitchChangeFactory(scheduleId, onOk = () => null)
 {
     return async checked =>
     {
         const requestIsSuccessful = await Api.sendPostChangeScheduleStateRequestAsync(scheduleId, checked);
         if (requestIsSuccessful)
         {
-            onOk();
+            await onOk();
         }
     };
 }
 
-export function onResumeClickFactory(scheduleId, onOk)
+export function onResumeClickFactory(scheduleId, onOk = () => null)
 {
     return () =>
     {
@@ -28,14 +28,14 @@ export function onResumeClickFactory(scheduleId, onOk)
                 const requestIsSuccessful = await Api.sendPostResumeScheduleRequestAsync(scheduleId);
                 if (requestIsSuccessful)
                 {
-                    onOk();
+                    await onOk();
                 }
             },
         });
     };
 }
 
-export function onCancelClickFactory(scheduleId, onOk)
+export function onCancelClickFactory(scheduleId, onOk = () => null)
 {
     return () =>
     {
@@ -47,14 +47,14 @@ export function onCancelClickFactory(scheduleId, onOk)
                 const requestIsSuccessful = await Api.sendPostCancelScheduleRequestAsync(scheduleId);
                 if (requestIsSuccessful)
                 {
-                    onOk();
+                    await onOk();
                 }
             },
         });
     };
 }
 
-export function onDeleteClickFactory(scheduleId, onOk)
+export function onDeleteClickFactory(scheduleId, onOk = () => null)
 {
     return () =>
     {
@@ -74,11 +74,12 @@ export function onDeleteClickFactory(scheduleId, onOk)
     };
 }
 
-export function onModifyClickFactory(scheduleId)
+export function onModifyClickFactory(scheduleId, afterClose = () => null)
 {
     return async () =>
     {
         changeCurrentModifyingScheduleId(scheduleId);
-        ModalFunction.showModal(MODAL_ID.SCHEDULE_MODIFY_MODAL);
+        await ModalFunction.showModalAsync(MODAL_ID.SCHEDULE_MODIFY_MODAL);
+        ModalFunction.afterModalClose(MODAL_ID.SCHEDULE_MODIFY_MODAL, afterClose);
     };
 }

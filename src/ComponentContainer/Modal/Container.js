@@ -4,58 +4,33 @@ import MODAL_ID from '../../CONSTANT/MODAL_ID';
 import OriginalModal from 'antd/lib/modal';
 import {connect} from 'react-redux';
 import * as Actions from './Actions/Actions';
+import eventEmitter from './EventEmitter';
+import {getModalCloseEventName, getModalShowEventName} from './Function';
 
 class Modal extends React.Component
 {
-    constructor(props)
-    {
-        super(props);
-        this.state = {
-            visible: false,
-        };
-    }
 
-    componentDidUpdate(prevProps, prevState, snapshot)
+    componentDidMount()
     {
-        const {modalId, currentVisibleModalIdSet} = this.props;
-        const {visible} = this.state;
-        if (visible === false && currentVisibleModalIdSet.has(modalId))
-        {
-            this.setState({
-                visible: true,
-            }, async () =>
-            {
-                const {onOpen} = this.props;
-                if (onOpen) // 调用 onOpen，如果存在的话
-                {
-                    await onOpen();
-                }
-            });
-        }
-        else if (visible === true && !currentVisibleModalIdSet.has(modalId))
-        {
-            this.setState({
-                visible: false,
-            });
-        }
+        const {onShow, afterClose, modalId} = this.props;
+        eventEmitter.on(getModalShowEventName(modalId), onShow ? onShow : () => null);
+        eventEmitter.on(getModalCloseEventName(modalId), afterClose ? afterClose : () => null);
     }
-
 
     render()
     {
-        const {visible} = this.state;
-        const {modalId, hideModal, ...rest} = this.props;
+        const {currentVisibleModalIdSet, modalId, closeModal, onOk, onCancel, ...rest} = this.props;
         return (
             <OriginalModal
                 destroyOnClose={true}
-                visible={visible}
-                onOk={rest.onExitConfirm ? rest.onExitConfirm : () =>
+                visible={currentVisibleModalIdSet.has(modalId)}
+                onOk={onOk ? onOk : () =>
                 {
-                    hideModal(modalId);
+                    closeModal(modalId);
                 }}
-                onCancel={rest.onCancel ? rest.onCancel : () =>
+                onCancel={onCancel ? onCancel : () =>
                 {
-                    hideModal(modalId);
+                    closeModal(modalId);
                 }}
                 {...rest} />
         );
@@ -65,7 +40,7 @@ class Modal extends React.Component
 Modal.propTypes = {
     ...OriginalModal.propTypes,
     modalId: PropTypes.oneOf(Object.values(MODAL_ID)).isRequired,
-    onOpen: PropTypes.func,
+    onShow: PropTypes.func,
 };
 
 const mapStateToProps = state =>
@@ -75,7 +50,7 @@ const mapStateToProps = state =>
 };
 
 const mapDispatchToProps = {
-    hideModal: Actions.hideModalAction,
+    closeModal: Actions.closeModalAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modal);

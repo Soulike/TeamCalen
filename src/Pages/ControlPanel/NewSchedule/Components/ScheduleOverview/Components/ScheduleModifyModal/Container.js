@@ -40,7 +40,7 @@ class ScheduleModifyModalContainer extends React.Component
         });
     };
 
-    onOpen = async () =>
+    onShow = async () =>
     {
         await this.setStateAsync({hasGotData: false});
         const {currentModifyingScheduleId} = this.props;
@@ -149,11 +149,11 @@ class ScheduleModifyModalContainer extends React.Component
                 startHour, startMinute, endHour, endMinute, scheduleText, hasReminder);
             if (requestIsSuccessful)
             {
-                const {selectedYear, selectedMonth, hideModal} = this.props;
+                const {selectedYear, selectedMonth, closeModal} = this.props;
                 this.setState({
                     confirmLoading: false,
                 });
-                hideModal(MODAL_ID.SCHEDULE_MODIFY_MODAL);
+                closeModal(MODAL_ID.SCHEDULE_MODIFY_MODAL);
                 getRecentSchedules();
                 getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
             }
@@ -182,7 +182,7 @@ class ScheduleModifyModalContainer extends React.Component
                                  onReminderSwitchChange={this.onReminderSwitchChange}
                                  onSubmit={this.onSubmit}
                                  hasGotData={hasGotData}
-                                 onOpen={this.onOpen} />
+                                 onShow={this.onShow} />
         );
     }
 }
@@ -200,7 +200,7 @@ const mapStateToProps = state =>
 const mapDispatchToProps = {
     getEveryDayScheduleAmountInAMonth: newScheduleActions.getEveryDayScheduleAmountInAMonthAction,
     getRecentSchedules: newScheduleActions.getRecentSchedulesAction,
-    hideModal: ModalActions.hideModalAction,
+    closeModal: ModalActions.closeModalAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleModifyModalContainer);

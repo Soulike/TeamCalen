@@ -1,3 +1,3 @@
 export const SHOW_MODAL = Symbol('showModalAction');
 
-export const HIDE_MODAL = Symbol('hideModalAction');
+export const CLOSE_MODAL = Symbol('closeModalAction');

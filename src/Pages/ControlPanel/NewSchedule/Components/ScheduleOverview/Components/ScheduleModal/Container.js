@@ -95,7 +95,8 @@ class ScheduleModalContainer extends React.Component
                             onResumeClickFactory(id, this.refreshSchedulesFactory()),
                             onCancelClickFactory(id, this.refreshSchedulesFactory()),
                             onDeleteClickFactory(id, this.refreshSchedulesFactory()),
-                            onModifyClickFactory(id)),
+                            onModifyClickFactory(id, this.refreshSchedulesFactory()),
+                        ),
                     );
                 });
                 await this.setStateAsync({timelineItems});
@@ -103,7 +104,7 @@ class ScheduleModalContainer extends React.Component
         };
     };
 
-    onOpen = async () =>
+    onShow = async () =>
     {
         await this.setStateAsync({timelineItems: []});
         await this.refreshSchedulesFactory()();
@@ -117,7 +118,7 @@ class ScheduleModalContainer extends React.Component
             <ScheduleModal year={year}
                            month={month}
                            day={day}
-                           timelineItems={timelineItems} onOpen={this.onOpen} />
+                           timelineItems={timelineItems} onShow={this.onShow} />
         );
     }
 }
