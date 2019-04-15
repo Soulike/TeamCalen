@@ -10,6 +10,8 @@ import {
     onResumeClickFactory,
     onSwitchChangeFactory,
 } from '../../Function';
+import * as Actions from '../../../../Actions/Actions';
+import {connect} from 'react-redux';
 
 // import SCHEDULE_STATE from '../../../../../../../CONSTANT/SCHEDULE_STATE';
 
@@ -61,11 +63,13 @@ class ScheduleModalContainer extends React.Component
         });
     };
 
-    loadSchedulesByDayFactory = () =>
+    refreshSchedulesFactory = () =>
     {
         return async () =>
         {
-            const {year, month, day} = this.props;
+            const {year, month, day, getRecentSchedules, getEveryDayScheduleAmountInAMonth, selectedYear, selectedMonth} = this.props;
+            getRecentSchedules();
+            getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
             const schedulesWrapper = await Api.sendGetSchedulesByDayRequestAsync(year, month, day);
             if (schedulesWrapper)
             {
@@ -87,10 +91,10 @@ class ScheduleModalContainer extends React.Component
                     timelineItems.push(
                         new TimelineItemObject.TimelineItem(id, month, day, startHour, startMinute, endHour, endMinute,
                             scheduleText, scheduleState,
-                            onSwitchChangeFactory(id, this.loadSchedulesByDayFactory()),
-                            onResumeClickFactory(id, this.loadSchedulesByDayFactory()),
-                            onCancelClickFactory(id, this.loadSchedulesByDayFactory()),
-                            onDeleteClickFactory(id, this.loadSchedulesByDayFactory()),
+                            onSwitchChangeFactory(id, this.refreshSchedulesFactory()),
+                            onResumeClickFactory(id, this.refreshSchedulesFactory()),
+                            onCancelClickFactory(id, this.refreshSchedulesFactory()),
+                            onDeleteClickFactory(id, this.refreshSchedulesFactory()),
                             onModifyClickFactory(id)),
                     );
                 });
@@ -102,7 +106,7 @@ class ScheduleModalContainer extends React.Component
     onOpen = async () =>
     {
         await this.setStateAsync({timelineItems: []});
-        await this.loadSchedulesByDayFactory()();
+        await this.refreshSchedulesFactory()();
     };
 
     render()
@@ -124,4 +128,18 @@ ScheduleModalContainer.propTypes = {
     day: PropTypes.string.isRequired,
 };
 
-export default ScheduleModalContainer;
+const mapStateToProps = state =>
+{
+    const {NewSchedule: {selectedYear, selectedMonth}} = state;
+    return {
+        selectedYear,
+        selectedMonth,
+    };
+};
+
+const mapDispatchToProps = {
+    getRecentSchedules: Actions.getRecentSchedulesAction,
+    getEveryDayScheduleAmountInAMonth: Actions.getEveryDayScheduleAmountInAMonthAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleModalContainer);

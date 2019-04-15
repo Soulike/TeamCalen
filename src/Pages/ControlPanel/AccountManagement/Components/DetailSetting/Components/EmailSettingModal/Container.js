@@ -3,6 +3,9 @@ import EmailSettingModal from './View';
 import {REGEX} from '../../../../../../../CONSTANT/REGEX';
 import message from 'antd/lib/message';
 import Api from '../../../../../../../Api';
+import {Actions as ModalActions} from '../../../../../../../ComponentContainer/Modal';
+import {connect} from 'react-redux';
+import MODAL_ID from '../../../../../../../CONSTANT/MODAL_ID';
 
 class EmailSettingModalContainer extends React.Component
 {
@@ -52,7 +55,12 @@ class EmailSettingModalContainer extends React.Component
         }
         else
         {
-            await Api.sendPostChangeEmailRequestAsync(email, verificationCode);
+            const requestIsSuccessful = await Api.sendPostChangeEmailRequestAsync(email, verificationCode);
+            if (requestIsSuccessful)
+            {
+                const {hideModal} = this.props;
+                hideModal(MODAL_ID.EMAIL_SETTING_MODAL);
+            }
         }
     };
 
@@ -68,4 +76,8 @@ class EmailSettingModalContainer extends React.Component
     }
 }
 
-export default EmailSettingModalContainer;
+const mapDispatchToProps = {
+    hideModal: ModalActions.hideModalAction,
+};
+
+export default connect(null, mapDispatchToProps)(EmailSettingModalContainer);

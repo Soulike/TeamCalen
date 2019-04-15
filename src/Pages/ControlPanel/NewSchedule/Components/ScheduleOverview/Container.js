@@ -60,8 +60,9 @@ class ScheduleOverviewContainer extends React.Component
 
     loadRecentSchedules = () =>
     {
-        const {getRecentSchedules} = this.props;
+        const {getRecentSchedules, getEveryDayScheduleAmountInAMonth, selectedYear, selectedMonth} = this.props;
         getRecentSchedules(10);
+        getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
     };
 
     render()
