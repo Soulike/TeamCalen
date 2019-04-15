@@ -95,6 +95,7 @@ class ScheduleModalContainer extends React.Component
                             onCancelClickFactory(id, this.refreshSchedulesFactory()),
                             onDeleteClickFactory(id, this.refreshSchedulesFactory()),
                             onModifyClickFactory(id, MODAL_ID.SCHEDULE_MODIFY_MODAL_FOR_SCHEDULE_MODAL, this.refreshSchedulesFactory()),
+                            // TODO: BUG，第一次事件没有挂上
                         ),
                     );
                 });
