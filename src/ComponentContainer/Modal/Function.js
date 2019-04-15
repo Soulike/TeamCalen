@@ -38,12 +38,12 @@ export function closeModalAsync(modalId)
 
 export function onModalShow(modalId, callback)
 {
-    eventEmitter.on(getModalShowEventName(modalId), callback);
+    eventEmitter.once(getModalShowEventName(modalId), callback);
 }
 
 export function afterModalClose(modalId, callback)
 {
-    eventEmitter.on(getModalCloseEventName(modalId), callback);
+    eventEmitter.once(getModalCloseEventName(modalId), callback);
 }
 
 export function getModalShowEventName(modalId)

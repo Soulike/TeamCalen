@@ -9,12 +9,17 @@ import {getModalCloseEventName, getModalShowEventName} from './Function';
 
 class Modal extends React.Component
 {
-
     componentDidMount()
     {
         const {onShow, afterClose, modalId} = this.props;
-        eventEmitter.on(getModalShowEventName(modalId), onShow ? onShow : () => null);
-        eventEmitter.on(getModalCloseEventName(modalId), afterClose ? afterClose : () => null);
+        if (typeof onShow === 'function')
+        {
+            eventEmitter.on(getModalShowEventName(modalId), onShow);
+        }
+        else if (typeof afterClose === 'function')
+        {
+            eventEmitter.on(getModalCloseEventName(modalId), afterClose);
+        }
     }
 
     render()

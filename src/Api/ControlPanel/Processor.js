@@ -705,6 +705,7 @@ export async function sendPostUploadAvatarRequestAsync(fileObject)
         {
             case STATUS_CODE.OK:
             {
+                message.success('上传成功');
                 return true;
             }
             case STATUS_CODE.BAD_REQUEST:

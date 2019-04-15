@@ -13,6 +13,7 @@ import {
     onResumeClickFactory,
     onSwitchChangeFactory,
 } from './Function';
+import {updateScheduleInfo} from '../../Function';
 
 class ScheduleOverviewContainer extends React.Component
 {
@@ -30,18 +31,16 @@ class ScheduleOverviewContainer extends React.Component
 
     componentDidMount()
     {
-        const {getEveryDayScheduleAmountInAMonth, getRecentSchedules, selectedYear, selectedMonth} = this.props;
-        getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
-        getRecentSchedules(10);
+        updateScheduleInfo();
     }
 
     onPanelChange = date =>
     {
-        const {getEveryDayScheduleAmountInAMonth, changeSelectedYearAndMonth} = this.props;
+        const {changeSelectedYearAndMonth} = this.props;
         const selectedYear = date.format('YYYY');
         const selectedMonth = date.format('MM');
         changeSelectedYearAndMonth(selectedYear, selectedMonth);
-        getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
+        updateScheduleInfo();
     };
 
     onSelect = date =>
@@ -56,13 +55,6 @@ class ScheduleOverviewContainer extends React.Component
         {
             showModal(MODAL_ID.SCHEDULE_MODAL);
         });
-    };
-
-    loadRecentSchedules = () =>
-    {
-        const {getRecentSchedules, getEveryDayScheduleAmountInAMonth, selectedYear, selectedMonth} = this.props;
-        getRecentSchedules(10);
-        getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
     };
 
     render()
@@ -87,11 +79,12 @@ class ScheduleOverviewContainer extends React.Component
             timelineItems.push(
                 new TimelineItemObject.TimelineItem(id, month, day, startHour, startMinute, endHour, endMinute,
                     scheduleText, scheduleState,
-                    onSwitchChangeFactory(id, this.loadRecentSchedules),
-                    onResumeClickFactory(id, this.loadRecentSchedules),
-                    onCancelClickFactory(id, this.loadRecentSchedules),
-                    onDeleteClickFactory(id, this.loadRecentSchedules),
-                    onModifyClickFactory(id)),
+                    onSwitchChangeFactory(id, updateScheduleInfo),
+                    onResumeClickFactory(id, updateScheduleInfo),
+                    onCancelClickFactory(id, updateScheduleInfo),
+                    onDeleteClickFactory(id, updateScheduleInfo),
+                    onModifyClickFactory(id, MODAL_ID.SCHEDULE_MODIFY_MODAL_FOR_RECENT_SCHEDULES, updateScheduleInfo),
+                ),
             );
         });
 
@@ -121,8 +114,6 @@ const mapStateToProps = state =>
 };
 
 const mapDispatchToProps = {
-    getEveryDayScheduleAmountInAMonth: newScheduleActions.getEveryDayScheduleAmountInAMonthAction,
-    getRecentSchedules: newScheduleActions.getRecentSchedulesAction,
     showModal: ModalActions.showModalAction,
     changeSelectedYearAndMonth: newScheduleActions.changeSelectedYearAndMonthAction,
 };

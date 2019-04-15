@@ -4,8 +4,7 @@ import moment from 'moment';
 import {REGEX} from '../../../../../CONSTANT/REGEX';
 import message from 'antd/lib/message';
 import Api from '../../../../../Api';
-import * as Actions from '../../Actions/Actions';
-import {connect} from 'react-redux';
+import {updateScheduleInfo} from '../../Function';
 
 class NewSchedulePanelContainer extends React.Component
 {
@@ -102,7 +101,6 @@ class NewSchedulePanelContainer extends React.Component
     onSubmit = async () =>
     {
         const {year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder} = this.state;
-        const {getRecentSchedules, getEveryDayScheduleAmountInAMonth} = this.props;
 
         if (startHour > endHour || (startHour === endHour && startMinute > endMinute))
         {
@@ -118,7 +116,7 @@ class NewSchedulePanelContainer extends React.Component
                 startHour, startMinute, endHour, endMinute, scheduleText, hasReminder);
             if (requestIsSuccessful)
             {
-                const {selectedYear, selectedMonth} = this.props;
+                updateScheduleInfo();
                 const now = moment();
                 this.setState({
                     year: now.format('YYYY'),
@@ -131,8 +129,6 @@ class NewSchedulePanelContainer extends React.Component
                     hasReminder: false,
                     scheduleText: '',
                 });
-                getRecentSchedules();
-                getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
             }
         }
     };
@@ -158,18 +154,4 @@ class NewSchedulePanelContainer extends React.Component
     }
 }
 
-const mapStateToProps = state =>
-{
-    const {NewSchedule: {selectedYear, selectedMonth}} = state;
-    return {
-        selectedYear,
-        selectedMonth,
-    };
-};
-
-const mapDispatchToProps = {
-    getRecentSchedules: Actions.getRecentSchedulesAction,
-    getEveryDayScheduleAmountInAMonth: Actions.getEveryDayScheduleAmountInAMonthAction,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewSchedulePanelContainer);
+export default NewSchedulePanelContainer;

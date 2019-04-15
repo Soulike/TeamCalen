@@ -25,7 +25,7 @@ function ScheduleOverview(props)
         timelineItems,
     } = props;
 
-    const selectedYearAndMonth = moment(`${selectedYear}-${selectedMonth}`);   // 面板上选择的日期
+    const selectedYearAndMonth = moment(`${selectedYear}-${selectedMonth}`, 'YYYY-MM');   // 面板上选择的日期
     const nowMoment = moment();
     const today = moment(nowMoment.format('YYYY-MM-DD'));    // 今天的日期
     return [
@@ -81,7 +81,10 @@ function ScheduleOverview(props)
                        year={clickedYear}
                        month={clickedMonth}
                        day={clickedDay} />,
-        <ScheduleModifyModal key={MODAL_ID.SCHEDULE_MODIFY_MODAL.description} />,
+        <ScheduleModifyModal modalId={MODAL_ID.SCHEDULE_MODIFY_MODAL_FOR_RECENT_SCHEDULES}
+                             key={MODAL_ID.SCHEDULE_MODIFY_MODAL_FOR_RECENT_SCHEDULES.description} />,
+        <ScheduleModifyModal modalId={MODAL_ID.SCHEDULE_MODIFY_MODAL_FOR_SCHEDULE_MODAL}
+                             key={MODAL_ID.SCHEDULE_MODIFY_MODAL_FOR_SCHEDULE_MODAL.description} />,
     ];
 }
 

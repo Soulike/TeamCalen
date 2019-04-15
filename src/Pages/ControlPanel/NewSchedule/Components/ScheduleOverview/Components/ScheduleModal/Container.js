@@ -10,8 +10,8 @@ import {
     onResumeClickFactory,
     onSwitchChangeFactory,
 } from '../../Function';
-import * as Actions from '../../../../Actions/Actions';
-import {connect} from 'react-redux';
+import {updateScheduleInfo} from '../../../../Function';
+import MODAL_ID from '../../../../../../../CONSTANT/MODAL_ID';
 
 // import SCHEDULE_STATE from '../../../../../../../CONSTANT/SCHEDULE_STATE';
 
@@ -67,9 +67,8 @@ class ScheduleModalContainer extends React.Component
     {
         return async () =>
         {
-            const {year, month, day, getRecentSchedules, getEveryDayScheduleAmountInAMonth, selectedYear, selectedMonth} = this.props;
-            getRecentSchedules();
-            getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
+            updateScheduleInfo();
+            const {year, month, day} = this.props;
             const schedulesWrapper = await Api.sendGetSchedulesByDayRequestAsync(year, month, day);
             if (schedulesWrapper)
             {
@@ -95,7 +94,7 @@ class ScheduleModalContainer extends React.Component
                             onResumeClickFactory(id, this.refreshSchedulesFactory()),
                             onCancelClickFactory(id, this.refreshSchedulesFactory()),
                             onDeleteClickFactory(id, this.refreshSchedulesFactory()),
-                            onModifyClickFactory(id, this.refreshSchedulesFactory()),
+                            onModifyClickFactory(id, MODAL_ID.SCHEDULE_MODIFY_MODAL_FOR_SCHEDULE_MODAL, this.refreshSchedulesFactory()),
                         ),
                     );
                 });
@@ -107,7 +106,7 @@ class ScheduleModalContainer extends React.Component
     onShow = async () =>
     {
         await this.setStateAsync({timelineItems: []});
-        await this.refreshSchedulesFactory()();
+        await (this.refreshSchedulesFactory())();
     };
 
     render()
@@ -129,18 +128,4 @@ ScheduleModalContainer.propTypes = {
     day: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state =>
-{
-    const {NewSchedule: {selectedYear, selectedMonth}} = state;
-    return {
-        selectedYear,
-        selectedMonth,
-    };
-};
-
-const mapDispatchToProps = {
-    getRecentSchedules: Actions.getRecentSchedulesAction,
-    getEveryDayScheduleAmountInAMonth: Actions.getEveryDayScheduleAmountInAMonthAction,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ScheduleModalContainer);
+export default ScheduleModalContainer;

@@ -14,6 +14,7 @@ const {TextArea} = Input;
 function ScheduleModifyModal(props)
 {
     const {
+        modalId,
         initYear,
         initMonth,
         initDay,
@@ -34,11 +35,12 @@ function ScheduleModifyModal(props)
         hasGotData,
     } = props;
     return (
-        <Modal modalId={MODAL_ID.SCHEDULE_MODIFY_MODAL}
+        <Modal modalId={modalId}
                title={'修改日程'}
                onOk={onSubmit}
                confirmLoading={confirmLoading}
-               onShow={onShow}>
+               onShow={onShow}
+               zIndex={1001}>
             <div className={Style.ScheduleModifyModal}>
                 <div className={Style.timeWrapper}>
                     <div className={Style.label}>开始时间</div>
@@ -88,6 +90,7 @@ function ScheduleModifyModal(props)
 }
 
 ScheduleModifyModal.propTypes = {   // props 里面全部都是初始值
+    modalId: PropTypes.oneOf(Object.values(MODAL_ID)).isRequired,   // 因为事件监听器冲突，因此只能分开设置ModalId
     currentModifyingScheduleId: PropTypes.number.isRequired,
     initYear: PropTypes.string.isRequired,           // 年份，四位整数字符串
     initMonth: PropTypes.string.isRequired,      // 月份，两位整数字符串

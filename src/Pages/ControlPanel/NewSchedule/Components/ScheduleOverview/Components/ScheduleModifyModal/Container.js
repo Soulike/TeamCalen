@@ -6,8 +6,9 @@ import {REGEX} from '../../../../../../../CONSTANT/REGEX';
 import message from 'antd/lib/message';
 import {Actions as ModalActions} from '../../../../../../../ComponentContainer/Modal';
 import MODAL_ID from '../../../../../../../CONSTANT/MODAL_ID';
-import * as newScheduleActions from '../../../../Actions/Actions';
 import moment from 'moment';
+import {updateScheduleInfo} from '../../../../Function';
+import PropTypes from 'prop-types';
 
 class ScheduleModifyModalContainer extends React.Component
 {
@@ -130,7 +131,7 @@ class ScheduleModifyModalContainer extends React.Component
     onSubmit = async () =>
     {
         const {year, month, day, startHour, startMinute, endHour, endMinute, hasReminder, scheduleText} = this.state;
-        const {getRecentSchedules, getEveryDayScheduleAmountInAMonth, currentModifyingScheduleId} = this.props;
+        const {modalId, currentModifyingScheduleId} = this.props;
 
         if (startHour > endHour || (startHour === endHour && startMinute > endMinute))
         {
@@ -149,13 +150,12 @@ class ScheduleModifyModalContainer extends React.Component
                 startHour, startMinute, endHour, endMinute, scheduleText, hasReminder);
             if (requestIsSuccessful)
             {
-                const {selectedYear, selectedMonth, closeModal} = this.props;
+                const {closeModal} = this.props;
                 this.setState({
                     confirmLoading: false,
                 });
-                closeModal(MODAL_ID.SCHEDULE_MODIFY_MODAL);
-                getRecentSchedules();
-                getEveryDayScheduleAmountInAMonth(selectedYear, selectedMonth);
+                closeModal(modalId);
+                updateScheduleInfo();
             }
         }
     };
@@ -163,9 +163,10 @@ class ScheduleModifyModalContainer extends React.Component
     render()
     {
         const {year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder, hasGotData} = this.state;
-        const {currentModifyingScheduleId} = this.props;
+        const {modalId, currentModifyingScheduleId} = this.props;
         return (
-            <ScheduleModifyModal initYear={year}
+            <ScheduleModifyModal modalId={modalId}
+                                 initYear={year}
                                  initMonth={month}
                                  initDay={day}
                                  initStartHour={startHour}
@@ -187,19 +188,19 @@ class ScheduleModifyModalContainer extends React.Component
     }
 }
 
+ScheduleModifyModalContainer.propTypes = {
+    modalId: PropTypes.oneOf(Object.values(MODAL_ID)).isRequired,   // 因为事件监听器冲突，因此只能分开设置ModalId
+};
+
 const mapStateToProps = state =>
 {
-    const {NewSchedule: {currentModifyingScheduleId, selectedYear, selectedMonth}} = state;
+    const {NewSchedule: {currentModifyingScheduleId}} = state;
     return {
         currentModifyingScheduleId,
-        selectedYear,
-        selectedMonth,
     };
 };
 
 const mapDispatchToProps = {
-    getEveryDayScheduleAmountInAMonth: newScheduleActions.getEveryDayScheduleAmountInAMonthAction,
-    getRecentSchedules: newScheduleActions.getRecentSchedulesAction,
     closeModal: ModalActions.closeModalAction,
 };
 

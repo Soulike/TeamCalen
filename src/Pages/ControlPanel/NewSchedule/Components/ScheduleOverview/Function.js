@@ -2,7 +2,6 @@ import Api from '../../../../../Api';
 import {changeCurrentModifyingScheduleId} from '../../Function';
 import Modal from 'antd/lib/modal';
 import {Function as ModalFunction} from '../../../../../ComponentContainer/Modal';
-import MODAL_ID from '../../../../../CONSTANT/MODAL_ID';
 
 export function onSwitchChangeFactory(scheduleId, onOk = () => null)
 {
@@ -74,12 +73,12 @@ export function onDeleteClickFactory(scheduleId, onOk = () => null)
     };
 }
 
-export function onModifyClickFactory(scheduleId, afterClose = () => null)
+export function onModifyClickFactory(scheduleId, scheduleModifyModalId, afterClose = () => null)
 {
     return async () =>
     {
         changeCurrentModifyingScheduleId(scheduleId);
-        await ModalFunction.showModalAsync(MODAL_ID.SCHEDULE_MODIFY_MODAL);
-        ModalFunction.afterModalClose(MODAL_ID.SCHEDULE_MODIFY_MODAL, afterClose);
+        await ModalFunction.showModalAsync(scheduleModifyModalId);
+        ModalFunction.afterModalClose(scheduleModifyModalId, afterClose);
     };
 }
