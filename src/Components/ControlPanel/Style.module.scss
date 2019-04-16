@@ -1,0 +1,73 @@
+.ControlPanel {
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    width: (1695rem/24);
+    height: (868rem/24);
+    margin: (63rem/24) auto;
+    background-color: #FFF;
+    border: (1rem/24) solid #BBB;
+
+    .leftPart {
+        flex-grow: 0;
+        width: (380rem/24);
+        border-right: (1rem/24) solid #BBB;
+        box-sizing: border-box;
+
+        .userInfoWrapper {
+            display: flex;
+            align-items: center;
+            margin-left: (13rem/24);
+            margin-top: (45rem/24);
+
+            .avatar {
+                width: (104rem/24);
+                height: (104rem/24);
+            }
+
+            .username {
+                font-size: (36rem/24);
+                margin-left: (19rem/24);
+            }
+        }
+
+        .tabWrapper {
+            margin-top: (64rem/24);
+
+            .tab {
+                font-size: (36rem/24);
+                text-align: center;
+                margin-bottom: (40rem/16);
+                border-left: (4rem/24) solid transparent;
+                cursor: pointer;
+                transition: 0.25s;
+                user-select: none;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                &.active, &:hover {
+                    color: #005BE7;
+                    border-left: (4rem/24) solid #005BE7;
+                }
+
+                &.active {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    .midPart {
+        flex-grow: 1;
+        width: (855rem/24);
+        box-sizing: border-box;
+    }
+
+    .rightPart {
+        box-sizing: border-box;
+        width: (460rem/24);
+        border-left: (1rem/24) solid #BBB;
+    }
+}

@@ -1,0 +1,31 @@
+.ScheduleOverview {
+    padding: (37rem/24) (77rem/24);
+
+    .calendarWrapper {
+
+        .calendar {
+
+            .badge {
+                position: relative;
+                bottom: (45rem/24);
+                left: (25rem/24)
+            }
+        }
+    }
+
+    .timelineWrapper {
+        margin-top: (10rem/24);
+
+        .timelineTitle {
+            font-size: (36rem/24);
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .timeline {
+            padding: (10rem/24) (50rem/24);
+            height: (229rem/24);
+            overflow: auto;
+        }
+    }
+}

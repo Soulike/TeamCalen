@@ -1,0 +1,27 @@
+.ReminderSetting {
+
+    .title {
+        text-align: center;
+        font-size: (36rem/24);
+    }
+
+    .reminderWrapper {
+        margin-top: (36rem/24);
+
+        .reminderSwitchWrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: (28rem/24);
+
+            &:first-child {
+                margin-top: 0;
+            }
+
+            .reminderLabel {
+                margin-left: (24rem/24);
+            }
+        }
+    }
+
+
+}

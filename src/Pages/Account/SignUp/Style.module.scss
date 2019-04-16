@@ -1,0 +1,51 @@
+.SignUp {
+    padding: (96rem/24) (200rem/24);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .signUpForm {
+        width: (452rem/24);
+
+        .title {
+            text-align: center;
+            font-size: (36rem/24);
+        }
+
+        .inputWrapper {
+            margin-top: (40rem/24);
+
+            .input {
+                margin-bottom: (35rem/24);
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .tipWrapper {
+            margin-top: (17rem/24);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            .loginTip {
+
+            }
+        }
+
+        .buttonWrapper {
+            margin-top: (28rem/24);
+            display: flex;
+            justify-content: center;
+
+            .submitButton {
+                font-size: (28rem/24);
+                width: (147rem/24);
+                height: (60rem/24);
+                border-radius: (20rem/24);
+            }
+        }
+    }
+}

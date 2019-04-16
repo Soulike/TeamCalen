@@ -1,0 +1,70 @@
+.Index {
+
+    .topBar {
+        height: (106rem/24);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 (161rem/24);
+
+        .icon {
+            background: url("../../Static/teamcalen.svg") no-repeat center;
+            background-size: contain;
+            width: (161rem/24);
+            height: (69rem/24);
+        }
+
+        .linkWrapper {
+            font-size: (36rem/24);
+
+            &, & a {
+                color: #FFF;
+            }
+
+            a {
+                text-decoration: none;
+            }
+        }
+    }
+
+    .entryWrapper {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: (106rem/24);
+        bottom: 0;
+        padding: (133rem/24) (200rem/24);
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+
+        .text {
+            font-size: (60rem/24);
+            color: #438AFF;
+            font-weight: bolder;
+            text-align: center;
+        }
+
+        .enterButton {
+            width: (355rem/24);
+            height: (90rem/24);
+            font-size: (40rem/24);
+            color: #438AFF;
+            border: (1rem/24) solid #BBB;
+            border-radius: (30rem/24);
+            margin-top: (32rem/24);
+            background-color: #FFF;
+        }
+    }
+
+    .background {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: url("../../Static/Index/background.png") no-repeat center;
+        background-size: cover;
+        z-index: -2;
+    }
+}
