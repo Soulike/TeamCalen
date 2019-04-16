@@ -14,8 +14,6 @@ class ControlPanelContainer extends React.Component
         super(props);
         this.state = {
             currentActivePageId: PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE,
-            username: undefined,
-            avatarSrc: undefined,
         };
 
         const {getUserInfo} = this.props;
@@ -27,12 +25,6 @@ class ControlPanelContainer extends React.Component
         const route = this.props.location.pathname;
         this.setState({
             currentActivePageId: ROUTE_TO_PAGE_ID[route],
-        });
-
-        const {userInfo: {username, avatarSrc}} = this.props;
-        this.setState({
-            username,
-            avatarSrc,
         });
     }
 
@@ -50,7 +42,8 @@ class ControlPanelContainer extends React.Component
 
     render()
     {
-        const {currentActivePageId, username, avatarSrc} = this.state;
+        const {currentActivePageId} = this.state;
+        const {username, avatarSrc} = this.props;
         const {midPartComponent, rightPartComponent} = this.props;
         return (
             <ControlPanel currentActivePageId={currentActivePageId}
@@ -70,7 +63,7 @@ ControlPanelContainer.propTypes = {
 const mapStateToProps = state =>
 {
     const {ControlPanel: {userInfo}} = state;
-    return {userInfo};
+    return {...userInfo};
 };
 
 const mapDispatchToProps = {
