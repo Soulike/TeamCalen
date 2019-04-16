@@ -33,7 +33,9 @@ class ScheduleModalContainer extends React.Component
             if (schedulesWrapper)
             {
                 const {schedules} = schedulesWrapper;
-                this.setState(schedules);
+                this.setState({
+                    schedules,
+                });
             }
         }
     };

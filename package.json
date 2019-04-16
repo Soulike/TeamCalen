@@ -1,7 +1,7 @@
 {
   "name": "teamcalen",
   "version": "0.1.0",
-  "proxy": "http://10.6.45.46:8080",
+  "proxy": "http://localhost:8080",
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
