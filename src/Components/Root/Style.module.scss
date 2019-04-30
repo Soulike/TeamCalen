@@ -1,5 +1,11 @@
 .Root {
 
+    .main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .backgroundLeft {
         position: fixed;
         left: 0;

@@ -1,10 +1,12 @@
-import Index from '../Pages/Index';
-import RootContainer from '../ComponentContainer/RootContainer';
-import Login from '../Pages/Account/Login';
-import SignUp from '../Pages/Account/SignUp';
-import RetrievePassword from '../Pages/Account/RetrievePassword';
-import NewSchedule from '../Pages/ControlPanel/NewSchedule';
-import AccountManagement from '../Pages/ControlPanel/AccountManagement';
+import React from 'react';
+
+const Index = React.lazy(() => import('../Pages/Index'));
+const RootContainer = React.lazy(() => import('../ComponentContainer/RootContainer'));
+const Login = React.lazy(() => import('../Pages/Account/Login'));
+const SignUp = React.lazy(() => import('../Pages/Account/SignUp'));
+const RetrievePassword = React.lazy(() => import('../Pages/Account/RetrievePassword'));
+const NewSchedule = React.lazy(() => import('../Pages/ControlPanel/NewSchedule'));
+const AccountManagement = React.lazy(() => import('../Pages/ControlPanel/AccountManagement'));
 
 const PAGE_ID = {
     INDEX: Symbol('index'),
@@ -88,7 +90,7 @@ const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.ACCOUNT.SIGN_UP]: SignUp,
     [PAGE_ID.ACCOUNT.RETRIEVE_PASSWORD]: RetrievePassword,
 
-    [PAGE_ID.CONTROL_PANEL.INDEX]: null,
+    [PAGE_ID.CONTROL_PANEL.INDEX]: RootContainer,
     [PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE]: NewSchedule,
     [PAGE_ID.CONTROL_PANEL.NEW_PROJECT]: null,
     [PAGE_ID.CONTROL_PANEL.MY_PROJECT]: null,

@@ -1,15 +1,15 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import ControlPanel from '../../../ComponentContainer/ControlPanelContainer';
 import AvatarUploader from './Components/AvatarUploader';
 import ReminderSetting from './Components/ReminderSetting';
 import PasswordChange from './Components/PasswordChange';
 import DetailSetting from './Components/DetailSetting';
+import ControlPanelContent from '../../../Components/ControlPanelContent';
 
 function AccountManagement()
 {
     return (
-        <ControlPanel midPartComponent={
+        <ControlPanelContent midPartComponent={
             <div className={Style.AccountManagement}>
                 <div className={Style.leftPart}>
                     <div className={Style.avatarUploaderWrapper}>

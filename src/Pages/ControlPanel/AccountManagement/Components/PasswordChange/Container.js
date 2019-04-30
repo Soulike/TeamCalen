@@ -5,8 +5,8 @@ import Api from '../../../../../Api';
 import {REGEX} from '../../../../../CONSTANT/REGEX';
 import message from 'antd/lib/message';
 import {Actions as AuthProcessorActions} from '../../../../../Components/AuthProcessor';
-import {browserHistory} from 'react-router';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../Router';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../CONFIG';
+import {withRouter} from 'react-router-dom';
 
 class PasswordChangeContainer extends React.Component
 {
@@ -56,7 +56,7 @@ class PasswordChangeContainer extends React.Component
             {
                 const {setOffline} = this.props;
                 setOffline();
-                browserHistory.push(PAGE_ID_TO_ROUTE[PAGE_ID.ACCOUNT.LOGIN]);
+                this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.ACCOUNT.LOGIN]);
             }
         }
     };
@@ -84,4 +84,4 @@ const mapDispatchToProps = {
     setOffline: AuthProcessorActions.setOfflineAction,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PasswordChangeContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PasswordChangeContainer));
