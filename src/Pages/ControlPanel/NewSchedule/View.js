@@ -1,12 +1,12 @@
 import React from 'react';
-import ControlPanelContainer from '../../../ComponentContainer/ControlPanelContainer';
 import ScheduleOverview from './Components/ScheduleOverview';
 import NewSchedulePanel from './Components/NewSchedulePanel';
+import ControlPanelContent from '../../../Components/ControlPanelContent';
 
 function NewSchedule()
 {
     return (
-        <ControlPanelContainer midPartComponent={
+        <ControlPanelContent midPartComponent={
             <ScheduleOverview />
         } rightPartComponent={
             <NewSchedulePanel />
