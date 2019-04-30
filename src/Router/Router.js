@@ -1,32 +1,24 @@
-import React from 'react';
-import {browserHistory, IndexRedirect, Route, Router} from 'react-router';
-import {PAGE_ID, PAGE_ID_TO_COMPONENT, PAGE_ID_TO_ROUTE} from './PAGE';
-import {Function as AuthProcessorFunction} from '../Components/AuthProcessor';
+import React, {Suspense} from 'react';
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../CONFIG';
+import Loading from '../Components/Loading';
 
-const Routes = () => (
-    <Router history={browserHistory}>
-        <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]} component={PAGE_ID_TO_COMPONENT[PAGE_ID.INDEX]} />
-        <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.ACCOUNT.INDEX]} component={PAGE_ID_TO_COMPONENT[PAGE_ID.ACCOUNT.INDEX]}>
-            <IndexRedirect to={PAGE_ID_TO_ROUTE[PAGE_ID.ACCOUNT.LOGIN]} />
-            {
-                Object.values(PAGE_ID.ACCOUNT).map(pageId =>
-                    <Route path={PAGE_ID_TO_ROUTE[pageId]}
-                           component={PAGE_ID_TO_COMPONENT[pageId]}
-                           key={PAGE_ID_TO_ROUTE[pageId]} />)
-            }
-        </Route>
-        <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.INDEX]}
-               component={PAGE_ID_TO_COMPONENT[PAGE_ID.CONTROL_PANEL.INDEX]}>
-            <IndexRedirect to={PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE]} />
-            {
-                Object.values(PAGE_ID.CONTROL_PANEL).map(pageId =>
-                    <Route path={PAGE_ID_TO_ROUTE[pageId]}
-                           component={PAGE_ID_TO_COMPONENT[pageId]}
-                           key={PAGE_ID_TO_ROUTE[pageId]}
-                           onEnter={AuthProcessorFunction.requireLogin} />)
-            }
-        </Route>
-    </Router>
-);
+const IndexRouter = React.lazy(() => import('./IndexRouter'));
+const ControlPanelRouter = React.lazy(() => import('./ControlPanelRouter'));
+const AccountRouter = React.lazy(() => import('./AccountRouter'));
 
-export default Routes;
+export default () =>
+{
+    return (
+        <BrowserRouter>
+            <Suspense fallback={<Loading />}>
+                <Switch>
+                    <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]} exact component={IndexRouter} />
+                    <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.ACCOUNT.INDEX]} component={AccountRouter} />
+                    <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.INDEX]} component={ControlPanelRouter} />
+                    <Route children={<Redirect to={PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]} />} />
+                </Switch>
+            </Suspense>
+        </BrowserRouter>
+    );
+};

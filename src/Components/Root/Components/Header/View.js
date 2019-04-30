@@ -2,7 +2,7 @@ import React from 'react';
 import Style from './Style.module.scss';
 import PropTypes from 'prop-types';
 import '../../../../Static/teamcalen.svg';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 
 function Header(props)
 {
@@ -15,9 +15,9 @@ function Header(props)
                     hasLoggedIn ?
                         <div className={Style.exit} onClick={exitFunction}>退出登录</div> :
                         <div className={Style.link}>
-                            <Link onlyActiveOnIndex={false} to={signUpLink}>注册</Link>
+                            <Link to={signUpLink}>注册</Link>
                             /
-                            <Link onlyActiveOnIndex={false} to={loginLink}>登录</Link>
+                            <Link to={loginLink}>登录</Link>
                         </div>
                 }
             </div>

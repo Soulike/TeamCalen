@@ -14,7 +14,7 @@ function Root(props)
                 signUpLink,
                 exitFunction,
             }} />
-            <main>{children}</main>
+            <main className={Style.main}>{children}</main>
             <div className={Style.backgroundLeft} />
             <div className={Style.backgroundRight} />
         </div>

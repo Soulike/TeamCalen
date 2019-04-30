@@ -1,0 +1,17 @@
+.ControlPanelContent {
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    flex-grow: 1;
+
+    .midPart {
+        flex-grow: 1;
+        box-sizing: border-box;
+    }
+
+    .rightPart {
+        box-sizing: border-box;
+        width: (460rem/24);
+        border-left: (1rem/24) solid #BBB;
+    }
+}

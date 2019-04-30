@@ -2,9 +2,8 @@ import React from 'react';
 import SignUp from './View';
 import {REGEX} from '../../../CONSTANT/REGEX';
 import Api from '../../../Api';
-import message from 'antd/lib/message/index';
-import {browserHistory} from 'react-router';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../Router';
+import message from 'antd/lib/message';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../CONFIG';
 
 class SignUpContainer extends React.Component
 {
@@ -65,7 +64,7 @@ class SignUpContainer extends React.Component
             const requestIsSuccessful = await Api.sendPostSignUpRequestAsync(username, password, email, verificationCode);
             if (requestIsSuccessful)
             {
-                browserHistory.push(PAGE_ID_TO_ROUTE[PAGE_ID.ACCOUNT.LOGIN]);
+                this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.ACCOUNT.LOGIN]);
             }
         }
     };

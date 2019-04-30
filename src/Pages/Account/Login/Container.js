@@ -3,8 +3,7 @@ import {Actions as AuthProcessorActions} from '../../../Components/AuthProcessor
 import {connect} from 'react-redux';
 import Login from './View';
 import message from 'antd/lib/message';
-import {browserHistory} from 'react-router';
-import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../Router';
+import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../CONFIG';
 import {REGEX} from '../../../CONSTANT/REGEX';
 
 class LoginContainer extends React.Component
@@ -22,7 +21,7 @@ class LoginContainer extends React.Component
         if (hasLoggedIn)
         {
             message.info('您已登录');
-            browserHistory.push(PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.INDEX]);
+            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.INDEX]);
         }
     }
 
@@ -31,7 +30,7 @@ class LoginContainer extends React.Component
         const {hasLoggedIn} = this.props;
         if (hasLoggedIn)
         {
-            browserHistory.push(PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.INDEX]);
+            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.INDEX]);
         }
     }
 

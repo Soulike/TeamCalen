@@ -1,9 +1,8 @@
 import React from 'react';
 import ControlPanel from '../../Components/ControlPanel';
-import {PAGE_ID} from '../../Router';
-import {withRouter} from 'react-router';
-import {ROUTE_TO_PAGE_ID} from '../../Router/PAGE';
-import PropTypes from 'prop-types';
+import {PAGE_ID} from '../../CONFIG';
+import {withRouter} from 'react-router-dom';
+import {ROUTE_TO_PAGE_ID} from '../../CONFIG/PAGE';
 import * as Actions from './Actions/Actions';
 import {connect} from 'react-redux';
 
@@ -43,22 +42,14 @@ class ControlPanelContainer extends React.Component
     render()
     {
         const {currentActivePageId} = this.state;
-        const {username, avatarSrc} = this.props;
-        const {midPartComponent, rightPartComponent} = this.props;
+        const {username, avatarSrc, children} = this.props;
         return (
             <ControlPanel currentActivePageId={currentActivePageId}
                           username={username}
-                          avatarSrc={avatarSrc}
-                          midPartComponent={midPartComponent}
-                          rightPartComponent={rightPartComponent} />
+                          avatarSrc={avatarSrc}>{children}</ControlPanel>
         );
     }
 }
-
-ControlPanelContainer.propTypes = {
-    midPartComponent: PropTypes.element,
-    rightPartComponent: PropTypes.element,
-};
 
 const mapStateToProps = state =>
 {
@@ -70,4 +61,4 @@ const mapDispatchToProps = {
     getUserInfo: Actions.getUserInfoAction,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ControlPanelContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ControlPanelContainer));
