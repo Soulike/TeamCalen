@@ -1,21 +1,25 @@
 import 'react-app-polyfill/ie11';
-import React from 'react';
+import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import {Provider} from 'react-redux';
 import Store from './Store';
-import Router from './Router';
 import * as serviceWorker from './serviceWorker';
-import zhCN from 'antd/lib/locale-provider/zh_CN';
-import LocaleProvider from 'antd/lib/locale-provider';
+import Loading from './Components/Loading';
 import './ModuleConfig';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+
+const LocaleProvider = React.lazy(() => import('antd/lib/locale-provider'));
+const Router = React.lazy(() => import('./Router'));
 
 ReactDOM.render(
-    <LocaleProvider locale={zhCN}>
-        <Provider store={Store}>
-            <Router />
-        </Provider>
-    </LocaleProvider>,
+    <Suspense fallback={<Loading />}>
+        <LocaleProvider locale={zhCN}>
+            <Provider store={Store}>
+                <Router />
+            </Provider>
+        </LocaleProvider>
+    </Suspense>,
     document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

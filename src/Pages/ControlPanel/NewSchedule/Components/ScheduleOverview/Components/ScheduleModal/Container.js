@@ -10,8 +10,8 @@ import {
     onResumeClickFactory,
     onSwitchChangeFactory,
 } from '../../Function';
-import {updateScheduleInfo} from '../../../../Function';
-import MODAL_ID from '../../../../../../../CONSTANT/MODAL_ID';
+import {eventEmitter} from '../../../../../../../Singleton';
+import EVENT from '../../../../../../../CONSTANT/EVENT';
 
 class ScheduleModalContainer extends React.Component
 {
@@ -20,21 +20,47 @@ class ScheduleModalContainer extends React.Component
         super(props);
         this.state = {
             schedules: [],
+
+            hasGotData: false,
         };
     }
 
-    refreshSchedules = async () =>
+    componentDidMount()
     {
-        updateScheduleInfo();
+        eventEmitter.on(EVENT.SCHEDULE.SCHEDULE_MODIFIED, async () =>
+        {
+            await this.updateSchedulesInState();
+        });
+
+        eventEmitter.on(EVENT.SCHEDULE.SCHEDULE_CREATED_OR_DELETED, async () =>
+        {
+            await this.updateSchedulesInState();
+        });
+    }
+
+    setStateAsync = async state =>
+    {
+        return new Promise(resolve =>
+        {
+            this.setState(state, resolve);
+        });
+    };
+
+    updateSchedulesInState = async () =>
+    {
         const {year, month, day} = this.props;
+        await this.setStateAsync({
+            hasGotData: false,
+        });
         const schedulesWrapper = await Api.sendGetSchedulesByDayRequestAsync(year, month, day);
         if (schedulesWrapper)
         {
             if (schedulesWrapper)
             {
                 const {schedules} = schedulesWrapper;
-                this.setState({
+                await this.setStateAsync({
                     schedules,
+                    hasGotData: true,
                 });
             }
         }
@@ -42,13 +68,16 @@ class ScheduleModalContainer extends React.Component
 
     onShow = async () =>
     {
-        await this.refreshSchedules();
+        await this.setStateAsync({
+            schedules: [],
+        });
+        await this.updateSchedulesInState();
     };
 
     render()
     {
         const {year, month, day} = this.props;
-        const {schedules} = this.state;
+        const {schedules, hasGotData} = this.state;
         const timelineItems = [];
         schedules.forEach(schedule =>
         {
@@ -66,11 +95,11 @@ class ScheduleModalContainer extends React.Component
             timelineItems.push(
                 new TimelineItemObject.TimelineItem(id, month, day, startHour, startMinute, endHour, endMinute,
                     scheduleText, scheduleState,
-                    onSwitchChangeFactory(id, this.refreshSchedules),
-                    onResumeClickFactory(id, this.refreshSchedules),
-                    onCancelClickFactory(id, this.refreshSchedules),
-                    onDeleteClickFactory(id, this.refreshSchedules),
-                    onModifyClickFactory(id, MODAL_ID.SCHEDULE_MODIFY_MODAL_FOR_SCHEDULE_MODAL, this.refreshSchedules),
+                    onSwitchChangeFactory(id),
+                    onResumeClickFactory(id),
+                    onCancelClickFactory(id),
+                    onDeleteClickFactory(id),
+                    onModifyClickFactory(id),
                 ),
             );
         });
@@ -78,7 +107,9 @@ class ScheduleModalContainer extends React.Component
             <ScheduleModal year={year}
                            month={month}
                            day={day}
-                           timelineItems={timelineItems} onShow={this.onShow} />
+                           timelineItems={timelineItems}
+                           onShow={this.onShow}
+                           hasGotData={hasGotData} />
         );
     }
 }
