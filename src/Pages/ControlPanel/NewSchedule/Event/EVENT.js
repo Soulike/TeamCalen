@@ -1,1 +1,0 @@
-export const SCHEDULE_CHANGED = 'scheduleChanged';

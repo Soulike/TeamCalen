@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Api from '../../../../../Api';
 import {REGEX} from '../../../../../CONSTANT/REGEX';
 import message from 'antd/lib/message';
-import {Actions as AuthProcessorActions} from '../../../../../Components/AuthProcessor';
+import {Actions as AuthProcessorActions} from '../../../../../ComponentContainer/AuthProcessor';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../../../CONFIG';
 import {withRouter} from 'react-router-dom';
 

@@ -4,7 +4,8 @@ import moment from 'moment';
 import {REGEX} from '../../../../../CONSTANT/REGEX';
 import message from 'antd/lib/message';
 import Api from '../../../../../Api';
-import {updateScheduleInfo} from '../../Function';
+import {eventEmitter} from '../../../../../Singleton';
+import EVENT from '../../../../../CONSTANT/EVENT';
 
 class NewSchedulePanelContainer extends React.Component
 {
@@ -116,7 +117,7 @@ class NewSchedulePanelContainer extends React.Component
                 startHour, startMinute, endHour, endMinute, scheduleText, hasReminder);
             if (requestIsSuccessful)
             {
-                updateScheduleInfo();
+                eventEmitter.emit(EVENT.SCHEDULE.SCHEDULE_CREATED_OR_DELETED);
                 const now = moment();
                 this.setState({
                     year: now.format('YYYY'),

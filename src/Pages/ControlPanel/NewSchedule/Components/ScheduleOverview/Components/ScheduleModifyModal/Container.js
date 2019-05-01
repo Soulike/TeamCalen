@@ -7,8 +7,9 @@ import message from 'antd/lib/message';
 import {Actions as ModalActions} from '../../../../../../../ComponentContainer/Modal';
 import MODAL_ID from '../../../../../../../CONSTANT/MODAL_ID';
 import moment from 'moment';
-import {updateScheduleInfo} from '../../../../Function';
 import PropTypes from 'prop-types';
+import {eventEmitter} from '../../../../../../../Singleton';
+import EVENT from '../../../../../../../CONSTANT/EVENT';
 
 class ScheduleModifyModalContainer extends React.Component
 {
@@ -155,7 +156,7 @@ class ScheduleModifyModalContainer extends React.Component
                     confirmLoading: false,
                 });
                 closeModal(modalId);
-                updateScheduleInfo();
+                eventEmitter.emit(EVENT.SCHEDULE.SCHEDULE_MODIFIED);
             }
         }
     };

@@ -10,6 +10,7 @@
 
     .leftPart {
         flex-grow: 0;
+        flex-shrink: 0;
         width: (380rem/24);
         border-right: (1rem/24) solid #BBB;
         box-sizing: border-box;
