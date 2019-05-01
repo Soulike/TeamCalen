@@ -47,4 +47,4 @@ ScheduleModal.defaultProps = {
     hasGotData: true,
 };
 
-export default ScheduleModal;
+export default React.memo(ScheduleModal);

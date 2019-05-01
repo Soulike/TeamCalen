@@ -32,4 +32,4 @@ function AccountManagement()
     );
 }
 
-export default AccountManagement;
+export default React.memo(AccountManagement);

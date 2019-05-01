@@ -87,4 +87,4 @@ NewSchedulePanel.propTypes = {
     onSubmit: PropTypes.func.isRequired,
 };
 
-export default NewSchedulePanel;
+export default React.memo(NewSchedulePanel);

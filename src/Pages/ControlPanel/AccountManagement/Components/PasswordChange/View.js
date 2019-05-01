@@ -46,4 +46,4 @@ PasswordChange.propTypes = {
     onSubmit: PropTypes.func.isRequired,
 };
 
-export default PasswordChange;
+export default React.memo(PasswordChange);

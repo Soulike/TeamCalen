@@ -32,4 +32,4 @@ Header.propTypes = {
     exitFunction: PropTypes.func.isRequired,
 };
 
-export default Header;
+export default React.memo(Header);

@@ -26,4 +26,4 @@ function ReminderSetting()
     );
 }
 
-export default ReminderSetting;
+export default React.memo(ReminderSetting);

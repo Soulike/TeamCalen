@@ -73,4 +73,4 @@ RetrievePassword.propTypes = {
     onSubmit: PropTypes.func.isRequired,
 };
 
-export default RetrievePassword;
+export default React.memo(RetrievePassword);

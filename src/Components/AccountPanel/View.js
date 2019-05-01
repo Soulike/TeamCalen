@@ -15,4 +15,4 @@ function AccountPanel(props)
     );
 }
 
-export default AccountPanel;
+export default React.memo(AccountPanel);

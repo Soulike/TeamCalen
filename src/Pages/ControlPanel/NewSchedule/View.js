@@ -14,4 +14,4 @@ function NewSchedule()
     );
 }
 
-export default NewSchedule;
+export default React.memo(NewSchedule);

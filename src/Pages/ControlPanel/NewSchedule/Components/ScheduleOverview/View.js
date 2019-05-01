@@ -111,4 +111,4 @@ ScheduleOverview.defaultProps = {
     hasGotRecentSchedules: true,
 };
 
-export default ScheduleOverview;
+export default React.memo(ScheduleOverview);

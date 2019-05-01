@@ -31,4 +31,4 @@ DetailSetting.propTypes = {
     onPhoneSettingButtonClick: PropTypes.func.isRequired,
 };
 
-export default DetailSetting;
+export default React.memo(DetailSetting);
