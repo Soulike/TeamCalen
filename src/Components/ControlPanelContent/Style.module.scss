@@ -10,6 +10,7 @@
     }
 
     .rightPart {
+        flex-shrink: 0;
         box-sizing: border-box;
         width: (460rem/24);
         border-left: (1rem/24) solid #BBB;
