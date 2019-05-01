@@ -2,8 +2,8 @@ import React from 'react';
 import AvatarUploader from './View';
 import message from 'antd/lib/message';
 import Api from '../../../../../Api';
-import {Actions as ControlPanelActions} from '../../../../../ComponentContainer/ControlPanelContainer';
-import {connect} from 'react-redux';
+import {eventEmitter} from '../../../../../Singleton';
+import EVENT from '../../../../../CONSTANT/EVENT';
 
 class AvatarUploaderContainer extends React.Component
 {
@@ -52,13 +52,12 @@ class AvatarUploaderContainer extends React.Component
         }
         else
         {
-            const {getUserInfo} = this.props;
             await this.setStateAsync({isUploading: true});
             const requestIsSuccessful = await Api.sendPostUploadAvatarRequestAsync(selectedFileObject);
             await this.setStateAsync({isUploading: false});
             if (requestIsSuccessful)
             {
-                getUserInfo();
+                eventEmitter.emit(EVENT.CONTROL_PANEL.USER_INFO_UPDATED);
             }
         }
     };
@@ -75,8 +74,4 @@ class AvatarUploaderContainer extends React.Component
     }
 }
 
-const mapDispatchToProps = {
-    getUserInfo: ControlPanelActions.getUserInfoAction,
-};
-
-export default connect(null, mapDispatchToProps)(AvatarUploaderContainer);
+export default AvatarUploaderContainer;

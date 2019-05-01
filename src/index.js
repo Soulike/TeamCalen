@@ -7,10 +7,10 @@ import Store from './Store';
 import * as serviceWorker from './serviceWorker';
 import Loading from './Components/Loading';
 import './ModuleConfig';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
 
-const Router = React.lazy(() => import('./Router'));
-const zhCN = React.lazy(() => import('antd/lib/locale-provider/zh_CN'));
 const LocaleProvider = React.lazy(() => import('antd/lib/locale-provider'));
+const Router = React.lazy(() => import('./Router'));
 
 ReactDOM.render(
     <Suspense fallback={<Loading />}>

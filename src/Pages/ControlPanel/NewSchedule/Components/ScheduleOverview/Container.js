@@ -1,7 +1,6 @@
 import React from 'react';
 import ScheduleOverview from './View';
 import moment from 'moment';
-import * as newScheduleActions from '../../Actions/Actions';
 import {connect} from 'react-redux';
 import {Actions as ModalActions} from '../../../../../ComponentContainer/Modal';
 import MODAL_ID from '../../../../../CONSTANT/MODAL_ID';
@@ -13,7 +12,9 @@ import {
     onResumeClickFactory,
     onSwitchChangeFactory,
 } from './Function';
-import {updateScheduleInfo} from '../../Function';
+import Api from '../../../../../Api';
+import {eventEmitter} from '../../../../../Singleton';
+import EVENT from '../../../../../CONSTANT/EVENT';
 
 class ScheduleOverviewContainer extends React.Component
 {
@@ -26,21 +27,99 @@ class ScheduleOverviewContainer extends React.Component
             clickedYear: nowMoment.format('YYYY'),  // 当前被点击的日期，用于获取具体日程列表
             clickedMonth: nowMoment.format('MM'),
             clickedDay: nowMoment.format('DD'),
+
+            selectedYear: nowMoment.format('YYYY'), // 当前选择显示数量的年月
+            selectedMonth: nowMoment.format('MM'),
+
+            everyDayScheduleAmountInAMonth: [], // 选择年月每一天的日程数量
+            recentSchedules: [],
+
+            hasGotEveryDayScheduleAmountInAMonth: false,
+            hasGotRecentSchedules: false,
         };
     }
 
+    setStateAsync = async state =>
+    {
+        return new Promise(resolve =>
+        {
+            this.setState(state, resolve);
+        });
+    };
+
     componentDidMount()
     {
-        updateScheduleInfo();
+        Promise.all([
+            this.updateEveryDayScheduleAmountInState(),
+            this.updateRecentSchedulesInState(),
+        ])
+            .then(() =>
+            {
+                eventEmitter.on(EVENT.SCHEDULE.SCHEDULE_CREATED_OR_DELETED, async () =>
+                {
+                    await Promise.all([
+                        this.updateEveryDayScheduleAmountInState(),
+                        this.updateRecentSchedulesInState(),
+                    ]);
+                });
+
+                eventEmitter.on(EVENT.SCHEDULE.SCHEDULE_MODIFIED, async () =>
+                {
+                    await this.updateRecentSchedulesInState();
+                });
+            });
     }
 
-    onPanelChange = date =>
+    componentWillUnmount()
     {
-        const {changeSelectedYearAndMonth} = this.props;
+        eventEmitter
+            .removeAllListeners(EVENT.SCHEDULE.SCHEDULE_MODIFIED)
+            .removeAllListeners(EVENT.SCHEDULE.SCHEDULE_CREATED_OR_DELETED);
+    }
+
+    updateEveryDayScheduleAmountInState = async () =>
+    {
+        const {
+            selectedYear,
+            selectedMonth,
+        } = this.state;
+        await this.setStateAsync({
+            hasGotEveryDayScheduleAmountInAMonth: false,
+        });
+        const scheduleAmountWrapper = await Api.sendGetEveryDayScheduleAmountInAMonthRequestAsync(selectedYear, selectedMonth);
+        if (scheduleAmountWrapper)
+        {
+            await this.setStateAsync({
+                everyDayScheduleAmountInAMonth: scheduleAmountWrapper['scheduleAmount'],
+                hasGotEveryDayScheduleAmountInAMonth: true,
+            });
+        }
+    };
+
+    updateRecentSchedulesInState = async () =>
+    {
+        await this.setStateAsync({
+            hasGotRecentSchedules: false,
+        });
+        const recentSchedulesWrapper = await Api.sendGetRecentSchedulesRequestAsync(10);
+        if (recentSchedulesWrapper)
+        {
+            await this.setStateAsync({
+                recentSchedules: recentSchedulesWrapper['schedules'],
+                hasGotRecentSchedules: true,
+            });
+        }
+    };
+
+    onPanelChange = async date =>
+    {
         const selectedYear = date.format('YYYY');
         const selectedMonth = date.format('MM');
-        changeSelectedYearAndMonth(selectedYear, selectedMonth);
-        updateScheduleInfo();
+        await this.setStateAsync({
+            selectedYear,
+            selectedMonth,
+        });
+        await this.updateEveryDayScheduleAmountInState();
     };
 
     onSelect = date =>
@@ -59,8 +138,17 @@ class ScheduleOverviewContainer extends React.Component
 
     render()
     {
-        const {selectedYear, selectedMonth, scheduleAmount, recentSchedules} = this.props;
-        const {clickedYear, clickedMonth, clickedDay} = this.state;
+        const {
+            clickedYear,
+            clickedMonth,
+            clickedDay,
+            selectedYear,
+            selectedMonth,
+            everyDayScheduleAmountInAMonth,
+            recentSchedules,
+            hasGotEveryDayScheduleAmountInAMonth,
+            hasGotRecentSchedules,
+        } = this.state;
 
         const timelineItems = [];
         recentSchedules.forEach(schedule =>
@@ -79,43 +167,33 @@ class ScheduleOverviewContainer extends React.Component
             timelineItems.push(
                 new TimelineItemObject.TimelineItem(id, month, day, startHour, startMinute, endHour, endMinute,
                     scheduleText, scheduleState,
-                    onSwitchChangeFactory(id, updateScheduleInfo),
-                    onResumeClickFactory(id, updateScheduleInfo),
-                    onCancelClickFactory(id, updateScheduleInfo),
-                    onDeleteClickFactory(id, updateScheduleInfo),
-                    onModifyClickFactory(id, MODAL_ID.SCHEDULE_MODIFY_MODAL_FOR_RECENT_SCHEDULES, updateScheduleInfo),
+                    onSwitchChangeFactory(id),
+                    onResumeClickFactory(id),
+                    onCancelClickFactory(id),
+                    onDeleteClickFactory(id),
+                    onModifyClickFactory(id),
                 ),
             );
         });
 
         return (
             <ScheduleOverview onPanelChange={this.onPanelChange}
-                              scheduleAmount={scheduleAmount}
+                              everyDayScheduleAmountInAMonth={everyDayScheduleAmountInAMonth}
                               selectedYear={selectedYear}
                               selectedMonth={selectedMonth}
                               clickedYear={clickedYear}
                               clickedMonth={clickedMonth}
                               clickedDay={clickedDay}
                               onSelect={this.onSelect}
-                              timelineItems={timelineItems} />
+                              timelineItems={timelineItems}
+                              hasGotEveryDayScheduleAmountInAMonth={hasGotEveryDayScheduleAmountInAMonth}
+                              hasGotRecentSchedules={hasGotRecentSchedules} />
         );
     }
 }
 
-const mapStateToProps = state =>
-{
-    const {NewSchedule: {scheduleAmount, recentSchedules, selectedYear, selectedMonth}} = state;
-    return {
-        scheduleAmount,
-        recentSchedules,
-        selectedYear,
-        selectedMonth,
-    };
-};
-
 const mapDispatchToProps = {
     showModal: ModalActions.showModalAction,
-    changeSelectedYearAndMonth: newScheduleActions.changeSelectedYearAndMonthAction,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScheduleOverviewContainer);
+export default connect(null, mapDispatchToProps)(ScheduleOverviewContainer);

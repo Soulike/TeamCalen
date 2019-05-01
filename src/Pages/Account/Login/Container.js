@@ -1,5 +1,5 @@
 import React from 'react';
-import {Actions as AuthProcessorActions} from '../../../Components/AuthProcessor';
+import {Actions as AuthProcessorActions} from '../../../ComponentContainer/AuthProcessor';
 import {connect} from 'react-redux';
 import Login from './View';
 import message from 'antd/lib/message';

@@ -5,6 +5,8 @@ import {withRouter} from 'react-router-dom';
 import {ROUTE_TO_PAGE_ID} from '../../CONFIG/PAGE';
 import * as Actions from './Actions/Actions';
 import {connect} from 'react-redux';
+import {eventEmitter} from '../../Singleton';
+import EVENT from '../../CONSTANT/EVENT';
 
 class ControlPanelContainer extends React.Component
 {
@@ -25,6 +27,17 @@ class ControlPanelContainer extends React.Component
         this.setState({
             currentActivePageId: ROUTE_TO_PAGE_ID[route],
         });
+
+        const {getUserInfo} = this.props;
+        eventEmitter.on(EVENT.CONTROL_PANEL.USER_INFO_UPDATED, () =>
+        {
+            getUserInfo();
+        });
+    }
+
+    componentWillUnmount()
+    {
+        eventEmitter.removeAllListeners(EVENT.CONTROL_PANEL.USER_INFO_UPDATED);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot)

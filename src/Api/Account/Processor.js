@@ -9,7 +9,7 @@ import {
 } from './ROUTE';
 import STATUS_CODE from '../../CONSTANT/STATUS_CODE';
 import message from 'antd/lib/message';
-import {Function as AuthProcessorFunction} from '../../Components/AuthProcessor';
+import {Function as AuthProcessorFunction} from '../../ComponentContainer/AuthProcessor';
 
 export async function sendPostLoginRequestAsync(username, password)
 {
