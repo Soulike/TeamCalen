@@ -53,4 +53,4 @@ Login.propTypes = {
     onSubmit: PropTypes.func.isRequired,
 };
 
-export default Login;
+export default React.memo(Login);

@@ -43,4 +43,4 @@ AvatarUploader.propTypes = {
     isUploading: PropTypes.bool.isRequired,
 };
 
-export default AvatarUploader;
+export default React.memo(AvatarUploader);

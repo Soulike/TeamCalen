@@ -120,4 +120,4 @@ TimelineItem.propTypes = {
     onDeleteClick: PropTypes.func.isRequired,
 };
 
-export default TimelineItem;
+export default React.memo(TimelineItem);

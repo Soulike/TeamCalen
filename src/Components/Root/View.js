@@ -28,4 +28,4 @@ Root.propTypes = {
     exitFunction: PropTypes.func.isRequired,
 };
 
-export default Root;
+export default React.memo(Root);

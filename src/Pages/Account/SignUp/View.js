@@ -86,4 +86,4 @@ SignUp.propTypes = {
     onSubmit: PropTypes.func.isRequired,
 };
 
-export default SignUp;
+export default React.memo(SignUp);

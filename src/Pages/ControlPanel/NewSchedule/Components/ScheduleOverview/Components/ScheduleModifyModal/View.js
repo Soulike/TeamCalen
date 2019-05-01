@@ -115,4 +115,4 @@ ScheduleModifyModal.propTypes = {   // props 里面全部都是初始值
     hasGotData: PropTypes.bool.isRequired,
 };
 
-export default ScheduleModifyModal;
+export default React.memo(ScheduleModifyModal);

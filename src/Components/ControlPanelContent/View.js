@@ -27,4 +27,4 @@ ControlPanelContent.propTypes = {
     rightPartComponent: PropTypes.element,
 };
 
-export default ControlPanelContent;
+export default React.memo(ControlPanelContent);

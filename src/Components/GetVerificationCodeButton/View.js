@@ -17,4 +17,4 @@ GetVerificationCodeButton.propTypes = {
     className: PropTypes.string,
 };
 
-export default GetVerificationCodeButton;
+export default React.memo(GetVerificationCodeButton);

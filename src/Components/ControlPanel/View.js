@@ -46,4 +46,4 @@ ControlPanel.defaultProps = {
     username: 'TeamCalen',
 };
 
-export default withRouter(ControlPanel);
+export default React.memo(withRouter(ControlPanel));

@@ -32,4 +32,4 @@ EmailSettingModal.propTypes = {
     verificationCodeInputRef: PropTypes.object.isRequired,
 };
 
-export default EmailSettingModal;
+export default React.memo(EmailSettingModal);
