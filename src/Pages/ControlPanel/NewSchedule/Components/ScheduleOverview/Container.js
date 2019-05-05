@@ -49,24 +49,22 @@ class ScheduleOverviewContainer extends React.Component
 
     componentDidMount()
     {
+        const modifyListener = async () =>
+        {
+            await Promise.all([
+                this.updateEveryDayScheduleAmountInState(),
+                this.updateRecentSchedulesInState(),
+            ]);
+        };
+
         Promise.all([
             this.updateEveryDayScheduleAmountInState(),
             this.updateRecentSchedulesInState(),
         ])
             .then(() =>
             {
-                eventEmitter.on(EVENT.SCHEDULE.SCHEDULE_CREATED_OR_DELETED, async () =>
-                {
-                    await Promise.all([
-                        this.updateEveryDayScheduleAmountInState(),
-                        this.updateRecentSchedulesInState(),
-                    ]);
-                });
-
-                eventEmitter.on(EVENT.SCHEDULE.SCHEDULE_MODIFIED, async () =>
-                {
-                    await this.updateRecentSchedulesInState();
-                });
+                eventEmitter.on(EVENT.SCHEDULE.SCHEDULE_CREATED_OR_DELETED, modifyListener);
+                eventEmitter.on(EVENT.SCHEDULE.SCHEDULE_MODIFIED, modifyListener);
             });
     }
 
