@@ -33,6 +33,11 @@ class ControlPanelContainer extends React.Component
         {
             getUserInfo();
         });
+
+        eventEmitter.on(EVENT.CONTROL_PANEL.USER_INFO_UPDATE_COMPLETED, () =>
+        {
+            this.forceUpdate();
+        });
     }
 
     componentWillUnmount()
@@ -59,7 +64,7 @@ class ControlPanelContainer extends React.Component
         return (
             <ControlPanel currentActivePageId={currentActivePageId}
                           username={username}
-                          avatarSrc={avatarSrc}>{children}</ControlPanel>
+                          avatarSrc={`${avatarSrc}?_t=${Date.now()}`}>{children}</ControlPanel> // 加一个时间戳禁止浏览器进行缓存
         );
     }
 }
