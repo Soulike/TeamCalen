@@ -8,9 +8,9 @@
 
 ```ts
 {
-    code: number;               // 本次请求状态
-    data?: object;              // 若请求处理成功，需要返回的数据
-    reason?: object | string;   // 若请求处理失败，失败的原因（主要用于调试）
+    code: number,               // 本次请求状态
+    data?: object,              // 若请求处理成功，需要返回的数据
+    reason?: object | string,   // 若请求处理失败，失败的原因（主要用于调试）
 }
 ```
 
@@ -41,14 +41,14 @@
 
 ```ts
 export const REGEX = {
-    USERNAME: /^\w{2;20}$/;
-    PASSWORD: /^.{6;}$/;
-    EMAIL: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-    VERIFICATION_CODE: /^[A-z0-9]{4}$/;
-    YEAR: /^\d{4}$/;
-    MONTH: /^\d{2}$/;
-    DAY: /^\d{2}$/;
-    SCHEDULE_TEXT: /^.{1;255}$/;
+    USERNAME: /^\w{2,20}$/,
+    PASSWORD: /^.{6,}$/,
+    EMAIL: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
+    VERIFICATION_CODE: /^[A-z0-9]{4}$/,
+    YEAR: /^\d{4}$/,
+    MONTH: /^\d{2}$/,
+    DAY: /^\d{2}$/,
+    SCHEDULE_TEXT: /^.{1,255}$/,
 };
 ```
 
@@ -142,8 +142,8 @@ class UserInfo
 - 请求体：
 ```ts
 {
-    username: string;       // 用户名
-    password: string;       // 密码
+    username: string,       // 用户名
+    password: string,       // 密码
 }
 ```
 - 其他说明：无
@@ -184,14 +184,14 @@ class UserInfo
 - 请求体：
 ```ts
 {
-    year: string;   // 年，如 '2019' 表示 2019 年
-    month: string;  // 月，如 '03' 表示 3 月
+    year: string,   // 年，如 '2019' 表示 2019 年
+    month: string,  // 月，如 '03' 表示 3 月
 }
 ```
 - 响应体：
 ```ts
 {
-    scheduleAmount: Array<number>;      // 数组，内容为整数
+    scheduleAmount: Array<number>,      // 数组，内容为整数
 
     // 这个数组从 0 开始，放置指定月所有天的日程数量。下标 0 的数据代表 1 号的日程数量，下标 1 的数据代表 2 号的日程数量，以此类推
 }
@@ -205,13 +205,13 @@ class UserInfo
 - 请求体：
 ```ts
 {
-    amount: number;     // 返回多少条
+    amount: number,     // 返回多少条
 }
 ```
 - 响应体：
 ```ts
 {
-    schedules: Array<ResponseSchedule>;
+    schedules: Array<ResponseSchedule>,
 }
 ```
 - 其他说明：
@@ -225,15 +225,15 @@ class UserInfo
 - 请求体：
 ```ts
 {
-    year: string;   // 年
-    month: string;  // 月
-    day: string;    // 日
+    year: string,   // 年
+    month: string,  // 月
+    day: string,    // 日
 }
 ```
 - 响应体：
 ```ts
 {
-    schedules: Array<ResponseSchedule>;
+    schedules: Array<ResponseSchedule>,
 }
 ```
 - 其他说明
@@ -246,8 +246,8 @@ class UserInfo
 - 请求体：
 ```ts
 {
-    scheduleId: number;     // 日程的唯一识别 ID
-    state: SCHEDULE_STATE.FINISHED | SCHEDULE_STATE.UNFINISHED;
+    scheduleId: number,     // 日程的唯一识别 ID
+    state: SCHEDULE_STATE.FINISHED | SCHEDULE_STATE.UNFINISHED,
 }
 ```
 - 响应体：无
@@ -260,7 +260,7 @@ class UserInfo
 - 请求体：
 ```ts
 {
-    scheduleId: number;     // 日程的唯一识别 ID
+    scheduleId: number,     // 日程的唯一识别 ID
 }
 ```
 - 响应体：无
@@ -273,7 +273,7 @@ class UserInfo
 - 请求体：
 ```ts
 {
-    scheduleId: number;     // 日程的唯一识别 ID
+    scheduleId: number,     // 日程的唯一识别 ID
 }
 ```
 - 响应体：无
@@ -286,7 +286,7 @@ class UserInfo
 - 请求体：
 ```ts
 {
-    scheduleId: number;     // 日程的唯一识别 ID
+    scheduleId: number,     // 日程的唯一识别 ID
 }
 ```
 - 响应体：无
@@ -316,7 +316,7 @@ class UserInfo
 - 请求体：
 ```ts
 {
-    scheduleId: Number;     // 日程的 ID
+    scheduleId: Number,     // 日程的 ID
 }
 ```
 - 响应体：一个 [ResponseSchedule](#ResponseSchedule) 的实例
