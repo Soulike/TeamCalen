@@ -497,21 +497,13 @@ export async function sendPostDeleteScheduleRequestAsync(scheduleId)
     }
 }
 
-export async function sendPostModifyScheduleRequestAsync(scheduleId, year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder)
+export async function sendPostModifyScheduleRequestAsync(scheduleId, requestSchedule)
 {
     try
     {
         const {code} = await Function.postAsync(MODIFY_SCHEDULE, {
             id: scheduleId,
-            year,
-            month,
-            day,
-            startHour,
-            startMinute,
-            endHour,
-            endMinute,
-            scheduleText,
-            hasReminder,
+            schedule: requestSchedule,
         });
         switch (code)
         {
@@ -566,21 +558,11 @@ export async function sendPostModifyScheduleRequestAsync(scheduleId, year, month
     }
 }
 
-export async function sendPostCreateScheduleRequestAsync(year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder)
+export async function sendPostCreateScheduleRequestAsync(requestSchedule)
 {
     try
     {
-        const {code} = await Function.postAsync(CREATE_SCHEDULE, {
-            year,
-            month,
-            day,
-            startHour,
-            startMinute,
-            endHour,
-            endMinute,
-            scheduleText,
-            hasReminder,
-        });
+        const {code} = await Function.postAsync(CREATE_SCHEDULE, requestSchedule);
         switch (code)
         {
             case STATUS_CODE.OK:

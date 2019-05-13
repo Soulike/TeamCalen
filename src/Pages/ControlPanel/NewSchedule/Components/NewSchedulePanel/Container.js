@@ -6,6 +6,7 @@ import message from 'antd/lib/message';
 import Api from '../../../../../Api';
 import {eventEmitter} from '../../../../../Singleton';
 import EVENT from '../../../../../CONSTANT/EVENT';
+import {RequestSchedule} from '../../../../../Class/Schedule';
 
 class NewSchedulePanelContainer extends React.Component
 {
@@ -113,8 +114,8 @@ class NewSchedulePanelContainer extends React.Component
         }
         else
         {
-            const requestIsSuccessful = await Api.sendPostCreateScheduleRequestAsync(year, month, day,
-                startHour, startMinute, endHour, endMinute, scheduleText, hasReminder);
+            const requestIsSuccessful = await Api.sendPostCreateScheduleRequestAsync(
+                new RequestSchedule(year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder));
             if (requestIsSuccessful)
             {
                 eventEmitter.emit(EVENT.SCHEDULE.SCHEDULE_CREATED_OR_DELETED);

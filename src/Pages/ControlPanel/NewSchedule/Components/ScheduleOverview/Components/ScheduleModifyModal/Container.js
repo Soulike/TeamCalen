@@ -10,6 +10,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import {eventEmitter} from '../../../../../../../Singleton';
 import EVENT from '../../../../../../../CONSTANT/EVENT';
+import {RequestSchedule} from '../../../../../../../Class/Schedule';
 
 class ScheduleModifyModalContainer extends React.Component
 {
@@ -147,8 +148,8 @@ class ScheduleModifyModalContainer extends React.Component
             this.setState({
                 confirmLoading: true,
             });
-            const requestIsSuccessful = await Api.sendPostModifyScheduleRequestAsync(currentModifyingScheduleId, year, month, day,
-                startHour, startMinute, endHour, endMinute, scheduleText, hasReminder);
+            const requestIsSuccessful = await Api.sendPostModifyScheduleRequestAsync(currentModifyingScheduleId,
+                new RequestSchedule(year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder));
             if (requestIsSuccessful)
             {
                 const {closeModal} = this.props;

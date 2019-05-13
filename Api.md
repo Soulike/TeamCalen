@@ -81,7 +81,8 @@ class Schedule
     endHour: number;        // 结束小时，0-23 整数
     endMinute: number;      // 结束分钟，0-59 整数
     scheduleText: string;   // 日程的具体内容
-    scheduleState: SCHEDULE_STATE;    // 枚举值，日程的状态
+    hasReminder?: boolean,   // 是否有提醒，默认值 false
+    scheduleState?: SCHEDULE_STATE;    // 枚举值，日程的状态，默认值 SCHEDULE_STATE.UNFINISHED'
 }
 ```
 
@@ -293,13 +294,20 @@ class UserInfo
 - 其他说明：
   - 删除和取消的区别：删除后日程将不会再出现在日程列表中，而取消会显示取消状态
 
-#### `/modifySchedule`
+#### `/modifySchedule`  // 请求体有修改
 
 - 功能说明：编辑日程信息
 - 请求方法：POST
-- 请求体：一个 [RequestSchedule](#RequestSchedule) 的实例
+- 请求体：
+```ts
+{
+    scheduleId: number,
+    schedule: RequestSchedule,
+}
+```
 - 响应体：无
-- 其他说明：无
+- 其他说明：
+  - Schedule 实例中有什么项目更改什么项目，不存在的项目就不做更改
 
 #### `/createSchedule`
 
