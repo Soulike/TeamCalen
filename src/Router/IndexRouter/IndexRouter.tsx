@@ -6,7 +6,9 @@ export default () =>
 {
     return (
         <Switch>
-            <Route path={PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]} exact render={() => PAGE_ID_TO_COMPONENT[PAGE_ID.INDEX]} />
+            <Route exact={true}
+                   path={PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]}
+                   component={PAGE_ID_TO_COMPONENT[PAGE_ID.INDEX]} />
         </Switch>
     );
 };

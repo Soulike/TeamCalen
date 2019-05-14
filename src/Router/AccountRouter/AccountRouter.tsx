@@ -13,7 +13,7 @@ export default () =>
                 <Switch>
                     {
                         Object.values(PAGE_ID.ACCOUNT).map(value =>
-                            <Route path={PAGE_ID_TO_ROUTE[value]}
+                            <Route exact={true} path={PAGE_ID_TO_ROUTE[value]}
                                    component={PAGE_ID_TO_COMPONENT[value]}
                                    key={PAGE_ID_TO_ROUTE[value]} />,
                         )

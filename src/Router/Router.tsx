@@ -11,9 +11,9 @@ export default () =>
     return (
         <BrowserRouter>
             <Switch>
-                <Route path={PAGE_ID_TO_ROUTE[PAGE_PREFIX.INDEX]} exact component={IndexRouter} />
-                <Route path={PAGE_ID_TO_ROUTE[PAGE_PREFIX.ACCOUNT]} component={AccountRouter} />
-                <Route path={PAGE_ID_TO_ROUTE[PAGE_PREFIX.CONTROL_PANEL]} component={ControlPanelRouter} />
+                <Route exact={true} path={PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]} component={IndexRouter} />
+                <Route path={PAGE_PREFIX.ACCOUNT} component={AccountRouter} />
+                <Route path={PAGE_PREFIX.CONTROL_PANEL} component={ControlPanelRouter} />
                 <Route children={<Redirect to={PAGE_ID_TO_ROUTE[PAGE_ID.INDEX]} />} />
             </Switch>
         </BrowserRouter>
