@@ -5,11 +5,10 @@ import Api from '../../../../../../../Api';
 import {REGEX} from '../../../../../../../CONSTANT/REGEX';
 import message from 'antd/lib/message';
 import {Actions as ModalActions} from '../../../../../../../ComponentContainer/Modal';
-import MODAL_ID from '../../../../../../../CONSTANT/MODAL_ID';
+import {EVENT, MODAL_ID} from '../../../../../../../CONSTANT';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import {eventEmitter} from '../../../../../../../Singleton';
-import EVENT from '../../../../../../../CONSTANT/EVENT';
 import {RequestSchedule} from '../../../../../../../Class/Schedule';
 
 class ScheduleModifyModalContainer extends React.Component

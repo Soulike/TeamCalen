@@ -11,7 +11,7 @@ import {
     onSwitchChangeFactory,
 } from '../../Function';
 import {eventEmitter} from '../../../../../../../Singleton';
-import EVENT from '../../../../../../../CONSTANT/EVENT';
+import {EVENT} from '../../../../../../../CONSTANT';
 
 class ScheduleModalContainer extends React.Component
 {

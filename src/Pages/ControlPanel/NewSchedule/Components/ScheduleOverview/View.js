@@ -4,7 +4,7 @@ import Calendar from 'antd/lib/calendar';
 import Badge from 'antd/lib/badge';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import MODAL_ID from '../../../../../CONSTANT/MODAL_ID';
+import {MODAL_ID} from '../../../../../CONSTANT';
 import Timeline from 'antd/lib/timeline';
 import TimelineItem, {Object as TimelineItemObject} from './Components/TimelineItem';
 import ScheduleModal from './Components/ScheduleModal';

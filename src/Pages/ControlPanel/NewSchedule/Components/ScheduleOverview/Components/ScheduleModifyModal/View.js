@@ -2,7 +2,7 @@ import React from 'react';
 import Style from './Style.module.scss';
 import PropTypes from 'prop-types';
 import Modal from '../../../../../../../ComponentContainer/Modal/Container';
-import MODAL_ID from '../../../../../../../CONSTANT/MODAL_ID';
+import {MODAL_ID} from '../../../../../../../CONSTANT';
 import DatePicker from 'antd/lib/date-picker';
 import moment from 'moment';
 import TimePicker from 'antd/lib/time-picker';

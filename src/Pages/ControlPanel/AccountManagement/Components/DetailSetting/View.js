@@ -3,7 +3,7 @@ import Style from './Style.module.scss';
 import Button from 'antd/lib/button';
 import PropTypes from 'prop-types';
 import EmailSettingModal from './Components/EmailSettingModal';
-import MODAL_ID from '../../../../../CONSTANT/MODAL_ID';
+import {MODAL_ID} from '../../../../../CONSTANT';
 
 function DetailSetting(props)
 {

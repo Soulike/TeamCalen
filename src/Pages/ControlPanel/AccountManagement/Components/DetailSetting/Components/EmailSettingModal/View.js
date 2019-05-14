@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import MODAL_ID from '../../../../../../../CONSTANT/MODAL_ID';
+import {MODAL_ID} from '../../../../../../../CONSTANT';
 import Input from 'antd/lib/input';
 import GetVerificationCodeButton from '../../../../../../../ComponentContainer/GetVerificationCodeButtonContainer';
 import Modal from '../../../../../../../ComponentContainer/Modal';

@@ -5,7 +5,7 @@ import {REGEX} from '../../../../../CONSTANT/REGEX';
 import message from 'antd/lib/message';
 import Api from '../../../../../Api';
 import {eventEmitter} from '../../../../../Singleton';
-import EVENT from '../../../../../CONSTANT/EVENT';
+import {EVENT} from '../../../../../CONSTANT';
 import {RequestSchedule} from '../../../../../Class/Schedule';
 
 class NewSchedulePanelContainer extends React.Component

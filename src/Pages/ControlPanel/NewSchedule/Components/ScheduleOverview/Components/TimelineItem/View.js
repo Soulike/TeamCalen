@@ -8,7 +8,7 @@ import Menu from 'antd/lib/menu';
 import Button from 'antd/lib/button';
 import PropTypes from 'prop-types';
 import Function from '../../../../../../../Function';
-import SCHEDULE_STATE from '../../../../../../../CONSTANT/SCHEDULE_STATE';
+import {SCHEDULE_STATE} from '../../../../../../../CONSTANT';
 
 const {Item} = Timeline;
 

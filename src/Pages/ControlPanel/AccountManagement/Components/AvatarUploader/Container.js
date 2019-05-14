@@ -3,7 +3,7 @@ import AvatarUploader from './View';
 import message from 'antd/lib/message';
 import Api from '../../../../../Api';
 import {eventEmitter} from '../../../../../Singleton';
-import EVENT from '../../../../../CONSTANT/EVENT';
+import {EVENT} from '../../../../../CONSTANT';
 
 class AvatarUploaderContainer extends React.Component
 {

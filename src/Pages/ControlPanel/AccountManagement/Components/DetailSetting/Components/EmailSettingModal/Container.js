@@ -5,7 +5,7 @@ import message from 'antd/lib/message';
 import Api from '../../../../../../../Api';
 import {Actions as ModalActions} from '../../../../../../../ComponentContainer/Modal';
 import {connect} from 'react-redux';
-import MODAL_ID from '../../../../../../../CONSTANT/MODAL_ID';
+import {MODAL_ID} from '../../../../../../../CONSTANT';
 
 class EmailSettingModalContainer extends React.Component
 {

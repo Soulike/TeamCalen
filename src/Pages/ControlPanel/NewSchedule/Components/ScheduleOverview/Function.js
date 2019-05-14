@@ -3,9 +3,7 @@ import {changeCurrentModifyingScheduleId} from '../../Function';
 import Modal from 'antd/lib/modal';
 import {Function as ModalFunction} from '../../../../../ComponentContainer/Modal';
 import {eventEmitter} from '../../../../../Singleton';
-import EVENT from '../../../../../CONSTANT/EVENT';
-import MODAL_ID from '../../../../../CONSTANT/MODAL_ID';
-import SCHEDULE_STATE from '../../../../../CONSTANT/SCHEDULE_STATE';
+import {EVENT, MODAL_ID, SCHEDULE_STATE} from '../../../../../CONSTANT';
 
 export function onSwitchChangeFactory(scheduleId)
 {

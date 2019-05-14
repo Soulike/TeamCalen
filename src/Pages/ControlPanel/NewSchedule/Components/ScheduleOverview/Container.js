@@ -3,7 +3,7 @@ import ScheduleOverview from './View';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {Actions as ModalActions} from '../../../../../ComponentContainer/Modal';
-import MODAL_ID from '../../../../../CONSTANT/MODAL_ID';
+import {EVENT, MODAL_ID} from '../../../../../CONSTANT';
 import {Object as TimelineItemObject} from './Components/TimelineItem';
 import {
     onCancelClickFactory,
@@ -14,7 +14,6 @@ import {
 } from './Function';
 import Api from '../../../../../Api';
 import {eventEmitter} from '../../../../../Singleton';
-import EVENT from '../../../../../CONSTANT/EVENT';
 
 class ScheduleOverviewContainer extends React.Component
 {

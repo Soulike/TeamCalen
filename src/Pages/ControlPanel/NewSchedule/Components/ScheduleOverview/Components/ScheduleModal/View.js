@@ -1,7 +1,7 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import Modal from '../../../../../../../ComponentContainer/Modal';
-import MODAL_ID from '../../../../../../../CONSTANT/MODAL_ID';
+import {MODAL_ID} from '../../../../../../../CONSTANT';
 import PropTypes from 'prop-types';
 import TimelineItem, {Object as TimelineItemObject} from '../TimelineItem';
 import Timeline from 'antd/lib/timeline';

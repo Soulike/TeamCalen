@@ -2,7 +2,7 @@ import React from 'react';
 import DetailSetting from './View';
 import {Actions as ModalActions} from '../../../../../ComponentContainer/Modal';
 import {connect} from 'react-redux';
-import MODAL_ID from '../../../../../CONSTANT/MODAL_ID';
+import {MODAL_ID} from '../../../../../CONSTANT';
 
 class DetailSettingContainer extends React.Component
 {
