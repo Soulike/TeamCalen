@@ -1,14 +1,21 @@
 import React from 'react';
 import RetrievePassword from './View';
-import {REGEX} from '../../../CONSTANT/REGEX';
+import {REGEX} from '../../../CONSTANT';
 import message from 'antd/lib/message';
 import Api from '../../../Api';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../CONFIG';
-import {withRouter} from 'react-router-dom';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 
-class RetrievePasswordContainer extends React.Component
+interface Props extends RouteComponentProps {}
+
+class RetrievePasswordContainer extends React.Component<Props>
 {
-    constructor(props)
+    private readonly usernameInputRef: React.RefObject<any>;
+    private readonly verificationCodeInputRef: React.RefObject<any>;
+    private readonly passwordInputRef: React.RefObject<any>;
+    private readonly confirmPasswordInputRef: React.RefObject<any>;
+
+    constructor(props: Readonly<Props>)
     {
         super(props);
 
@@ -31,7 +38,7 @@ class RetrievePasswordContainer extends React.Component
         }
     };
 
-    onSubmit = async e =>
+    onSubmit = async (e: React.FormEvent) =>
     {
         e.preventDefault();
         const username = this.usernameInputRef.current.input.value;

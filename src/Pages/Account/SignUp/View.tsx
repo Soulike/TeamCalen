@@ -5,11 +5,21 @@ import {Link} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../CONFIG';
 import Button from 'antd/lib/button/index';
 import Tooltip from 'antd/lib/tooltip/index';
-import PropTypes from 'prop-types';
-import {REGEX_TEXT} from '../../../CONSTANT/REGEX';
+import {REGEX_TEXT} from '../../../CONSTANT';
 import GetVerificationCodeButton from '../../../ComponentContainer/GetVerificationCodeButtonContainer';
 
-function SignUp(props)
+interface Props
+{
+    usernameInputRef: React.RefObject<Input>;
+    passwordInputRef: React.RefObject<Input>;
+    confirmPasswordInputRef: React.RefObject<Input>;
+    emailInputRef: React.RefObject<Input>;
+    verificationCodeInputRef: React.RefObject<Input>;
+    onGetVerificationCodeButtonClick: (e?: React.MouseEvent<HTMLDivElement, MouseEvent>) => any;
+    onSubmit: (e: React.FormEvent) => any;
+}
+
+function SignUp(props: Props)
 {
     const {
         usernameInputRef,
@@ -75,15 +85,5 @@ function SignUp(props)
         </div>
     );
 }
-
-SignUp.propTypes = {
-    usernameInputRef: PropTypes.object.isRequired,
-    passwordInputRef: PropTypes.object.isRequired,
-    confirmPasswordInputRef: PropTypes.object.isRequired,
-    emailInputRef: PropTypes.object.isRequired,
-    verificationCodeInputRef: PropTypes.object.isRequired,
-    onGetVerificationCodeButtonClick: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-};
 
 export default React.memo(SignUp);

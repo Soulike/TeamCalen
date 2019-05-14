@@ -4,9 +4,15 @@ import Input from 'antd/lib/input';
 import Button from 'antd/lib/button';
 import {Link} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../CONFIG';
-import PropTypes from 'prop-types';
 
-function Login(props)
+interface Props
+{
+    usernameInputRef: React.RefObject<Input>;
+    passwordInputRef: React.RefObject<Input>;
+    onSubmit: (e: React.FormEvent) => any;
+}
+
+function Login(props: Props)
 {
     const {usernameInputRef, passwordInputRef, onSubmit} = props;
     return (
@@ -46,11 +52,5 @@ function Login(props)
         </div>
     );
 }
-
-Login.propTypes = {
-    usernameInputRef: PropTypes.object.isRequired,
-    passwordInputRef: PropTypes.object.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-};
 
 export default React.memo(Login);

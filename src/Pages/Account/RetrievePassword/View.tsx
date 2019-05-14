@@ -1,13 +1,23 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import PropTypes from 'prop-types';
 import Input from 'antd/lib/input';
 import Tooltip from 'antd/lib/tooltip';
-import {REGEX_TEXT} from '../../../CONSTANT/REGEX';
+import {REGEX_TEXT} from '../../../CONSTANT';
 import Button from 'antd/lib/button';
 import GetVerificationCodeButton from '../../../ComponentContainer/GetVerificationCodeButtonContainer';
 
-function RetrievePassword(props)
+interface Props
+{
+    usernameInputRef: React.RefObject<Input>;
+    verificationCodeInputRef: React.RefObject<Input>;
+    passwordInputRef: React.RefObject<Input>;
+    confirmPasswordInputRef: React.RefObject<Input>;
+    onGetVerificationCodeButtonClick: (e?: React.MouseEvent<HTMLDivElement, MouseEvent>) => any;
+    onSubmit: (e: React.FormEvent) => any;
+}
+
+
+function RetrievePassword(props: Props)
 {
     const {
         usernameInputRef,
@@ -63,14 +73,5 @@ function RetrievePassword(props)
             </form>
         </div>);
 }
-
-RetrievePassword.propTypes = {
-    usernameInputRef: PropTypes.object.isRequired,
-    verificationCodeInputRef: PropTypes.object.isRequired,
-    passwordInputRef: PropTypes.object.isRequired,
-    confirmPasswordInputRef: PropTypes.object.isRequired,
-    onGetVerificationCodeButtonClick: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-};
 
 export default React.memo(RetrievePassword);

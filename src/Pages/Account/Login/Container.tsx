@@ -5,10 +5,20 @@ import Login from './View';
 import message from 'antd/lib/message';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../CONFIG';
 import {REGEX} from '../../../CONSTANT/REGEX';
+import {withRouter, RouteComponentProps} from 'react-router-dom';
 
-class LoginContainer extends React.Component
+interface Props extends RouteComponentProps
 {
-    constructor(props)
+    hasLoggedIn: boolean;
+    login: (username: string, password: string) => Promise<any>;
+}
+
+class LoginContainer extends React.Component<Props>
+{
+    usernameInputRef: React.RefObject<any>;
+    passwordInputRef: React.RefObject<any>;
+
+    constructor(props: Readonly<Props>)
     {
         super(props);
         this.usernameInputRef = React.createRef();
@@ -25,7 +35,7 @@ class LoginContainer extends React.Component
         }
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot)
+    componentDidUpdate(prevProps: Props)
     {
         const {hasLoggedIn} = this.props;
         if (hasLoggedIn)
@@ -34,7 +44,7 @@ class LoginContainer extends React.Component
         }
     }
 
-    onSubmit = async e =>
+    onSubmit = async (e: React.FormEvent) =>
     {
         e.preventDefault();
         const username = this.usernameInputRef.current.input.value;
@@ -60,7 +70,7 @@ class LoginContainer extends React.Component
     }
 }
 
-const mapStateToProps = state =>
+const mapStateToProps = (state: { AuthProcessor: { hasLoggedIn: boolean; }; }) =>
 {
     const {AuthProcessor: {hasLoggedIn}} = state;
     return {hasLoggedIn};
@@ -70,4 +80,4 @@ const mapDispatchToProps = {
     login: AuthProcessorActions.loginAction,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginContainer));

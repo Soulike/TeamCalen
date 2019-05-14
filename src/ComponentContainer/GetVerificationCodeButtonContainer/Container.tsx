@@ -3,7 +3,7 @@ import GetVerificationCodeButton from '../../Components/GetVerificationCodeButto
 
 interface GetVerificationCodeButtonContainerProps
 {
-    onClick: () => any;
+    onClick: (e?: React.MouseEvent<HTMLDivElement, MouseEvent>) => any;
 }
 
 interface GetVerificationCodeButtonContainerState
