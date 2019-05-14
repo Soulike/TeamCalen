@@ -5,12 +5,14 @@ import {Function as ModalFunction} from '../../../../../ComponentContainer/Modal
 import {eventEmitter} from '../../../../../Singleton';
 import EVENT from '../../../../../CONSTANT/EVENT';
 import MODAL_ID from '../../../../../CONSTANT/MODAL_ID';
+import SCHEDULE_STATE from '../../../../../CONSTANT/SCHEDULE_STATE';
 
 export function onSwitchChangeFactory(scheduleId)
 {
     return async checked =>
     {
-        const requestIsSuccessful = await Api.sendPostChangeScheduleStateRequestAsync(scheduleId, checked);
+        const requestIsSuccessful = await Api.sendPostChangeScheduleStateRequestAsync(scheduleId,
+            checked ? SCHEDULE_STATE.FINISHED : SCHEDULE_STATE.UNFINISHED);
         if (requestIsSuccessful)
         {
             eventEmitter.emit(EVENT.SCHEDULE.SCHEDULE_MODIFIED);
