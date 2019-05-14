@@ -6,7 +6,14 @@ import {Actions as AuthProcessorActions} from '../AuthProcessor';
 import Modal from 'antd/lib/modal';
 import Api from '../../Api';
 
-class RootContainer extends React.Component
+interface Props
+{
+    setOffline: () => any;
+    hasLoggedIn: boolean;
+    children?: JSX.Element;
+}
+
+class RootContainer extends React.Component<Props>
 {
     onExitConfirm = async () =>
     {
@@ -40,7 +47,7 @@ class RootContainer extends React.Component
     }
 }
 
-const mapStateToProps = state =>
+const mapStateToProps = (state: { AuthProcessor: { hasLoggedIn: boolean; }; }) =>
 {
     const {AuthProcessor: {hasLoggedIn}} = state;
     return {

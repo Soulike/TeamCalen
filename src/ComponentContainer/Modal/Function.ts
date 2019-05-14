@@ -1,14 +1,15 @@
 import * as Actions from './Actions/Actions';
 import Store from '../../Store';
 import eventEmitter from './EventEmitter';
+import {MODAL_ID} from '../../CONSTANT';
 
-export function showModal(modalId, callback = () => null)
+export function showModal(modalId: MODAL_ID, callback: () => any = () => null)
 {
     Store.dispatch(Actions.showModalAction(modalId));
     onModalShow(modalId, callback);
 }
 
-export function showModalAsync(modalId)
+export function showModalAsync(modalId: MODAL_ID)
 {
     return new Promise(resolve =>
     {
@@ -19,13 +20,13 @@ export function showModalAsync(modalId)
     });
 }
 
-export function closeModal(modalId, callback = () => null)
+export function closeModal(modalId: MODAL_ID, callback: () => any = () => null)
 {
     Store.dispatch(Actions.closeModalAction(modalId));
     afterModalClose(modalId, callback);
 }
 
-export function closeModalAsync(modalId)
+export function closeModalAsync(modalId: MODAL_ID)
 {
     return new Promise(resolve =>
     {
@@ -36,22 +37,22 @@ export function closeModalAsync(modalId)
     });
 }
 
-export function onModalShow(modalId, callback)
+export function onModalShow(modalId: MODAL_ID, callback: () => any = () => null)
 {
     eventEmitter.once(getModalShowEventName(modalId), callback);
 }
 
-export function afterModalClose(modalId, callback)
+export function afterModalClose(modalId: MODAL_ID, callback: () => any = () => null)
 {
     eventEmitter.once(getModalCloseEventName(modalId), callback);
 }
 
-export function getModalShowEventName(modalId)
+export function getModalShowEventName(modalId: MODAL_ID)
 {
-    return `${modalId.description}.show`;
+    return `${modalId}.show`;
 }
 
-export function getModalCloseEventName(modalId)
+export function getModalCloseEventName(modalId: MODAL_ID)
 {
-    return `${modalId.description}.close`;
+    return `${modalId}.close`;
 }

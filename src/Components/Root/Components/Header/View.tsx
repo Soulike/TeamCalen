@@ -1,10 +1,17 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import PropTypes from 'prop-types';
 import '../../../../Static/teamcalen.svg';
 import {Link} from 'react-router-dom';
 
-function Header(props)
+interface HeaderProps
+{
+    hasLoggedIn: boolean;
+    loginLink: string;
+    signUpLink: string;
+    exitFunction: () => any;
+}
+
+function Header(props: HeaderProps)
 {
     const {hasLoggedIn, loginLink, signUpLink, exitFunction} = props;
     return (
@@ -24,12 +31,5 @@ function Header(props)
         </div>
     );
 }
-
-Header.propTypes = {
-    hasLoggedIn: PropTypes.bool.isRequired,
-    loginLink: PropTypes.string.isRequired,
-    signUpLink: PropTypes.string.isRequired,
-    exitFunction: PropTypes.func.isRequired,
-};
 
 export default React.memo(Header);

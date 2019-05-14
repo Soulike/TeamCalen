@@ -2,7 +2,7 @@ import React from 'react';
 import Style from './Style.module.scss';
 import '../../Static/Account/cardBackground.png';
 
-function AccountPanel(props)
+function AccountPanel(props: { children?: JSX.Element })
 {
     const {children} = props;
     return (

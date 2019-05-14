@@ -1,16 +1,29 @@
 import React from 'react';
 import ControlPanel from '../../Components/ControlPanel';
 import {PAGE_ID} from '../../CONFIG';
-import {withRouter} from 'react-router-dom';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {ROUTE_TO_PAGE_ID} from '../../CONFIG/PAGE';
 import * as Actions from './Actions/Actions';
 import {connect} from 'react-redux';
 import {eventEmitter} from '../../Singleton';
-import EVENT from '../../CONSTANT/EVENT';
+import {EVENT} from '../../CONSTANT';
+import {UserInfo} from '../../Class';
 
-class ControlPanelContainer extends React.Component
+interface ControlPanelContainerProps extends RouteComponentProps
 {
-    constructor(props)
+    getUserInfo: () => Promise<void>;
+    userInfo: UserInfo;
+    children?: JSX.Element
+}
+
+interface ControlPanelContainerState
+{
+    currentActivePageId: string
+}
+
+class ControlPanelContainer extends React.Component<ControlPanelContainerProps, ControlPanelContainerState>
+{
+    constructor(props: Readonly<ControlPanelContainerProps>)
     {
         super(props);
         this.state = {
@@ -29,13 +42,9 @@ class ControlPanelContainer extends React.Component
         });
 
         const {getUserInfo} = this.props;
-        eventEmitter.on(EVENT.CONTROL_PANEL.USER_INFO_UPDATED, () =>
+        eventEmitter.on(EVENT.CONTROL_PANEL.USER_INFO_UPDATED, async () =>
         {
-            getUserInfo();
-        });
-
-        eventEmitter.on(EVENT.CONTROL_PANEL.USER_INFO_UPDATE_COMPLETED, () =>
-        {
+            await getUserInfo();
             this.forceUpdate();
         });
     }
@@ -45,7 +54,7 @@ class ControlPanelContainer extends React.Component
         eventEmitter.removeAllListeners(EVENT.CONTROL_PANEL.USER_INFO_UPDATED);
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot)
+    componentDidUpdate(prevProps: ControlPanelContainerProps, prevState: ControlPanelContainerState)
     {
         const route = this.props.location.pathname;
         const prevRoute = prevProps.location.pathname;
@@ -60,7 +69,7 @@ class ControlPanelContainer extends React.Component
     render()
     {
         const {currentActivePageId} = this.state;
-        const {username, avatarSrc, children} = this.props;
+        const {userInfo: {username, avatarSrc}, children} = this.props;
         return (
             <ControlPanel currentActivePageId={currentActivePageId}
                           username={username}
@@ -69,10 +78,10 @@ class ControlPanelContainer extends React.Component
     }
 }
 
-const mapStateToProps = state =>
+const mapStateToProps = (state: { ControlPanel: { userInfo: UserInfo; }; }) =>
 {
     const {ControlPanel: {userInfo}} = state;
-    return {...userInfo};
+    return {userInfo};
 };
 
 const mapDispatchToProps = {

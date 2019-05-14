@@ -1,9 +1,17 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import Header from './Components/Header';
-import PropTypes from 'prop-types';
 
-function Root(props)
+interface RootProps
+{
+    hasLoggedIn: boolean;
+    loginLink: string;
+    signUpLink: string;
+    exitFunction: () => any;
+    children?: JSX.Element;
+}
+
+function Root(props: RootProps)
 {
     const {hasLoggedIn, loginLink, signUpLink, exitFunction, children} = props;
     return (
@@ -20,12 +28,5 @@ function Root(props)
         </div>
     );
 }
-
-Root.propTypes = {
-    hasLoggedIn: PropTypes.bool.isRequired,
-    loginLink: PropTypes.string.isRequired,
-    signUpLink: PropTypes.string.isRequired,
-    exitFunction: PropTypes.func.isRequired,
-};
 
 export default React.memo(Root);

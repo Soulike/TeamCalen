@@ -1,14 +1,23 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import PropTypes from 'prop-types';
 import Avatar from 'antd/lib/avatar';
 import teamcalen from '../../Static/teamcalen.svg';
 import {PAGE_ID_TO_NAME, PAGE_ID_TO_ROUTE} from '../../CONFIG';
-import {withRouter} from 'react-router-dom';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {History} from 'history';
 
-function ControlPanel(props)
+interface ControlPanelProps extends RouteComponentProps
 {
-    const {avatarSrc, username, currentActivePageId, children} = props;
+    avatarSrc?: string;
+    username: string;
+    currentActivePageId: string;
+    children?: JSX.Element;
+    history: History;
+}
+
+function ControlPanel(props: ControlPanelProps)
+{
+    const {avatarSrc, username, currentActivePageId, children, history} = props;
     return (
         <div className={Style.ControlPanel}>
             <div className={Style.leftPart}>
@@ -18,12 +27,12 @@ function ControlPanel(props)
                 </div>
                 <div className={Style.tabWrapper}>
                     {
-                        Object.getOwnPropertySymbols(PAGE_ID_TO_NAME).map(pageId =>
+                        Object.keys(PAGE_ID_TO_NAME).map(pageId =>
                             <div className={`${Style.tab} ${pageId === currentActivePageId ? Style.active : null}`}
                                  key={PAGE_ID_TO_ROUTE[pageId]}
                                  onClick={() =>
                                  {
-                                     props.history.push(PAGE_ID_TO_ROUTE[pageId]);
+                                     history.push(PAGE_ID_TO_ROUTE[pageId]);
                                  }}>
                                 {PAGE_ID_TO_NAME[pageId]}
                             </div>)
@@ -34,12 +43,6 @@ function ControlPanel(props)
         </div>
     );
 }
-
-ControlPanel.propTypes = {
-    avatarSrc: PropTypes.string,
-    username: PropTypes.string.isRequired,
-    currentActivePageId: PropTypes.symbol.isRequired,
-};
 
 ControlPanel.defaultProps = {
     avatarSrc: teamcalen,

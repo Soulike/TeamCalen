@@ -1,8 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Style from './Style.module.scss';
 
-function GetVerificationCodeButton(props)
+interface GetVerificationCodeButtonProps
+{
+    children?: JSX.Element;
+    onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    className?: string;
+}
+
+function GetVerificationCodeButton(props: GetVerificationCodeButtonProps)
 {
     const {children, onClick, className} = props;
     return (
@@ -11,10 +17,5 @@ function GetVerificationCodeButton(props)
         </div>
     );
 }
-
-GetVerificationCodeButton.propTypes = {
-    onClick: PropTypes.func.isRequired,
-    className: PropTypes.string,
-};
 
 export default React.memo(GetVerificationCodeButton);

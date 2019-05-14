@@ -1,10 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import GetVerificationCodeButton from '../../Components/GetVerificationCodeButton';
 
-class GetVerificationCodeButtonContainer extends React.Component
+interface GetVerificationCodeButtonContainerProps
 {
-    constructor(props)
+    onClick: () => any;
+}
+
+interface GetVerificationCodeButtonContainerState
+{
+    textInButton: string,
+    hasSendVerificationCode: boolean,
+}
+
+class GetVerificationCodeButtonContainer extends React.Component<GetVerificationCodeButtonContainerProps, GetVerificationCodeButtonContainerState>
+{
+    constructor(props: Readonly<GetVerificationCodeButtonContainerProps>)
     {
         super(props);
         this.state = {
@@ -51,12 +61,9 @@ class GetVerificationCodeButtonContainer extends React.Component
     {
         const {textInButton} = this.state;
         return (
-            <GetVerificationCodeButton onClick={this.onClick}>{textInButton}</GetVerificationCodeButton>
+            <GetVerificationCodeButton onClick={this.onClick}><span>{textInButton}</span></GetVerificationCodeButton>
         );
     }
 }
 
-GetVerificationCodeButtonContainer.propTypes = {
-    onClick: PropTypes.func.isRequired,
-};
 export default GetVerificationCodeButtonContainer;

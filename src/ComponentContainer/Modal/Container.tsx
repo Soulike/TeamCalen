@@ -1,13 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import MODAL_ID from '../../CONSTANT/MODAL_ID';
-import OriginalModal from 'antd/lib/modal';
+import {MODAL_ID} from '../../CONSTANT';
+import OriginalModal, {ModalProps} from 'antd/lib/modal';
 import {connect} from 'react-redux';
 import * as Actions from './Actions/Actions';
 import eventEmitter from './EventEmitter';
 import {getModalCloseEventName, getModalShowEventName} from './Function';
 
-class Modal extends React.Component
+interface Props extends ModalProps
+{
+    onShow: () => any;
+    modalId: MODAL_ID;
+    closeModal: (modalId: MODAL_ID) => any;
+    currentVisibleModalIdSet: Set<MODAL_ID>;
+}
+
+class Modal extends React.Component<Props>
 {
     componentDidMount()
     {
@@ -42,13 +49,7 @@ class Modal extends React.Component
     }
 }
 
-Modal.propTypes = {
-    ...OriginalModal.propTypes,
-    modalId: PropTypes.oneOf(Object.values(MODAL_ID)).isRequired,
-    onShow: PropTypes.func,
-};
-
-const mapStateToProps = state =>
+const mapStateToProps = (state: { Modal: { currentVisibleModalIdSet: any; }; }) =>
 {
     const {Modal: {currentVisibleModalIdSet}} = state;
     return {currentVisibleModalIdSet};

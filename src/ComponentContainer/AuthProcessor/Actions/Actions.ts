@@ -1,9 +1,10 @@
 import * as ACTION_TYPE from './ACTION_TYPE';
 import Api from '../../../Api';
+import redux from 'redux';
 
-export function loginAction(username, password)
+export function loginAction(username: string, password: string)
 {
-    return async dispatch =>
+    return async (dispatch: redux.Dispatch) =>
     {
         const requestIsSuccessful = await Api.sendPostLoginRequestAsync(username, password);
         if (requestIsSuccessful)

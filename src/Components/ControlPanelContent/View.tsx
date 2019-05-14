@@ -1,8 +1,13 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import PropTypes from 'prop-types';
 
-function ControlPanelContent(props)
+interface ControlPanelContentProps
+{
+    midPartComponent: JSX.Element;
+    rightPartComponent: JSX.Element;
+}
+
+function ControlPanelContent(props: ControlPanelContentProps)
 {
     const {midPartComponent, rightPartComponent} = props;
     return (
@@ -16,15 +21,9 @@ function ControlPanelContent(props)
                         {rightPartComponent}
                     </div> :
                     null
-
             }
         </div>
     );
 }
-
-ControlPanelContent.propTypes = {
-    midPartComponent: PropTypes.element.isRequired,
-    rightPartComponent: PropTypes.element,
-};
 
 export default React.memo(ControlPanelContent);

@@ -3,7 +3,13 @@ import {connect} from 'react-redux';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 import {Redirect} from 'react-router-dom';
 
-class LoginCheckComponentWrapper extends React.Component
+interface Props
+{
+    hasLoggedIn: boolean,
+    children?: JSX.Element
+}
+
+class LoginCheckComponentWrapper extends React.Component<Props>
 {
     render()
     {
@@ -12,7 +18,7 @@ class LoginCheckComponentWrapper extends React.Component
     }
 }
 
-const mapStateToProps = state =>
+const mapStateToProps = (state: { AuthProcessor: { hasLoggedIn: boolean; }; }) =>
 {
     const {AuthProcessor: {hasLoggedIn}} = state;
     return {hasLoggedIn};

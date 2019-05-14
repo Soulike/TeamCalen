@@ -1,11 +1,13 @@
 import * as ACTION_TYPE from './ACTION_TYPE';
 import Api from '../../../Api';
 import {eventEmitter} from '../../../Singleton';
-import EVENT from '../../../CONSTANT/EVENT';
+import {EVENT} from '../../../CONSTANT';
+import redux from 'redux';
+import {UserInfo} from '../../../Class';
 
 export function getUserInfoAction()
 {
-    return async dispatch =>
+    return async (dispatch: redux.Dispatch) =>
     {
         const userInfo = await Api.sendGetUserInfoRequestAsync();
         eventEmitter.emit(EVENT.CONTROL_PANEL.USER_INFO_UPDATE_COMPLETED);
@@ -20,7 +22,7 @@ export function getUserInfoAction()
     };
 }
 
-function getUserInfoSuccessfulAction(userInfo)
+function getUserInfoSuccessfulAction(userInfo: UserInfo)
 {
     return {
         type: ACTION_TYPE.GET_USER_INFO_SUCCESSFUL,
