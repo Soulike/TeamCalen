@@ -1,7 +1,7 @@
 import Account from './Account';
-import ControlPanel from './ControlPanel';
+import Schedule from './Schedule';
 
 export default {
     ...Account,
-    ...ControlPanel,
+    ...Schedule,
 };

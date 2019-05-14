@@ -240,7 +240,7 @@ class UserInfo
 - 其他说明
   - 数组中日程信息的顺序应当按照开始时间升序，即早的在前，晚的在后
 
-#### `/changeScheduleState` // state 参数类型被更改
+#### `/changeScheduleState`
 
 - 功能说明：切换日程完成状态
 - 请求方法：POST
@@ -294,7 +294,7 @@ class UserInfo
 - 其他说明：
   - 删除和取消的区别：删除后日程将不会再出现在日程列表中，而取消会显示取消状态
 
-#### `/modifySchedule`  // 请求体有修改
+#### `/modifySchedule`
 
 - 功能说明：编辑日程信息
 - 请求方法：POST
