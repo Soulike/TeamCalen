@@ -1,18 +1,18 @@
-const INDEX = Symbol('index');
+const INDEX = 'INDEX';
 
 const ACCOUNT = {
-    LOGIN: Symbol('login'),
-    SIGN_UP: Symbol('signUp'),
-    RETRIEVE_PASSWORD: Symbol('retrievePassword'),
+    LOGIN: 'LOGIN',
+    SIGN_UP: 'SIGN_UP',
+    RETRIEVE_PASSWORD: 'RETRIEVE_PASSWORD',
 };
 
 const CONTROL_PANEL = {
-    NEW_SCHEDULE: Symbol('newSchedule'),
-    NEW_PROJECT: Symbol('newProject'),
-    MY_PROJECT: Symbol('myProject'),
-    PROJECT_DETAIL: Symbol('projectDetail'),
-    FRIEND_LIST: Symbol('friendList'),
-    ACCOUNT_MANAGEMENT: Symbol('accountManagement'),
+    NEW_SCHEDULE: 'NEW_SCHEDULE',
+    NEW_PROJECT: 'NEW_PROJECT',
+    MY_PROJECT: 'MY_PROJECT',
+    PROJECT_DETAIL: 'PROJECT_DETAIL',
+    FRIEND_LIST: 'FRIEND_LIST',
+    ACCOUNT_MANAGEMENT: 'ACCOUNT_MANAGEMENT',
 };
 
 export const PAGE_ID = {

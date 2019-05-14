@@ -2,9 +2,9 @@ import React from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_COMPONENT, PAGE_ID_TO_ROUTE} from '../../CONFIG';
 import LoginCheckComponentWrapper from '../../ComponentContainer/LoginCheckComponentWrapper';
-import ControlPanelContainer from '../../ComponentContainer/ControlPanelContainer';
 
-const Root = PAGE_ID_TO_COMPONENT[PAGE_ID.CONTROL_PANEL.INDEX];
+const ControlPanelContainer = React.lazy(() => import('../../ComponentContainer/ControlPanelContainer'));
+const Root = React.lazy(() => import('../../ComponentContainer/RootContainer'));
 
 export default () =>
 {

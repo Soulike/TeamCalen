@@ -1,9 +1,9 @@
 import React from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
 import {PAGE_ID, PAGE_ID_TO_COMPONENT, PAGE_ID_TO_ROUTE} from '../../CONFIG';
-import AccountPanel from '../../Components/AccountPanel';
 
-const Root = PAGE_ID_TO_COMPONENT[PAGE_ID.ACCOUNT.INDEX];
+const AccountPanel = React.lazy(() => import('../../Components/AccountPanel'));
+const Root = React.lazy(() => import('../../ComponentContainer/RootContainer'));
 
 export default () =>
 {
