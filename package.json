@@ -4,7 +4,15 @@
   "proxy": "https://teamcalen.soulike.tech",
   "private": true,
   "dependencies": {
-    "antd": "^3.16.6",
+    "@types/jest": "^24.0.13",
+    "@types/node": "^12.0.1",
+    "@types/node-sass": "^4.11.0",
+    "@types/prop-types": "^15.7.1",
+    "@types/react": "^16.8.17",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-redux": "^7.0.9",
+    "@types/react-router-dom": "^4.3.3",
+    "antd": "^3.18.1",
     "axios": "^0.18.0",
     "moment": "latest",
     "node-sass": "^4.12.0",
@@ -13,9 +21,10 @@
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "3.0.0",
+    "react-scripts": "3.0.1",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "typescript": "^3.4.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -36,7 +45,8 @@
     ],
     "development": [
       "last 1 chrome version",
-      "last 2 edge versions"
+      "last 2 edge versions",
+      "ie 10-11"
     ]
   }
 }
