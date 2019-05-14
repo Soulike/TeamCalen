@@ -1,4 +1,4 @@
-const INDEX = Symbol('index.ts');
+const INDEX = Symbol('index');
 
 const ACCOUNT = {
     LOGIN: Symbol('login'),
