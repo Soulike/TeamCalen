@@ -21,7 +21,7 @@ class LoginContainer extends React.Component
         if (hasLoggedIn)
         {
             message.info('您已登录');
-            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.INDEX]);
+            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE]);
         }
     }
 
@@ -30,7 +30,7 @@ class LoginContainer extends React.Component
         const {hasLoggedIn} = this.props;
         if (hasLoggedIn)
         {
-            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.INDEX]);
+            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE]);
         }
     }
 
