@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 // import 所有 Reducer
 import {Reducer as AuthProcessorReducer} from './ComponentContainer/AuthProcessor';
 import {Reducer as ModalReducer} from './ComponentContainer/Modal';
-import {Reducer as NewScheduleReducer} from './Pages/ControlPanel/NewSchedule';
+import {Reducer as ScheduleReducer} from './Pages/ControlPanel/Schedule';
 import {Reducer as ControlPanelReducer} from './ComponentContainer/ControlPanelContainer';
 
 // Store 中的初始值，根据开发需要进行改变
@@ -14,7 +14,7 @@ const initValues = {
     Modal: {
         currentVisibleModalIdSet: new Set(),
     },
-    NewSchedule: {
+    Schedule: {
         currentModifyingScheduleId: 0,  // 目前在编辑框中编辑的日程 ID
     },
     ControlPanel: {
@@ -33,7 +33,7 @@ const storeEnhancers = compose(
 const Reducer = combineReducers({
     AuthProcessor: AuthProcessorReducer,
     Modal: ModalReducer,
-    NewSchedule: NewScheduleReducer,
+    Schedule: ScheduleReducer,
     ControlPanel: ControlPanelReducer,
 });
 

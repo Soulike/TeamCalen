@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 import Login from './View';
 import message from 'antd/lib/message';
 import {PAGE_ID, PAGE_ID_TO_ROUTE} from '../../../CONFIG';
-import {REGEX} from '../../../CONSTANT/REGEX';
-import {withRouter, RouteComponentProps} from 'react-router-dom';
+import {REGEX} from '../../../CONSTANT';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 
 interface Props extends RouteComponentProps
 {
@@ -31,7 +31,7 @@ class LoginContainer extends React.Component<Props>
         if (hasLoggedIn)
         {
             message.info('您已登录');
-            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE]);
+            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.SCHEDULE]);
         }
     }
 
@@ -40,7 +40,7 @@ class LoginContainer extends React.Component<Props>
         const {hasLoggedIn} = this.props;
         if (hasLoggedIn)
         {
-            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE]);
+            this.props.history.push(PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.SCHEDULE]);
         }
     }
 

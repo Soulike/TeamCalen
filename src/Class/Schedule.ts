@@ -33,13 +33,17 @@ export class RequestSchedule extends Schedule {}
 export class ResponseSchedule extends Schedule
 {
     public id: number;
+    public hasReminder: boolean;
+    public scheduleState: boolean;
 
     constructor(id: number,
                 year: string, month: string, day: string,
                 startHour: number, startMinute: number, endHour: number, endMinute: number,
-                scheduleText: string, hasReminder?: boolean, scheduleState?: boolean)
+                scheduleText: string, hasReminder: boolean, scheduleState: boolean)
     {
-        super(year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder, scheduleState);
+        super(year, month, day, startHour, startMinute, endHour, endMinute, scheduleText);
         this.id = id;
+        this.hasReminder = hasReminder;
+        this.scheduleState = scheduleState;
     }
 }

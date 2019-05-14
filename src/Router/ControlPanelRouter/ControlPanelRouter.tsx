@@ -19,7 +19,7 @@ export default () =>
                                        component={PAGE_ID_TO_COMPONENT[value]}
                                        key={PAGE_ID_TO_ROUTE[value]} />)
                         }
-                        <Route children={<Redirect to={PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE]} />} />
+                        <Route children={<Redirect to={PAGE_ID_TO_ROUTE[PAGE_ID.CONTROL_PANEL.SCHEDULE]} />} />
                     </Switch>
                 </ControlPanelContainer>
             </LoginCheckComponentWrapper>

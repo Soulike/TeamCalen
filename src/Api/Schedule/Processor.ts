@@ -14,7 +14,7 @@ import {
 import {SCHEDULE_STATE, STATUS_CODE} from '../../CONSTANT';
 import message from 'antd/lib/message';
 import {Function as AuthProcessorFunction} from '../../ComponentContainer/AuthProcessor';
-import {RequestSchedule,ResponseSchedule} from '../../Class';
+import {RequestSchedule, ResponseSchedule} from '../../Class';
 
 export async function sendGetEveryDayScheduleAmountInAMonthRequestAsync(year: string, month: string): Promise<object | null>
 {
@@ -77,7 +77,7 @@ export async function sendGetEveryDayScheduleAmountInAMonthRequestAsync(year: st
     }
 }
 
-export async function sendGetRecentSchedulesRequestAsync(amount: number): Promise<object | null>
+export async function sendGetRecentSchedulesRequestAsync(amount: number): Promise<{ schedules: Array<ResponseSchedule> } | null>
 {
     try
     {
@@ -134,7 +134,7 @@ export async function sendGetRecentSchedulesRequestAsync(amount: number): Promis
     }
 }
 
-export async function sendGetSchedulesByDayRequestAsync(year: string, month: string, day: string): Promise<object | null>
+export async function sendGetSchedulesByDayRequestAsync(year: string, month: string, day: string): Promise<{ schedules: Array<ResponseSchedule> } | null>
 {
     try
     {
@@ -437,7 +437,7 @@ export async function sendPostDeleteScheduleRequestAsync(scheduleId: number): Pr
     }
 }
 
-export async function sendPostModifyScheduleRequestAsync(scheduleId:number, requestSchedule:RequestSchedule): Promise<true | null>
+export async function sendPostModifyScheduleRequestAsync(scheduleId: number, requestSchedule: RequestSchedule): Promise<true | null>
 {
     try
     {
@@ -498,7 +498,7 @@ export async function sendPostModifyScheduleRequestAsync(scheduleId:number, requ
     }
 }
 
-export async function sendPostCreateScheduleRequestAsync(requestSchedule:RequestSchedule): Promise<true | null>
+export async function sendPostCreateScheduleRequestAsync(requestSchedule: RequestSchedule): Promise<true | null>
 {
     try
     {
@@ -556,7 +556,7 @@ export async function sendPostCreateScheduleRequestAsync(requestSchedule:Request
     }
 }
 
-export async function sendGetScheduleByIdRequestAsync(scheduleId:number): Promise<ResponseSchedule | null>
+export async function sendGetScheduleByIdRequestAsync(scheduleId: number): Promise<ResponseSchedule | null>
 {
     try
     {

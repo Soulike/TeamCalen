@@ -27,7 +27,7 @@ class ControlPanelContainer extends React.Component<ControlPanelContainerProps, 
     {
         super(props);
         this.state = {
-            currentActivePageId: PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE,
+            currentActivePageId: PAGE_ID.CONTROL_PANEL.SCHEDULE,
         };
 
         const {getUserInfo} = this.props;

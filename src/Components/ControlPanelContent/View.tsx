@@ -4,7 +4,7 @@ import Style from './Style.module.scss';
 interface ControlPanelContentProps
 {
     midPartComponent: JSX.Element;
-    rightPartComponent: JSX.Element;
+    rightPartComponent?: JSX.Element;
 }
 
 function ControlPanelContent(props: ControlPanelContentProps)

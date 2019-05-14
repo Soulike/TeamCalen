@@ -5,7 +5,7 @@ const Index = React.lazy(() => import('../../Pages/Index'));
 const Login = React.lazy(() => import('../../Pages/Account/Login'));
 const SignUp = React.lazy(() => import('../../Pages/Account/SignUp'));
 const RetrievePassword = React.lazy(() => import('../../Pages/Account/RetrievePassword'));
-const NewSchedule = React.lazy(() => import('../../Pages/ControlPanel/NewSchedule'));
+const Schedule = React.lazy(() => import('../../Pages/ControlPanel/Schedule'));
 const AccountManagement = React.lazy(() => import('../../Pages/ControlPanel/AccountManagement'));
 
 export const PAGE_ID_TO_COMPONENT = {
@@ -15,7 +15,7 @@ export const PAGE_ID_TO_COMPONENT = {
     [PAGE_ID.ACCOUNT.SIGN_UP]: SignUp,
     [PAGE_ID.ACCOUNT.RETRIEVE_PASSWORD]: RetrievePassword,
 
-    [PAGE_ID.CONTROL_PANEL.NEW_SCHEDULE]: NewSchedule,
+    [PAGE_ID.CONTROL_PANEL.SCHEDULE]: Schedule,
     [PAGE_ID.CONTROL_PANEL.NEW_PROJECT]: undefined,
     [PAGE_ID.CONTROL_PANEL.MY_PROJECT]: undefined,
     [PAGE_ID.CONTROL_PANEL.PROJECT_DETAIL]: undefined,
