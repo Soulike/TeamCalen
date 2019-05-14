@@ -1,17 +1,21 @@
-export function prefixZero(number)
+export function prefixZero(number: string | number): string
 {
-    number = Number.parseInt(number);
+    if (typeof number === 'string')
+    {
+        number = Number.parseInt(number);
+    }
+
     if (number >= 0 && number < 10)
     {
         return `0${number}`;
     }
     else
     {
-        return number;
+        return number.toString(10);
     }
 }
 
-export function isSetsEqual(a, b)
+export function isSetsEqual(a: Set<any>, b: Set<any>): boolean
 {
     if (a.size !== b.size)
     {

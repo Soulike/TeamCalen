@@ -1,10 +1,10 @@
-export function requestPrefix(url)
+export function requestPrefix(url: string): string
 {
     url = removePrependSlashes(url);
     return `/server/${url}`;
 }
 
-export function removePrependSlashes(str)
+export function removePrependSlashes(str: string): string
 {
     while (str.charAt(0) === '/')
     {
