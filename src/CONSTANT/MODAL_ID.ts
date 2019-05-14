@@ -1,0 +1,5 @@
+export enum MODAL_ID
+{
+    SCHEDULE_MODAL,
+    SCHEDULE_MODIFY_MODAL
+}
