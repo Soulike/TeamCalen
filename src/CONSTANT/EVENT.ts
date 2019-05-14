@@ -1,4 +1,4 @@
-export default {
+export const EVENT = {
     CONTROL_PANEL: {
         USER_INFO_UPDATED: Symbol('USER_INFO_UPDATED'),
         USER_INFO_UPDATE_COMPLETED: Symbol('USER_INFO_UPDATE_COMPLETED'),
