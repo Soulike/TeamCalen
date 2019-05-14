@@ -1,7 +1,7 @@
 import {RequestSchedule, ResponseSchedule} from './Schedule';
 import {UserInfo} from './UserInfo';
 
-export default {
+export {
     RequestSchedule,
     ResponseSchedule,
     UserInfo,

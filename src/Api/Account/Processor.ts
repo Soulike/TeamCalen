@@ -1,29 +1,146 @@
 import Function from '../../Function';
 import {
-    CANCEL_SCHEDULE,
-    CHANGE_SCHEDULE_STATE,
-    CREATE_SCHEDULE,
-    DELETE_SCHEDULE,
-    GET_EVERY_DAY_SCHEDULE_AMOUNT_IN_A_MONTH,
-    GET_RECENT_SCHEDULES,
-    GET_SCHEDULE_BY_ID,
-    GET_SCHEDULES_BY_DAY,
-    MODIFY_SCHEDULE,
-    RESUME_SCHEDULE,
+    CHANGE_EMAIL,
+    CHANGE_PASSWORD,
+    GET_USER_INFO,
+    LOGIN,
+    LOGOUT,
+    RETRIEVE_PASSWORD,
+    SEND_VERIFICATION_CODE_BY_EMAIL,
+    SEND_VERIFICATION_CODE_BY_USERNAME,
+    SIGN_UP,
+    UPLOAD_AVATAR,
 } from './ROUTE';
-import STATUS_CODE from '../../CONSTANT/STATUS_CODE';
+import {STATUS_CODE} from '../../CONSTANT';
 import message from 'antd/lib/message';
 import {Function as AuthProcessorFunction} from '../../ComponentContainer/AuthProcessor';
+import {UserInfo} from '../../Class';
 
-export async function sendGetEveryDayScheduleAmountInAMonthRequestAsync(year, month)
+export async function sendPostLoginRequestAsync(username: string, password: string): Promise<true | null>
 {
     try
     {
-        const {code, data} = await Function.getAsync(GET_EVERY_DAY_SCHEDULE_AMOUNT_IN_A_MONTH, false, {
-            year,
-            month,
+        const {code} = await Function.postAsync(LOGIN, {
+            username,
+            password,
         });
 
+        switch (code)
+        {
+            case STATUS_CODE.OK:
+            {
+                message.success('登录成功');
+                return true;
+            }
+            case STATUS_CODE.BAD_REQUEST:
+            {
+                message.error('参数错误');
+                return null;
+            }
+            case STATUS_CODE.UNAUTHORIZED:
+            {
+                AuthProcessorFunction.setOffline();
+                message.error('未登录操作');
+                return null;
+            }
+            case STATUS_CODE.FORBIDDEN:
+            {
+                message.error('登录操作被拒绝');
+                return null;
+            }
+            case STATUS_CODE.NOT_FOUND:
+            {
+                message.error('帐号或密码错误');
+                return null;
+            }
+            case STATUS_CODE.CONFLICT:
+            {
+                message.error('帐号或密码错误');
+                return null;
+            }
+            case STATUS_CODE.INTERNAL_SERVER_ERROR:
+            {
+                message.error('服务器出错');
+                return null;
+            }
+            default:
+            {
+                message.error('未知原因的登录失败');
+                return null;
+            }
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        message.error('网络异常');
+        return null;
+    }
+}
+
+export async function sendPostLogoutRequestAsync(): Promise<true | null>
+{
+    try
+    {
+        const {code} = await Function.postAsync(LOGOUT);
+        switch (code)
+        {
+            case STATUS_CODE.OK:
+            {
+                message.success('退出登录成功');
+                return true;
+            }
+            case STATUS_CODE.BAD_REQUEST:
+            {
+                message.error('参数错误');
+                return null;
+            }
+            case STATUS_CODE.UNAUTHORIZED:
+            {
+                AuthProcessorFunction.setOffline();
+                message.error('未登录操作');
+                return null;
+            }
+            case STATUS_CODE.FORBIDDEN:
+            {
+                message.error('退出登录操作被拒绝');
+                return null;
+            }
+            case STATUS_CODE.NOT_FOUND:
+            {
+                message.error('用户不存在');
+                return null;
+            }
+            case STATUS_CODE.CONFLICT:
+            {
+                message.error('未知错误');
+                return null;
+            }
+            case STATUS_CODE.INTERNAL_SERVER_ERROR:
+            {
+                message.error('服务器出错');
+                return null;
+            }
+            default:
+            {
+                message.error('未知原因的退出登录失败');
+                return null;
+            }
+        }
+    }
+    catch (e)
+    {
+        console.error(e);
+        message.error('网络异常');
+        return null;
+    }
+}
+
+export async function sendGetUserInfoRequestAsync(): Promise<UserInfo | null>
+{
+    try
+    {
+        const {code, data} = await Function.getAsync(GET_USER_INFO, false);
         switch (code)
         {
             case STATUS_CODE.OK:
@@ -43,12 +160,12 @@ export async function sendGetEveryDayScheduleAmountInAMonthRequestAsync(year, mo
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('获取每日日程数量操作被拒绝');
+                message.error('获取用户信息操作被拒绝');
                 return null;
             }
             case STATUS_CODE.NOT_FOUND:
             {
-                message.error('每日日程数量不存在');
+                message.error('用户不存在');
                 return null;
             }
             case STATUS_CODE.CONFLICT:
@@ -63,7 +180,7 @@ export async function sendGetEveryDayScheduleAmountInAMonthRequestAsync(year, mo
             }
             default:
             {
-                message.error('未知原因的获取每日日程数量失败');
+                message.error('未知原因的获取用户信息失败');
                 return null;
             }
         }
@@ -76,138 +193,19 @@ export async function sendGetEveryDayScheduleAmountInAMonthRequestAsync(year, mo
     }
 }
 
-export async function sendGetRecentSchedulesRequestAsync(amount)
+export async function sendPostUploadAvatarRequestAsync(file: File): Promise<true | null>
 {
     try
     {
-        const {code, data} = await Function.getAsync(GET_RECENT_SCHEDULES, false, {amount});
+        const formData = new FormData();
+        formData.append('avatar', file);
+
+        const {code} = await Function.postAsync(UPLOAD_AVATAR, formData);
         switch (code)
         {
             case STATUS_CODE.OK:
             {
-                return data;
-            }
-            case STATUS_CODE.BAD_REQUEST:
-            {
-                message.error('参数错误');
-                return null;
-            }
-            case STATUS_CODE.UNAUTHORIZED:
-            {
-                AuthProcessorFunction.setOffline();
-                message.error('未登录操作');
-                return null;
-            }
-            case STATUS_CODE.FORBIDDEN:
-            {
-                message.error('获取近期日程操作被拒绝');
-                return null;
-            }
-            case STATUS_CODE.NOT_FOUND:
-            {
-                message.error('近期日程不存在');
-                return null;
-            }
-            case STATUS_CODE.CONFLICT:
-            {
-                message.error('未知错误');
-                return null;
-            }
-            case STATUS_CODE.INTERNAL_SERVER_ERROR:
-            {
-                message.error('服务器出错');
-                return null;
-            }
-            default:
-            {
-                message.error('未知原因的获取近期日程失败');
-                return null;
-            }
-        }
-    }
-    catch (e)
-    {
-        console.error(e);
-        message.error('网络异常');
-        return null;
-    }
-}
-
-export async function sendGetSchedulesByDayRequestAsync(year, month, day)
-{
-    try
-    {
-        const {code, data} = await Function.getAsync(GET_SCHEDULES_BY_DAY, false, {
-            year,
-            month,
-            day,
-        });
-
-        switch (code)
-        {
-            case STATUS_CODE.OK:
-            {
-                return data;
-            }
-            case STATUS_CODE.BAD_REQUEST:
-            {
-                message.error('参数错误');
-                return null;
-            }
-            case STATUS_CODE.UNAUTHORIZED:
-            {
-                AuthProcessorFunction.setOffline();
-                message.error('未登录操作');
-                return null;
-            }
-            case STATUS_CODE.FORBIDDEN:
-            {
-                message.error('获取日程操作被拒绝');
-                return null;
-            }
-            case STATUS_CODE.NOT_FOUND:
-            {
-                message.error('日程不存在');
-                return null;
-            }
-            case STATUS_CODE.CONFLICT:
-            {
-                message.error('未知错误');
-                return null;
-            }
-            case STATUS_CODE.INTERNAL_SERVER_ERROR:
-            {
-                message.error('服务器出错');
-                return null;
-            }
-            default:
-            {
-                message.error('未知原因的获取日程失败');
-                return null;
-            }
-        }
-    }
-    catch (e)
-    {
-        console.error(e);
-        message.error('网络异常');
-        return null;
-    }
-}
-
-export async function sendPostChangeScheduleStateRequestAsync(scheduleId, state)
-{
-    try
-    {
-        const {code} = await Function.postAsync(CHANGE_SCHEDULE_STATE, {
-            scheduleId,
-            state,
-        });
-        switch (code)
-        {
-            case STATUS_CODE.OK:
-            {
-                message.success('修改日程状态成功');
+                message.success('上传成功');
                 return true;
             }
             case STATUS_CODE.BAD_REQUEST:
@@ -223,17 +221,17 @@ export async function sendPostChangeScheduleStateRequestAsync(scheduleId, state)
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('修改日程状态操作被拒绝');
+                message.error('上传头像操作被拒绝');
                 return null;
             }
             case STATUS_CODE.NOT_FOUND:
             {
-                message.error('日程不存在');
+                message.error('用户不存在');
                 return null;
             }
             case STATUS_CODE.CONFLICT:
             {
-                message.error('未知错误');
+                message.error('与服务器现有资源冲突');
                 return null;
             }
             case STATUS_CODE.INTERNAL_SERVER_ERROR:
@@ -243,7 +241,7 @@ export async function sendPostChangeScheduleStateRequestAsync(scheduleId, state)
             }
             default:
             {
-                message.error('未知原因的修改日程状态失败');
+                message.error('未知原因的上传头像失败');
                 return null;
             }
         }
@@ -256,18 +254,19 @@ export async function sendPostChangeScheduleStateRequestAsync(scheduleId, state)
     }
 }
 
-export async function sendPostResumeScheduleRequestAsync(scheduleId)
+/**
+ * @deprecated
+ * */
+export async function sendPostSendVerificationCodeByEmailRequestAsync(email: string): Promise<true | null>
 {
     try
     {
-        const {code} = await Function.postAsync(RESUME_SCHEDULE, {
-            scheduleId,
-        });
+        const {code} = await Function.postAsync(SEND_VERIFICATION_CODE_BY_EMAIL, {email});
         switch (code)
         {
             case STATUS_CODE.OK:
             {
-                message.success('恢复日程成功');
+                message.success('验证码已发送到您的邮箱');
                 return true;
             }
             case STATUS_CODE.BAD_REQUEST:
@@ -283,12 +282,12 @@ export async function sendPostResumeScheduleRequestAsync(scheduleId)
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('恢复日程操作被拒绝');
+                message.error('获取验证码操作被拒绝');
                 return null;
             }
             case STATUS_CODE.NOT_FOUND:
             {
-                message.error('日程不存在');
+                message.error('未知错误');
                 return null;
             }
             case STATUS_CODE.CONFLICT:
@@ -303,7 +302,7 @@ export async function sendPostResumeScheduleRequestAsync(scheduleId)
             }
             default:
             {
-                message.error('未知原因的恢复日程失败');
+                message.error('未知原因的获取验证码失败');
                 return null;
             }
         }
@@ -316,18 +315,24 @@ export async function sendPostResumeScheduleRequestAsync(scheduleId)
     }
 }
 
-export async function sendPostCancelScheduleRequestAsync(scheduleId)
+/**
+ * @deprecated
+ * */
+export async function sendPostSignUpRequestAsync(username: string, password: string, email: string, verificationCode: string): Promise<true | null>
 {
     try
     {
-        const {code} = await Function.postAsync(CANCEL_SCHEDULE, {
-            scheduleId,
+        const {code} = await Function.postAsync(SIGN_UP, {
+            username,
+            password,
+            email,
+            verificationCode,
         });
         switch (code)
         {
             case STATUS_CODE.OK:
             {
-                message.success('取消日程成功');
+                message.success('注册成功');
                 return true;
             }
             case STATUS_CODE.BAD_REQUEST:
@@ -343,17 +348,17 @@ export async function sendPostCancelScheduleRequestAsync(scheduleId)
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('取消日程操作被拒绝');
+                message.error('注册操作被拒绝');
                 return null;
             }
             case STATUS_CODE.NOT_FOUND:
             {
-                message.error('日程不存在');
+                message.error('未知错误');
                 return null;
             }
             case STATUS_CODE.CONFLICT:
             {
-                message.error('未知错误');
+                message.error('用户名已存在');
                 return null;
             }
             case STATUS_CODE.INTERNAL_SERVER_ERROR:
@@ -363,7 +368,7 @@ export async function sendPostCancelScheduleRequestAsync(scheduleId)
             }
             default:
             {
-                message.error('未知原因的取消日程失败');
+                message.error('未知原因的注册失败');
                 return null;
             }
         }
@@ -376,18 +381,19 @@ export async function sendPostCancelScheduleRequestAsync(scheduleId)
     }
 }
 
-export async function sendPostDeleteScheduleRequestAsync(scheduleId)
+/**
+ * @deprecated
+ * */
+export async function sendPostSendVerificationCodeByUsernameRequestAsync(username: string): Promise<true | null>
 {
     try
     {
-        const {code} = await Function.postAsync(DELETE_SCHEDULE, {
-            scheduleId,
-        });
+        const {code} = await Function.postAsync(SEND_VERIFICATION_CODE_BY_USERNAME, {username});
         switch (code)
         {
             case STATUS_CODE.OK:
             {
-                message.success('删除日程成功');
+                message.success('验证码已发送到您注册时的邮箱');
                 return true;
             }
             case STATUS_CODE.BAD_REQUEST:
@@ -403,12 +409,12 @@ export async function sendPostDeleteScheduleRequestAsync(scheduleId)
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('删除日程操作被拒绝');
+                message.error('获取验证码操作被拒绝');
                 return null;
             }
             case STATUS_CODE.NOT_FOUND:
             {
-                message.error('日程不存在');
+                message.error('用户名不存在');
                 return null;
             }
             case STATUS_CODE.CONFLICT:
@@ -423,7 +429,7 @@ export async function sendPostDeleteScheduleRequestAsync(scheduleId)
             }
             default:
             {
-                message.error('未知原因的删除日程失败');
+                message.error('未知原因的获取验证码失败');
                 return null;
             }
         }
@@ -436,19 +442,23 @@ export async function sendPostDeleteScheduleRequestAsync(scheduleId)
     }
 }
 
-export async function sendPostModifyScheduleRequestAsync(scheduleId, requestSchedule)
+/**
+ * @deprecated
+ * */
+export async function sendPostRetrievePasswordRequestAsync(username: string, verificationCode: string, password: string): Promise<true | null>
 {
     try
     {
-        const {code} = await Function.postAsync(MODIFY_SCHEDULE, {
-            id: scheduleId,
-            schedule: requestSchedule,
+        const {code} = await Function.postAsync(RETRIEVE_PASSWORD, {
+            username,
+            verificationCode,
+            password,
         });
         switch (code)
         {
             case STATUS_CODE.OK:
             {
-                message.success('修改日程成功');
+                message.success('找回密码成功，请使用新密码登录');
                 return true;
             }
             case STATUS_CODE.BAD_REQUEST:
@@ -464,12 +474,12 @@ export async function sendPostModifyScheduleRequestAsync(scheduleId, requestSche
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('修改日程操作被拒绝');
+                message.error('验证码错误');
                 return null;
             }
             case STATUS_CODE.NOT_FOUND:
             {
-                message.error('日程不存在');
+                message.error('用户名不存在');
                 return null;
             }
             case STATUS_CODE.CONFLICT:
@@ -484,7 +494,7 @@ export async function sendPostModifyScheduleRequestAsync(scheduleId, requestSche
             }
             default:
             {
-                message.error('未知原因的修改日程失败');
+                message.error('未知原因的找回密码失败');
                 return null;
             }
         }
@@ -497,16 +507,23 @@ export async function sendPostModifyScheduleRequestAsync(scheduleId, requestSche
     }
 }
 
-export async function sendPostCreateScheduleRequestAsync(requestSchedule)
+/**
+ * @deprecated
+ * */
+export async function sendPostChangePasswordRequestAsync(password: string, newPassword: string, verificationCode: string): Promise<true | null>
 {
     try
     {
-        const {code} = await Function.postAsync(CREATE_SCHEDULE, requestSchedule);
+        const {code} = await Function.postAsync(CHANGE_PASSWORD, {
+            password,
+            newPassword,
+            verificationCode,
+        });
         switch (code)
         {
             case STATUS_CODE.OK:
             {
-                message.success('创建日程成功');
+                message.success('修改密码成功，请重新登录');
                 return true;
             }
             case STATUS_CODE.BAD_REQUEST:
@@ -522,17 +539,17 @@ export async function sendPostCreateScheduleRequestAsync(requestSchedule)
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('创建日程操作被拒绝');
+                message.error('新密码不合法或验证码错误');
                 return null;
             }
             case STATUS_CODE.NOT_FOUND:
             {
-                message.error('日程不存在');
+                message.error('用户不存在');
                 return null;
             }
             case STATUS_CODE.CONFLICT:
             {
-                message.error('未知错误');
+                message.error('原密码错误');
                 return null;
             }
             case STATUS_CODE.INTERNAL_SERVER_ERROR:
@@ -542,7 +559,7 @@ export async function sendPostCreateScheduleRequestAsync(requestSchedule)
             }
             default:
             {
-                message.error('未知原因的创建日程失败');
+                message.error('未知原因的修改密码失败');
                 return null;
             }
         }
@@ -555,18 +572,23 @@ export async function sendPostCreateScheduleRequestAsync(requestSchedule)
     }
 }
 
-export async function sendGetScheduleByIdRequestAsync(scheduleId)
+/**
+ * @deprecated
+ * */
+export async function sendPostChangeEmailRequestAsync(email: string, verificationCode: string): Promise<true | null>
 {
     try
     {
-        const {code, data} = await Function.getAsync(GET_SCHEDULE_BY_ID, false, {
-            scheduleId,
+        const {code} = await Function.postAsync(CHANGE_EMAIL, {
+            email,
+            verificationCode,
         });
         switch (code)
         {
             case STATUS_CODE.OK:
             {
-                return data;
+                message.success('修改邮箱成功');
+                return true;
             }
             case STATUS_CODE.BAD_REQUEST:
             {
@@ -581,17 +603,17 @@ export async function sendGetScheduleByIdRequestAsync(scheduleId)
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('获取日程信息操作被拒绝');
+                message.error('新邮箱不合法或验证码错误');
                 return null;
             }
             case STATUS_CODE.NOT_FOUND:
             {
-                message.error('日程不存在');
+                message.error('用户不存在');
                 return null;
             }
             case STATUS_CODE.CONFLICT:
             {
-                message.error('未知错误');
+                message.error('与服务器现有资源冲突');
                 return null;
             }
             case STATUS_CODE.INTERNAL_SERVER_ERROR:
@@ -601,7 +623,7 @@ export async function sendGetScheduleByIdRequestAsync(scheduleId)
             }
             default:
             {
-                message.error('未知原因的获取日程信息失败');
+                message.error('未知原因的修改邮箱失败');
                 return null;
             }
         }

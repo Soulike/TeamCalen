@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {AxiosRequestConfig} from 'axios';
 
-export async function getAsync(url: string, allowCache: boolean = true, params: AxiosRequestConfig = {}, config: AxiosRequestConfig = {}) : Promise<any>
+export async function getAsync(url: string, allowCache: boolean = true, params = {}, config: AxiosRequestConfig = {}) : Promise<any>
 {
     return new Promise(async (resolve, reject) =>
     {
@@ -24,7 +24,7 @@ export async function getAsync(url: string, allowCache: boolean = true, params: 
 
 }
 
-export async function postAsync(url: string, params: AxiosRequestConfig = {}, config: AxiosRequestConfig = {}): Promise<any>
+export async function postAsync(url: string, params = {}, config: AxiosRequestConfig = {}): Promise<any>
 {
     return new Promise(async (resolve, reject) =>
     {
