@@ -1,3 +1,6 @@
+/**
+ * @description prepend 0 when number (positive or 0) is less than 10
+ * */
 export function prefixZero(number: string | number): string
 {
     if (typeof number === 'string')
@@ -15,6 +18,9 @@ export function prefixZero(number: string | number): string
     }
 }
 
+/**
+ * @description check if two sets are equal
+ * */
 export function isSetsEqual(a: Set<any>, b: Set<any>): boolean
 {
     if (a.size !== b.size)

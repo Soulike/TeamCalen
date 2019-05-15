@@ -6,6 +6,9 @@ export function requestPrefix(prefix: string, url: string): string
     return `/${prefix}/${url}`;
 }
 
+/**
+ * @description remove prepend slashes from specific str
+ * */
 export function removePrependSlashes(str: string): string
 {
     let slashAmount = 0;
