@@ -1,14 +1,38 @@
-export function requestPrefix(url: string): string
+export function requestPrefix(prefix: string, url: string): string
 {
     url = removePrependSlashes(url);
-    return `/server/${url}`;
+    prefix = removePrependSlashes(prefix);
+    prefix = removeRearSlashes(prefix);
+    return `/${prefix}/${url}`;
 }
 
+/**
+ * @description remove prepend slashes from specific str
+ * */
 export function removePrependSlashes(str: string): string
 {
-    while (str.charAt(0) === '/')
+    let slashAmount = 0;
+    for (let i = 0; i < str.length && str.charAt(i) === '/'; i++)
     {
-        str = str.substring(1);
+        slashAmount++;
     }
-    return str;
+    return str.slice(slashAmount);
+}
+
+export function removeRearSlashes(str: string): string
+{
+    let slashAmount = 0;
+    for (let i = str.length - 1; i >= 0 && str.charAt(i) === '/'; i--)
+    {
+        slashAmount++;
+    }
+
+    if (slashAmount !== 0)
+    {
+        return str.slice(0, -1 * slashAmount);
+    }
+    else
+    {
+        return str;
+    }
 }
