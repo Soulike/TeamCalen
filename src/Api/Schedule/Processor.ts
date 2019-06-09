@@ -86,7 +86,12 @@ export async function sendGetRecentSchedulesRequestAsync(amount: number): Promis
         {
             case STATUS_CODE.OK:
             {
-                return data;
+                const scheduleArray: Array<Schedule> = [];
+                data.schedules.forEach((serializedSchedule: any) =>
+                {
+                    scheduleArray.push(Schedule.from(serializedSchedule));
+                });
+                return {schedules: scheduleArray};
             }
             case STATUS_CODE.BAD_REQUEST:
             {
@@ -148,7 +153,12 @@ export async function sendGetSchedulesByDayRequestAsync(year: string, month: str
         {
             case STATUS_CODE.OK:
             {
-                return data;
+                const scheduleArray: Array<Schedule> = [];
+                data.schedules.forEach((serializedSchedule: any) =>
+                {
+                    scheduleArray.push(Schedule.from(serializedSchedule));
+                });
+                return {schedules: scheduleArray};
             }
             case STATUS_CODE.BAD_REQUEST:
             {

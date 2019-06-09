@@ -26,4 +26,18 @@ export class Schedule
         this.scheduleState = scheduleState;
         this.username = username;
     }
+
+    static from(obj: any): Schedule
+    {
+        return new Schedule(
+            obj.id,
+            new Date(obj.day),
+            obj.startTime ? new Date(obj.startTime) : obj.startTime,
+            obj.endTime ? new Date(obj.endTime) : obj.endTime,
+            obj.scheduleText,
+            obj.hasReminder,
+            obj.scheduleState,
+            obj.username,
+        );
+    }
 }
