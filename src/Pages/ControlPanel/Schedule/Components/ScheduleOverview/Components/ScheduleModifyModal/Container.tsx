@@ -215,9 +215,9 @@ class ScheduleModifyModalContainer extends React.Component<Props, State>
     }
 }
 
-const mapStateToProps = (state: { NewSchedule: { currentModifyingScheduleId: number; }; }) =>
+const mapStateToProps = (state: { Schedule: { currentModifyingScheduleId: number; }; }) =>
 {
-    const {NewSchedule: {currentModifyingScheduleId}} = state;
+    const {Schedule: {currentModifyingScheduleId}} = state;
     return {
         currentModifyingScheduleId,
     };
