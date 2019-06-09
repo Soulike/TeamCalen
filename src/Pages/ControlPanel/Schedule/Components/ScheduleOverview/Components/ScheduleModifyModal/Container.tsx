@@ -68,8 +68,17 @@ class ScheduleModifyModalContainer extends React.Component<Props, State>
         const schedule = await Api.sendGetScheduleByIdRequestAsync(currentModifyingScheduleId);
         if (schedule)
         {
+            const {day, startTime, endTime, hasReminder, scheduleText} = schedule;
             await this.setStateAsync({
-                ...schedule,
+                year: (day as Date).getFullYear(),
+                month: (day as Date).getMonth() + 1,
+                day: (day as Date).getDate(),
+                startHour: (startTime as Date).getUTCHours(),
+                startMinute: (startTime as Date).getUTCMinutes(),
+                endHour: (endTime as Date).getUTCHours(),
+                endMinute: (endTime as Date).getUTCMinutes(),
+                hasReminder,
+                scheduleText,
                 hasGotData: true,
             });
         }
@@ -169,9 +178,9 @@ class ScheduleModifyModalContainer extends React.Component<Props, State>
             const requestIsSuccessful = await Api.sendPostModifyScheduleRequestAsync(currentModifyingScheduleId,
                 new Schedule(
                     undefined,
-                    new Date(Number.parseInt(year), Number.parseInt(month), Number.parseInt(day)),
-                    new Date(Number.parseInt(year), Number.parseInt(month), Number.parseInt(day), startHour, startMinute),
-                    new Date(Number.parseInt(year), Number.parseInt(month), Number.parseInt(day), endHour, endMinute),
+                    new Date(Date.UTC(Number.parseInt(year), Number.parseInt(month) - 1, Number.parseInt(day))),
+                    new Date(Date.UTC(Number.parseInt(year), Number.parseInt(month) - 1, Number.parseInt(day), startHour, startMinute)),
+                    new Date(Date.UTC(Number.parseInt(year), Number.parseInt(month) - 1, Number.parseInt(day), endHour, endMinute)),
                     scheduleText,
                     hasReminder,
                 ),

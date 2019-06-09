@@ -577,7 +577,7 @@ export async function sendGetScheduleByIdRequestAsync(scheduleId: number): Promi
         {
             case STATUS_CODE.OK:
             {
-                return data;
+                return Schedule.from(data);
             }
             case STATUS_CODE.BAD_REQUEST:
             {
