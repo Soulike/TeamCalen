@@ -16,7 +16,7 @@ import message from 'antd/lib/message';
 import {Function as AuthProcessorFunction} from '../../ComponentContainer/AuthProcessor';
 import {Schedule} from '../../Class';
 
-export async function sendGetEveryDayScheduleAmountInAMonthRequestAsync(year: string, month: string): Promise<any | null>
+export async function sendGetEveryDayScheduleAmountInAMonthRequestAsync(year: string, month: string): Promise<{ scheduleAmount: Array<number> } | null>
 {
     try
     {

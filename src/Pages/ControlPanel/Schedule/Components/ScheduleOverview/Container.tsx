@@ -107,8 +107,7 @@ class ScheduleOverviewContainer extends React.Component<Props, State>
         {
 
             await this.setStateAsync({
-                // @ts-ignore
-                everyDayScheduleAmountInAMonth: scheduleAmountWrapper['scheduleAmount'],
+                everyDayScheduleAmountInAMonth: scheduleAmountWrapper.scheduleAmount,
                 hasGotEveryDayScheduleAmountInAMonth: true,
             });
         }

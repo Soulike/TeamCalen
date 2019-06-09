@@ -1,14 +1,12 @@
 import * as ACTION_TYPE from './Actions/ACTION_TYPE';
-import redux from 'redux';
 
-export default (state = {}, action: redux.Action) =>
+export default (state = {}, action: any) =>
 {
     const {type} = action;
     switch (type)
     {
         case ACTION_TYPE.CHANGE_CURRENT_MODIFYING_SCHEDULE_ID:
         {
-            // @ts-ignore
             const {scheduleId} = action;
             return {
                 ...state,
