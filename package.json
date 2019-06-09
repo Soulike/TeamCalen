@@ -1,7 +1,7 @@
 {
   "name": "teamcalen",
   "version": "0.1.0",
-  "proxy": "https://teamcalen.soulike.tech",
+  "proxy": "http://39.96.200.130:10000",
   "private": true,
   "dependencies": {
     "@types/jest": "^24.0.13",

@@ -80,7 +80,7 @@ class ControlPanelContainer extends React.Component<ControlPanelContainerProps, 
         return (
             <ControlPanel currentActivePageId={currentActivePageId}
                           username={username as string}
-                          avatarSrc={avatar ? avatarSrc : undefined}>{children}</ControlPanel> // 加一个时间戳禁止浏览器进行缓存
+                          avatarSrc={avatar ? avatarSrc : undefined}>{children}</ControlPanel>
         );
     }
 }

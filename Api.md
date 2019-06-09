@@ -155,7 +155,7 @@ class UserProfile
 #### `/uploadAvatar`
 
 - 功能说明：上传用户头像
-- 请求方法：POST
+- 请求方法：PUT
 - 请求体：FormData 对象，其中的域有
   - `avatar`：文件的二进制内容
 - 响应体：无

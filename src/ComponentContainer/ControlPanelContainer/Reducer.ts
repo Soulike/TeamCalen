@@ -1,21 +1,20 @@
 import * as ACTION_TYPE from './Actions/ACTION_TYPE';
 import redux from 'redux';
 
-export default (state = {}, action: redux.Action) =>
+export default (state = {}, action: redux.Action & any) =>
 {
     const {type} = action;
     switch (type)
     {
-        case ACTION_TYPE.GET_USER_INFO_SUCCESSFUL:
+        case ACTION_TYPE.GET_USER_PROFILE_SUCCESSFUL:
         {
-            // @ts-ignore
-            const {userInfo} = action;
+            const {userProfile} = action;
             return {
                 ...state,
-                userInfo,
+                userProfile,
             };
         }
-        case ACTION_TYPE.GET_USER_INFO_FAILED:
+        case ACTION_TYPE.GET_USER_PROFILE_FAILED:
         default:
         {
             return state;

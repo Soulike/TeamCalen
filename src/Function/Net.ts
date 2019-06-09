@@ -52,3 +52,19 @@ export async function postAsync(url: string, params = {}, config: AxiosRequestCo
         }
     });
 }
+
+export async function putAsync(url: string, params = {}, config: AxiosRequestConfig = {}): Promise<any>
+{
+    return new Promise(async (resolve, reject) =>
+    {
+        try
+        {
+            const res = await axios.put(url, params, config);
+            resolve(res.data);
+        }
+        catch (e)
+        {
+            reject(e);
+        }
+    });
+}

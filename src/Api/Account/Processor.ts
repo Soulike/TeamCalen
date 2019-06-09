@@ -200,7 +200,7 @@ export async function sendPostUploadAvatarRequestAsync(file: File): Promise<true
         const formData = new FormData();
         formData.append('avatar', file);
 
-        const {code} = await Function.postAsync(UPLOAD_AVATAR, formData);
+        const {code} = await Function.putAsync(UPLOAD_AVATAR, formData);
         switch (code)
         {
             case STATUS_CODE.OK:

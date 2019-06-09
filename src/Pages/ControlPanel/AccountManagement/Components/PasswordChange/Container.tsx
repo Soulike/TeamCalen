@@ -85,9 +85,9 @@ class PasswordChangeContainer extends React.Component<Props>
     }
 }
 
-const mapStateToProps = (state: { ControlPanel: { userInfo: { username: any; }; }; }) =>
+const mapStateToProps = (state: { ControlPanel: { userProfile: { username: any; }; }; }) =>
 {
-    const {ControlPanel: {userInfo: {username}}} = state;
+    const {ControlPanel: {userProfile: {username}}} = state;
     return {username};
 };
 

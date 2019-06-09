@@ -16,7 +16,7 @@ import message from 'antd/lib/message';
 import {Function as AuthProcessorFunction} from '../../ComponentContainer/AuthProcessor';
 import {Schedule} from '../../Class';
 
-export async function sendGetEveryDayScheduleAmountInAMonthRequestAsync(year: string, month: string): Promise<object | null>
+export async function sendGetEveryDayScheduleAmountInAMonthRequestAsync(year: string, month: string): Promise<any | null>
 {
     try
     {
@@ -437,13 +437,13 @@ export async function sendPostDeleteScheduleRequestAsync(scheduleId: number): Pr
     }
 }
 
-export async function sendPostModifyScheduleRequestAsync(scheduleId: number, requestSchedule: Schedule): Promise<true | null>
+export async function sendPostModifyScheduleRequestAsync(scheduleId: number, schedule: Schedule): Promise<true | null>
 {
     try
     {
         const {code} = await Function.postAsync(MODIFY_SCHEDULE, {
-            id: scheduleId,
-            schedule: requestSchedule,
+            scheduleId,
+            schedule,
         });
         switch (code)
         {

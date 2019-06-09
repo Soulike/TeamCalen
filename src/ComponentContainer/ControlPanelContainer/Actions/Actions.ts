@@ -22,7 +22,7 @@ export function getUserProfileAction()
 function getUserProfileSuccessfulAction(userProfile: UserProfile)
 {
     return {
-        type: ACTION_TYPE.GET_USER_INFO_SUCCESSFUL,
+        type: ACTION_TYPE.GET_USER_PROFILE_SUCCESSFUL,
         userProfile,
     };
 }
@@ -30,6 +30,6 @@ function getUserProfileSuccessfulAction(userProfile: UserProfile)
 function getUserProfileFailedAction()
 {
     return {
-        type: ACTION_TYPE.GET_USER_INFO_FAILED,
+        type: ACTION_TYPE.GET_USER_PROFILE_FAILED,
     };
 }
