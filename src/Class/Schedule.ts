@@ -1,49 +1,29 @@
-class Schedule
-{
-    public year: string;
-    public month: string;
-    public day: string;
-    public startHour: number;
-    public startMinute: number;
-    public endHour: number;
-    public endMinute: number;
-    public scheduleText: string;
-    public hasReminder?: boolean;
-    public scheduleState?: boolean;
+import {SCHEDULE_STATE} from '../CONSTANT';
 
-    constructor(year: string, month: string, day: string,
-                startHour: number, startMinute: number, endHour: number, endMinute: number,
-                scheduleText: string, hasReminder?: boolean, scheduleState?: boolean)
+/**
+ * @class
+ * @description 日程类，对应数据库的 Schedule 表
+ * */
+export class Schedule
+{
+    public id?: number;      // id
+    public day?: Date;          // 所属日期
+    public startTime?: Date | null;    // 开始时间，包括年月日时间
+    public endTime?: Date | null;      // 结束时间
+    public scheduleText?: string;   // 日程的具体内容
+    public hasReminder?: boolean;   // 是否有提醒，默认值 false
+    public scheduleState?: SCHEDULE_STATE;    // 枚举值，日程的状态，默认值 SCHEDULE_STATE.UNFINISHED'
+    public username?: string | null;            // 日程所属的人
+
+    constructor(id?: number, day?: Date, startTime?: Date | null, endTime?: Date | null, scheduleText?: string, hasReminder?: boolean, scheduleState?: SCHEDULE_STATE, username?: string | null)
     {
-        this.year = year;
-        this.month = month;
+        this.id = id;
         this.day = day;
-        this.startHour = startHour;
-        this.startMinute = startMinute;
-        this.endHour = endHour;
-        this.endMinute = endMinute;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.scheduleText = scheduleText;
         this.hasReminder = hasReminder;
         this.scheduleState = scheduleState;
-    }
-}
-
-export class RequestSchedule extends Schedule {}
-
-export class ResponseSchedule extends Schedule
-{
-    public id: number;
-    public hasReminder: boolean;
-    public scheduleState: boolean;
-
-    constructor(id: number,
-                year: string, month: string, day: string,
-                startHour: number, startMinute: number, endHour: number, endMinute: number,
-                scheduleText: string, hasReminder: boolean, scheduleState: boolean)
-    {
-        super(year, month, day, startHour, startMinute, endHour, endMinute, scheduleText);
-        this.id = id;
-        this.hasReminder = hasReminder;
-        this.scheduleState = scheduleState;
+        this.username = username;
     }
 }

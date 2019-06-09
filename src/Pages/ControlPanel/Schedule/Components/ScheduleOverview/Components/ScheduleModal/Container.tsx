@@ -11,7 +11,7 @@ import {
 } from '../../Function';
 import {eventEmitter} from '../../../../../../../Singleton';
 import {EVENT, SCHEDULE_STATE} from '../../../../../../../CONSTANT';
-import {ResponseSchedule} from '../../../../../../../Class';
+import {Schedule} from '../../../../../../../Class';
 
 interface Props
 {
@@ -22,7 +22,7 @@ interface Props
 
 interface State
 {
-    schedules: Array<ResponseSchedule>;
+    schedules: Array<Schedule>;
     hasGotData: boolean;
 }
 
@@ -92,27 +92,32 @@ class ScheduleModalContainer extends React.Component<Props, State>
         const {year, month, day} = this.props;
         const {schedules, hasGotData} = this.state;
         const timelineItems: Array<TimelineItemObject.TimelineItem> = [];
-        schedules.forEach(schedule =>
+        schedules.forEach((schedule: Schedule) =>
         {
             const {
                 id,
-                month,
                 day,
-                startHour,
-                startMinute,
-                endHour,
-                endMinute,
+                startTime,
+                endTime,
                 scheduleText,
                 scheduleState,
             } = schedule;
+            // 从后端返回的对象，这些数据项一定都存在，因此进行强制类型转换
             timelineItems.push(
-                new TimelineItemObject.TimelineItem(id, month, day, startHour, startMinute, endHour, endMinute,
-                    scheduleText, scheduleState ? SCHEDULE_STATE.FINISHED : SCHEDULE_STATE.UNFINISHED,
-                    onSwitchChangeFactory(id),
-                    onResumeClickFactory(id),
-                    onCancelClickFactory(id),
-                    onDeleteClickFactory(id),
-                    onModifyClickFactory(id),
+                new TimelineItemObject.TimelineItem(
+                    id as number,
+                    ((day as Date).getMonth() + 1).toString(),
+                    ((day as Date).getDate()).toString(),
+                    (startTime as Date).getHours(),
+                    (startTime as Date).getMinutes(),
+                    (endTime as Date).getHours(),
+                    (endTime as Date).getMinutes(),
+                    scheduleText as string, scheduleState ? SCHEDULE_STATE.FINISHED : SCHEDULE_STATE.UNFINISHED,
+                    onSwitchChangeFactory(id as number),
+                    onResumeClickFactory(id as number),
+                    onCancelClickFactory(id as number),
+                    onDeleteClickFactory(id as number),
+                    onModifyClickFactory(id as number),
                 ),
             );
         });

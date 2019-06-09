@@ -4,7 +4,7 @@
 
 ## 返回格式约定
 
-所有后台返回的数据格式均为 tsON，tsON 对应对象格式如下
+所有后台返回的数据格式均为 JSON，JSON 对应对象格式如下
 
 ```ts
 {
@@ -31,7 +31,7 @@
 ## 名词解释
 
 - 请求体：在 GET 请求中指查询字符串内容，在 POST 请求中指请求体中内容
-- 响应体：指返回 tsON 中 data 键对应对象的内容
+- 响应体：指返回 JSON 中 data 键对应对象的内容
 
 ---
 
@@ -73,35 +73,14 @@ export const REGEX = {
 ```ts
 class Schedule 
 {
-    year: string;           // 年份，四位整数字符串
-    month: string;          // 月份，两位整数字符串
-    day: string;            // 日，两位整数字符串
-    startHour: number;      // 开始小时，0-23 整数
-    startMinute: number;    // 开始分钟，0-59 整数
-    endHour: number;        // 结束小时，0-23 整数
-    endMinute: number;      // 结束分钟，0-59 整数
-    scheduleText: string;   // 日程的具体内容
-    hasReminder?: boolean,   // 是否有提醒，默认值 false
-    scheduleState?: SCHEDULE_STATE;    // 枚举值，日程的状态，默认值 SCHEDULE_STATE.UNFINISHED'
-}
-```
-
-### `RequestSchedule`
-
-请求用日程类，继承自 `Schedule` 类，但并没有添加任何新的内容。
-
-```ts
-class RequestSchedule extents Schedule {}
-```
-
-### `ResponseSchedule`
-
-响应用日程类，继承自 `Schedule` 类，但添加了日程 id。
-
-```ts
-class ResponseSchedule extents Schedule
-{
-    id: number;
+    public id?: number;      // id
+    public day?: Date;          // 所属日期
+    public startTime?: Date | null;    // 开始时间，包括年月日时间
+    public endTime?: Date | null;      // 结束时间
+    public scheduleText?: string;   // 日程的具体内容
+    public hasReminder?: boolean;   // 是否有提醒，默认值 false
+    public scheduleState?: SCHEDULE_STATE;    // 枚举值，日程的状态，默认值 SCHEDULE_STATE.UNFINISHED'
+    public username?: string | null;            // 日程所属的人
 }
 ```
 
@@ -118,15 +97,23 @@ enum SCHEDULE_STATE
 };
 ```
 
-### `UserInfo`
+### `UserProfile`
 
 用户信息类。
 
 ```ts
-class UserInfo
+class UserProfile
 {
-    username: string;
-    avatarSrc?: string;
+    public avatar?: Buffer | null;
+    public motto?: string | null;
+    public username?: string | null;
+
+    constructor(username?: string | null, avatar?: Buffer | null, motto?: string | null)
+    {
+        this.username = username;
+        this.avatar = avatar;
+        this.motto = motto;
+    }
 }
 ```
 
@@ -134,7 +121,7 @@ class UserInfo
 
 ## 各个请求的详细信息 (所有请求前缀均为 `/server`)
 
-### 帐号管理部分（请求前缀为 `/account`，由其他后台模块接管）
+### 帐号管理部分（请求前缀为 `/account`）
 
 #### `/login`
 
@@ -157,12 +144,12 @@ class UserInfo
 - 响应体：无
 - 其他说明：无
 
-#### `/getUserInfo`
+#### `/getUserProfile`
 
 - 功能说明：获取当前登录用户信息
 - 请求方法：GET
 - 请求体：无
-- 响应体：[用户信息类](#UserInfo)的实例
+- 响应体：[用户信息类](#UserProfile)的实例
 - 其他说明：无
 
 #### `/uploadAvatar`
@@ -212,7 +199,7 @@ class UserInfo
 - 响应体：
 ```ts
 {
-    schedules: Array<ResponseSchedule>,
+    schedules: Array<Schedule>,
 }
 ```
 - 其他说明：
@@ -234,7 +221,7 @@ class UserInfo
 - 响应体：
 ```ts
 {
-    schedules: Array<ResponseSchedule>,
+    schedules: Array<Schedule>,
 }
 ```
 - 其他说明
@@ -302,7 +289,7 @@ class UserInfo
 ```ts
 {
     scheduleId: number,
-    schedule: RequestSchedule,
+    schedule: Schedule,
 }
 ```
 - 响应体：无
@@ -313,7 +300,12 @@ class UserInfo
 
 - 功能说明：创建新日程
 - 请求方法：POST
-- 请求体：一个 [RequestSchedule](#RequestSchedule) 的实例
+- 请求体：
+```ts
+{
+    schedule: Schedule,
+}
+```
 - 响应体：无
 - 其他说明：无
 
@@ -327,5 +319,5 @@ class UserInfo
     scheduleId: Number,     // 日程的 ID
 }
 ```
-- 响应体：一个 [ResponseSchedule](#ResponseSchedule) 的实例
+- 响应体：一个 [Schedule](#Schedule) 的实例
 - 其他说明：无

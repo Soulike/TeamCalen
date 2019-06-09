@@ -1,33 +1,33 @@
 import * as ACTION_TYPE from './ACTION_TYPE';
 import Api from '../../../Api';
 import redux from 'redux';
-import {UserInfo} from '../../../Class';
+import {UserProfile} from '../../../Class';
 
-export function getUserInfoAction()
+export function getUserProfileAction()
 {
     return async (dispatch: redux.Dispatch) =>
     {
-        const userInfo = await Api.sendGetUserInfoRequestAsync();
-        if (userInfo)
+        const userProfile = await Api.sendGetUserProfileRequestAsync();
+        if (userProfile)
         {
-            dispatch(getUserInfoSuccessfulAction(userInfo));
+            dispatch(getUserProfileSuccessfulAction(userProfile));
         }
         else
         {
-            dispatch(getUserInfoFailedAction());
+            dispatch(getUserProfileFailedAction());
         }
     };
 }
 
-function getUserInfoSuccessfulAction(userInfo: UserInfo)
+function getUserProfileSuccessfulAction(userProfile: UserProfile)
 {
     return {
         type: ACTION_TYPE.GET_USER_INFO_SUCCESSFUL,
-        userInfo,
+        userProfile,
     };
 }
 
-function getUserInfoFailedAction()
+function getUserProfileFailedAction()
 {
     return {
         type: ACTION_TYPE.GET_USER_INFO_FAILED,

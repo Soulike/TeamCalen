@@ -4,7 +4,7 @@ export const LOGIN = accountPrefix('/login');
 
 export const LOGOUT = accountPrefix('/logout');
 
-export const GET_USER_INFO = accountPrefix('/getUserInfo');
+export const GET_USER_PROFILE = accountPrefix('/getUserProfile');
 
 export const UPLOAD_AVATAR = accountPrefix('/uploadAvatar');
 

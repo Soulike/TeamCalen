@@ -18,7 +18,7 @@ const initValues = {
         currentModifyingScheduleId: 0,  // 目前在编辑框中编辑的日程 ID
     },
     ControlPanel: {
-        userInfo: {},
+        userProfile: {},
     },
 };
 

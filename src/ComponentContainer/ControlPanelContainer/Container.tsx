@@ -7,12 +7,12 @@ import * as Actions from './Actions/Actions';
 import {connect} from 'react-redux';
 import {eventEmitter} from '../../Singleton';
 import {EVENT} from '../../CONSTANT';
-import {UserInfo} from '../../Class';
+import {UserProfile} from '../../Class';
 
 interface ControlPanelContainerProps extends RouteComponentProps
 {
-    getUserInfo: () => Promise<void>;
-    userInfo: UserInfo;
+    getUserProfile: () => Promise<void>;
+    userProfile: UserProfile;
     children?: JSX.Element
 }
 
@@ -30,8 +30,8 @@ class ControlPanelContainer extends React.Component<ControlPanelContainerProps, 
             currentActivePageId: PAGE_ID.CONTROL_PANEL.SCHEDULE,
         };
 
-        const {getUserInfo} = this.props;
-        getUserInfo();
+        const {getUserProfile} = this.props;
+        getUserProfile();
     }
 
     componentDidMount()
@@ -41,10 +41,10 @@ class ControlPanelContainer extends React.Component<ControlPanelContainerProps, 
             currentActivePageId: ROUTE_TO_PAGE_ID[route],
         });
 
-        const {getUserInfo} = this.props;
+        const {getUserProfile} = this.props;
         eventEmitter.on(EVENT.CONTROL_PANEL.USER_INFO_UPDATED, async () =>
         {
-            await getUserInfo();
+            await getUserProfile();
             this.forceUpdate();
         });
     }
@@ -69,23 +69,30 @@ class ControlPanelContainer extends React.Component<ControlPanelContainerProps, 
     render()
     {
         const {currentActivePageId} = this.state;
-        const {userInfo: {username, avatarSrc}, children} = this.props;
+        const {userProfile: {username, avatar}, children} = this.props;
+
+        let avatarSrc = '';
+        if (avatar)
+        {
+            avatarSrc = `data:image/webp;base64,${Buffer.from(avatar).toString('base64')}`;
+        }
+
         return (
             <ControlPanel currentActivePageId={currentActivePageId}
-                          username={username}
-                          avatarSrc={`${avatarSrc}?_t=${Date.now()}`}>{children}</ControlPanel> // 加一个时间戳禁止浏览器进行缓存
+                          username={username as string}
+                          avatarSrc={avatar ? avatarSrc : undefined}>{children}</ControlPanel> // 加一个时间戳禁止浏览器进行缓存
         );
     }
 }
 
-const mapStateToProps = (state: { ControlPanel: { userInfo: UserInfo; }; }) =>
+const mapStateToProps = (state: { ControlPanel: { userProfile: UserProfile; }; }) =>
 {
-    const {ControlPanel: {userInfo}} = state;
-    return {userInfo};
+    const {ControlPanel: {userProfile}} = state;
+    return {userProfile};
 };
 
 const mapDispatchToProps = {
-    getUserInfo: Actions.getUserInfoAction,
+    getUserProfile: Actions.getUserProfileAction,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ControlPanelContainer));

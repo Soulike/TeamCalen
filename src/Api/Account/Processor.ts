@@ -2,7 +2,7 @@ import Function from '../../Function';
 import {
     CHANGE_EMAIL,
     CHANGE_PASSWORD,
-    GET_USER_INFO,
+    GET_USER_PROFILE,
     LOGIN,
     LOGOUT,
     RETRIEVE_PASSWORD,
@@ -14,7 +14,7 @@ import {
 import {STATUS_CODE} from '../../CONSTANT';
 import message from 'antd/lib/message';
 import {Function as AuthProcessorFunction} from '../../ComponentContainer/AuthProcessor';
-import {UserInfo} from '../../Class';
+import {UserProfile} from '../../Class';
 
 export async function sendPostLoginRequestAsync(username: string, password: string): Promise<true | null>
 {
@@ -136,11 +136,11 @@ export async function sendPostLogoutRequestAsync(): Promise<true | null>
     }
 }
 
-export async function sendGetUserInfoRequestAsync(): Promise<UserInfo | null>
+export async function sendGetUserProfileRequestAsync(): Promise<UserProfile | null>
 {
     try
     {
-        const {code, data} = await Function.getAsync(GET_USER_INFO, false);
+        const {code, data} = await Function.getAsync(GET_USER_PROFILE, false);
         switch (code)
         {
             case STATUS_CODE.OK:

@@ -1,11 +1,11 @@
 import React from 'react';
 import NewSchedulePanel from './View';
 import moment from 'moment';
-import {EVENT, REGEX} from '../../../../../CONSTANT';
+import {EVENT, REGEX, SCHEDULE_STATE} from '../../../../../CONSTANT';
 import message from 'antd/lib/message';
 import Api from '../../../../../Api';
 import {eventEmitter} from '../../../../../Singleton';
-import {RequestSchedule} from '../../../../../Class';
+import {Schedule} from '../../../../../Class';
 
 interface Props {}
 
@@ -129,7 +129,16 @@ class NewSchedulePanelContainer extends React.Component<Props, State>
         else
         {
             const requestIsSuccessful = await Api.sendPostCreateScheduleRequestAsync(
-                new RequestSchedule(year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder));
+                new Schedule(
+                    undefined,
+                    new Date(Number.parseInt(year), Number.parseInt(month), Number.parseInt(day)),
+                    new Date(Number.parseInt(year), Number.parseInt(month), Number.parseInt(day), startHour, startMinute),
+                    new Date(Number.parseInt(year), Number.parseInt(month), Number.parseInt(day), endHour, endMinute),
+                    scheduleText,
+                    hasReminder,
+                    SCHEDULE_STATE.UNFINISHED,
+                ),
+            );
             if (requestIsSuccessful)
             {
                 eventEmitter.emit(EVENT.SCHEDULE.SCHEDULE_CREATED_OR_DELETED);

@@ -7,7 +7,7 @@ import message from 'antd/lib/message';
 import {Actions as ModalActions} from '../../../../../../../ComponentContainer/Modal';
 import moment from 'moment';
 import {eventEmitter} from '../../../../../../../Singleton';
-import {RequestSchedule} from '../../../../../../../Class';
+import {Schedule} from '../../../../../../../Class';
 
 interface Props
 {
@@ -167,7 +167,15 @@ class ScheduleModifyModalContainer extends React.Component<Props, State>
                 confirmLoading: true,
             });
             const requestIsSuccessful = await Api.sendPostModifyScheduleRequestAsync(currentModifyingScheduleId,
-                new RequestSchedule(year, month, day, startHour, startMinute, endHour, endMinute, scheduleText, hasReminder));
+                new Schedule(
+                    undefined,
+                    new Date(Number.parseInt(year), Number.parseInt(month), Number.parseInt(day)),
+                    new Date(Number.parseInt(year), Number.parseInt(month), Number.parseInt(day), startHour, startMinute),
+                    new Date(Number.parseInt(year), Number.parseInt(month), Number.parseInt(day), endHour, endMinute),
+                    scheduleText,
+                    hasReminder,
+                ),
+            );
             if (requestIsSuccessful)
             {
                 const {closeModal} = this.props;
