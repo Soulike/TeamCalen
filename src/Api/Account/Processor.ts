@@ -345,7 +345,7 @@ export async function sendPostSignUpRequestAsync(username: string, password: str
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('注册操作被拒绝');
+                message.error('验证码错误');
                 return null;
             }
             case STATUS_CODE.NOT_FOUND:
