@@ -254,9 +254,6 @@ export async function sendPostUploadAvatarRequestAsync(file: File): Promise<true
     }
 }
 
-/**
- * @deprecated
- * */
 export async function sendPostSendVerificationCodeByEmailRequestAsync(email: string): Promise<true | null>
 {
     try

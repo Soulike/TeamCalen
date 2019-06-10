@@ -155,6 +155,30 @@ class UserProfile
 - 响应体：无
 - 其他说明：无
 
+### `/sendVerificationCode`
+
+- 功能说明：向用户邮箱发送验证码
+- 请求方法：POST
+- 请求体：无
+- 响应体：无
+- 其他说明：
+  - 验证码存储于 `session.verificationCode` 中
+  - 如果用户资料不存在或 Email 不存在，返回 404
+
+### `/sendVerificationCodeByEmail`
+
+- 功能说明：向指定邮箱发送验证码
+- 请求方法：POST
+- 请求体：
+```ts
+{
+    email: string,
+}
+```
+- 响应体：无
+- 其他说明：
+  - 验证码存储于 `session.verificationCode` 中
+
 ---
 
 ### 日程管理模块（请求前缀为 `/schedule`）
