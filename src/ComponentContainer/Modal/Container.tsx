@@ -8,9 +8,9 @@ import {getModalCloseEventName, getModalShowEventName} from './Function';
 
 interface Props extends ModalProps
 {
-    onShow: () => any;
+    onShow?: () => any;
     modalId: MODAL_ID;
-    closeModal: (modalId: MODAL_ID) => any;
+    closeModal?: (modalId: MODAL_ID) => any;
     currentVisibleModalIdSet: Set<MODAL_ID>;
 }
 
@@ -38,11 +38,17 @@ class Modal extends React.Component<Props>
                 visible={currentVisibleModalIdSet.has(modalId)}
                 onOk={onOk ? onOk : () =>
                 {
-                    closeModal(modalId);
+                    if (typeof closeModal === 'function')
+                    {
+                        closeModal(modalId);
+                    }
                 }}
                 onCancel={onCancel ? onCancel : () =>
                 {
-                    closeModal(modalId);
+                    if (typeof closeModal === 'function')
+                    {
+                        closeModal(modalId);
+                    }
                 }}
                 {...rest} />
         );

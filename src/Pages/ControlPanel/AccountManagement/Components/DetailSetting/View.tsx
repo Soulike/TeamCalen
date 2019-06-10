@@ -1,6 +1,7 @@
 import React from 'react';
 import Style from './Style.module.scss';
 import Button from 'antd/lib/button';
+import EmailSettingModal from './Components/EmailSettingModal';
 
 interface Props
 {
@@ -15,19 +16,21 @@ function DetailSetting(props: Readonly<Props>)
         onPhoneSettingButtonClick,
     } = props;
     return (
-        <div className={Style.DetailSetting} key={Style.DetailSetting}>
-            <div className={Style.title}>详细设置</div>
-            <div className={Style.buttonWrapper}>
-                <Button htmlType={'button'}
-                        block={true}
-                        onClick={onEmailSettingButtonClick}
-                        disabled={true}>邮箱设置</Button>
-                <Button htmlType={'button'}
-                        block={true}
-                        onClick={onPhoneSettingButtonClick}
-                        disabled={true}>手机设置</Button>
+        <React.Fragment>
+            <div className={Style.DetailSetting} key={Style.DetailSetting}>
+                <div className={Style.title}>详细设置</div>
+                <div className={Style.buttonWrapper}>
+                    <Button htmlType={'button'}
+                            block={true}
+                            onClick={onEmailSettingButtonClick}>邮箱设置</Button>
+                    <Button htmlType={'button'}
+                            block={true}
+                            onClick={onPhoneSettingButtonClick}
+                            disabled={true}>手机设置</Button>
+                </div>
             </div>
-        </div>
+            <EmailSettingModal />
+        </React.Fragment>
     );
 }
 
