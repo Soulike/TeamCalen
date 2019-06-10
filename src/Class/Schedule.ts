@@ -31,7 +31,7 @@ export class Schedule
     {
         return new Schedule(
             obj.id,
-            new Date(obj.day),
+            obj.day ? new Date(obj.day) : obj.day,
             obj.startTime ? new Date(obj.startTime) : obj.startTime,
             obj.endTime ? new Date(obj.endTime) : obj.endTime,
             obj.scheduleText,

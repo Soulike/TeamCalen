@@ -145,7 +145,7 @@ export async function sendGetUserProfileRequestAsync(): Promise<UserProfile | nu
         {
             case STATUS_CODE.OK:
             {
-                return data;
+                return UserProfile.from(data);
             }
             case STATUS_CODE.BAD_REQUEST:
             {
