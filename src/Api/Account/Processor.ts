@@ -312,9 +312,6 @@ export async function sendPostSendVerificationCodeByEmailRequestAsync(email: str
     }
 }
 
-/**
- * @deprecated
- * */
 export async function sendPostSignUpRequestAsync(username: string, password: string, email: string, verificationCode: string): Promise<true | null>
 {
     try
@@ -436,9 +433,7 @@ export async function sendPostSendVerificationCodeByUsernameRequestAsync(usernam
     }
 }
 
-/**
- * @deprecated
- * */
+
 export async function sendPostRetrievePasswordRequestAsync(username: string, verificationCode: string, password: string): Promise<true | null>
 {
     try
@@ -501,9 +496,6 @@ export async function sendPostRetrievePasswordRequestAsync(username: string, ver
     }
 }
 
-/**
- * @deprecated
- * */
 export async function sendPostChangePasswordRequestAsync(password: string, newPassword: string, verificationCode: string): Promise<true | null>
 {
     try
@@ -566,9 +558,6 @@ export async function sendPostChangePasswordRequestAsync(password: string, newPa
     }
 }
 
-/**
- * @deprecated
- * */
 export async function sendPostChangeEmailRequestAsync(email: string, verificationCode: string): Promise<true | null>
 {
     try

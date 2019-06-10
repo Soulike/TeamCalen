@@ -2,7 +2,7 @@ export const REGEX = {
     USERNAME: /^\w{2,20}$/,
     PASSWORD: /^.{6,}$/,
     EMAIL: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
-    VERIFICATION_CODE: /^[0-9]{6}$/,
+    VERIFICATION_CODE: /^[a-z0-9]{4}$/,
     YEAR: /^\d{4}$/,
     MONTH: /^\d{2}$/,
     DAY: /^\d{2}$/,
