@@ -45,7 +45,7 @@ export async function sendPostLoginRequestAsync(username: string, password: stri
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('登录操作被拒绝');
+                message.error('帐号或密码错误');
                 return null;
             }
             case STATUS_CODE.NOT_FOUND:
@@ -378,9 +378,6 @@ export async function sendPostSignUpRequestAsync(username: string, password: str
     }
 }
 
-/**
- * @deprecated
- * */
 export async function sendPostSendVerificationCodeByUsernameRequestAsync(username: string): Promise<true | null>
 {
     try
@@ -411,7 +408,7 @@ export async function sendPostSendVerificationCodeByUsernameRequestAsync(usernam
             }
             case STATUS_CODE.NOT_FOUND:
             {
-                message.error('用户名不存在');
+                message.error('用户名或邮箱不存在');
                 return null;
             }
             case STATUS_CODE.CONFLICT:

@@ -155,11 +155,16 @@ class UserProfile
 - 响应体：无
 - 其他说明：无
 
-### `/sendVerificationCode`
+### `/sendVerificationCodeByUsername`
 
 - 功能说明：向用户邮箱发送验证码
 - 请求方法：POST
-- 请求体：无
+- 请求体：
+```ts
+{
+    username: string,
+}
+```
 - 响应体：无
 - 其他说明：
   - 验证码存储于 `session.verificationCode` 中
