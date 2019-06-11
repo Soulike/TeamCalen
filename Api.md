@@ -1,13 +1,16 @@
 # 接口文档
 
+所有的请求体、响应体表示方式均以 TypeScript 的表示方式为准。
+
 ## 返回格式约定
 
 所有后台返回的数据格式均为 JSON，JSON 对应对象格式如下
 
-```js
+```ts
 {
-    code: Number,
-    data: Object
+    code: number,               // 本次请求状态
+    data?: object,              // 若请求处理成功，需要返回的数据
+    reason?: object | string,   // 若请求处理失败，失败的原因（主要用于调试）
 }
 ```
 
@@ -21,13 +24,13 @@
 - 409 请求与服务器端资源冲突
 - 500 服务器发生错误
 
-`data` 的具体格式根据情况决定。
+`data` 的具体格式见下方文档的“响应体”部分。
 
 ---
 
 ## 名词解释
 
-- 请求体：在 GET 请求中指查询字符串内容，在 POST 请求中指请求体中内容。项目不会出现其他请求方式
+- 请求体：在 GET 请求中指查询字符串内容，在 POST 请求中指请求体中内容
 - 响应体：指返回 JSON 中 data 键对应对象的内容
 
 ---
@@ -36,7 +39,7 @@
 
 目前项目用到的正则表达式如下
 
-```js
+```ts
 export const REGEX = {
     USERNAME: /^\w{2,20}$/,
     PASSWORD: /^.{6,}$/,
@@ -61,80 +64,71 @@ export const REGEX = {
 
 ---
 
+## 所有用到的类、接口与枚举
+
+### `Schedule`
+
+日程类。
+
+```ts
+class Schedule 
+{
+    public id?: number;      // id
+    public day?: Date;          // 所属日期
+    public startTime?: Date | null;    // 开始时间，包括年月日时间
+    public endTime?: Date | null;      // 结束时间
+    public scheduleText?: string;   // 日程的具体内容
+    public hasReminder?: boolean;   // 是否有提醒，默认值 false
+    public scheduleState?: SCHEDULE_STATE;    // 枚举值，日程的状态，默认值 SCHEDULE_STATE.UNFINISHED'
+    public username?: string | null;            // 日程所属的人
+}
+```
+
+### `SCHEDULE_STATE`
+
+日程状态枚举类型。
+
+```ts
+enum SCHEDULE_STATE 
+{
+    FINISHED = 'finished';
+    UNFINISHED = 'unfinished';
+    CANCELED = 'canceled';
+};
+```
+
+### `UserProfile`
+
+用户信息类。
+
+```ts
+class UserProfile
+{
+    public avatar?: Buffer | null;
+    public motto?: string | null;
+    public username?: string | null;
+    public email?:string | null;
+}
+```
+
+---
+
 ## 各个请求的详细信息 (所有请求前缀均为 `/server`)
 
-### 账户部分（请求前缀为 `/account`）
+### 帐号管理部分（请求前缀为 `/account`）
 
 #### `/login`
 
 - 功能说明：用户登录并下发 Session
 - 请求方法：POST
 - 请求体：
-```js
+```ts
 {
-    username: String,       // 用户名
-    password: String,       // 密码
+    username: string,       // 用户名
+    password: string,       // 密码
 }
 ```
 - 其他说明：无
-
-#### `/sendVerificationCodeByEmail`
-
-- 功能说明：向指定邮箱发送验证码
-- 请求方法：POST
-- 请求体：
-```js
-{
-    email: String,
-}
-```
-- 响应体：无
-- 其他说明：无
-
-#### `/signUp`
-
-- 功能说明：用户注册
-- 请求方法：POST
-- 请求体：
-```js
-{
-    username: String,
-    password: String,
-    email: String,
-    verificationCode: String,
-}
-```
-- 其他说明：用户名不允许重复，如果发生重复返回 409
-
-#### `/sendVerificationCodeByUsername`
-
-- 功能说明：向指定用户名对应的邮箱发送验证码
-- 请求方法：POST
-- 请求体：
-```js
-{
-    username: String,
-}
-```
-- 响应体：无
-- 其他说明：如果用户名不存在，返回 404
-
-#### `/retrievePassword`
-
-- 功能说明：找回密码
-- 请求方法：POST
-- 请求体：
-```js
-{
-    username: String,
-    verificationCode: String,
-    password: String,           // 新密码
-}
-```
-- 响应体：无
-- 其他说明
-  - 如果用户名不存在，返回 404
-  - 如果验证码错误，返回 403
 
 #### `/logout`
 
@@ -144,39 +138,71 @@ export const REGEX = {
 - 响应体：无
 - 其他说明：无
 
----
-
-### 控制面板部分（请求前缀为 `/controlPanel`）
-
-#### `/getUserInfo`
+#### `/getUserProfile`
 
 - 功能说明：获取当前登录用户信息
 - 请求方法：GET
 - 请求体：无
-- 响应体：
-```js
+- 响应体：[用户信息类](#UserProfile)的实例
+- 其他说明：无
+
+#### `/uploadAvatar`
+
+- 功能说明：上传用户头像
+- 请求方法：PUT
+- 请求体：FormData 对象，其中的域有
+  - `avatar`：文件的二进制内容
+- 响应体：无
+- 其他说明：无
+
+### `/sendVerificationCodeByUsername`
+
+- 功能说明：向用户邮箱发送验证码
+- 请求方法：POST
+- 请求体：
+```ts
 {
-    username: String,   // 用户名
-    avatarSrc: String,  // 头像文件的 URL，可以不存在
+    username: string,
 }
 ```
-- 其他说明：这一接口以后可能会根据需要增加其他的项
+- 响应体：无
+- 其他说明：
+  - 验证码存储于 `session.verificationCode` 中
+  - 如果用户资料不存在或 Email 不存在，返回 404
+
+### `/sendVerificationCodeByEmail`
+
+- 功能说明：向指定邮箱发送验证码
+- 请求方法：POST
+- 请求体：
+```ts
+{
+    email: string,
+}
+```
+- 响应体：无
+- 其他说明：
+  - 验证码存储于 `session.verificationCode` 中
+
+---
+
+### 日程管理模块（请求前缀为 `/schedule`）
 
 #### `/getEveryDayScheduleAmountInAMonth`
 
 - 功能说明：获取指定年月中每一天的日程数量
 - 请求方法：GET
 - 请求体：
-```js
+```ts
 {
-    year: String,   // 年，如 '2019' 表示 2019 年
-    month: String,  // 月，如 '03' 表示 3 月
+    year: string,   // 年，如 '2019' 表示 2019 年
+    month: string,  // 月，如 '03' 表示 3 月
 }
 ```
 - 响应体：
-```js
+```ts
 {
-    scheduleAmount: Array,      // 数组，内容为整数
+    scheduleAmount: Array<number>,      // 数组，内容为整数
 
     // 这个数组从 0 开始，放置指定月所有天的日程数量。下标 0 的数据代表 1 号的日程数量，下标 1 的数据代表 2 号的日程数量，以此类推
 }
@@ -188,71 +214,37 @@ export const REGEX = {
 - 功能说明：返回用户从今天起到未来的特定条日程
 - 请求方法：GET
 - 请求体：
-```js
+```ts
 {
-    amount: Number,     // 返回多少条
+    amount: number,     // 返回多少条
 }
 ```
 - 响应体：
-```js
+```ts
 {
-    schedules: [                    // 数组，内含日程信息
-        {
-            id: Number,             // 这条日程的唯一识别 ID
-            year: String,           // 年份，四位整数字符串
-            month: String,          // 月份，两位整数字符串
-            day: String,            // 日，两位整数字符串
-            startHour: Number,      // 开始小时，0-23 整数
-            startMinute: Number,    // 开始分钟，0-59 整数
-            endHour: Number,        // 结束小时，0-23 整数
-            endMinute: Number,      // 结束分钟，0-59 整数
-            scheduleText: String,   // 日程的具体内容
-            scheduleState: ENUM,    // 枚举值，日程的状态
-        }
-    ]
+    schedules: Array<Schedule>,
 }
 ```
 - 其他说明：
   - 数组中日程信息的顺序应当按照开始时间升序，即早的在前，晚的在后
   - 如果存在的日程数量不够，就有多少个返回多少个
-  - 日程状态枚举值：
-```js
-export default {
-    FINISHED: 'finished',
-    UNFINISHED: 'unfinished',
-    CANCELED: 'canceled',
-};
-```
 
 #### `/getSchedulesByDay`
 
 - 功能说明：得到某一天的所有日程
 - 请求方法：GET
 - 请求体：
-```js
+```ts
 {
-    year: String,   // 年
-    month: String,  // 月
-    day: String,    // 日
+    year: string,   // 年
+    month: string,  // 月
+    day: string,    // 日
 }
 ```
 - 响应体：
-```js
+```ts
 {
-    schedules: [                    // 数组，内含日程信息
-        {
-            id: Number,             // 这条日程的唯一识别 ID
-            year: String,           // 年份，四位整数字符串
-            month: String,          // 月份，两位整数字符串
-            day: String,            // 日，两位整数字符串
-            startHour: Number,      // 开始小时，0-23 整数
-            startMinute: Number,    // 开始分钟，0-59 整数
-            endHour: Number,        // 结束小时，0-23 整数
-            endMinute: Number,      // 结束分钟，0-59 整数
-            scheduleText: String,   // 日程的具体内容
-            scheduleState: ENUM,    // 枚举值，日程的状态
-        }
-    ]
+    schedules: Array<Schedule>,
 }
 ```
 - 其他说明
@@ -263,10 +255,10 @@ export default {
 - 功能说明：切换日程完成状态
 - 请求方法：POST
 - 请求体：
-```js
+```ts
 {
-    scheduleId: Number,     // 日程的唯一识别 ID
-    state: Boolean,         // 日程是否完成，true 为已完成，false 为未完成
+    scheduleId: number,     // 日程的唯一识别 ID
+    state: SCHEDULE_STATE.FINISHED | SCHEDULE_STATE.UNFINISHED,
 }
 ```
 - 响应体：无
@@ -277,9 +269,9 @@ export default {
 - 功能说明：恢复已经被取消的日程
 - 请求方法：POST
 - 请求体：
-```js
+```ts
 {
-    scheduleId: Number,     // 日程的唯一识别 ID
+    scheduleId: number,     // 日程的唯一识别 ID
 }
 ```
 - 响应体：无
@@ -290,9 +282,9 @@ export default {
 - 功能说明：取消日程
 - 请求方法：POST
 - 请求体：
-```js
+```ts
 {
-    scheduleId: Number,     // 日程的唯一识别 ID
+    scheduleId: number,     // 日程的唯一识别 ID
 }
 ```
 - 响应体：无
@@ -303,9 +295,9 @@ export default {
 - 功能说明：删除日程
 - 请求方法：POST
 - 请求体：
-```js
+```ts
 {
-    scheduleId: Number,     // 日程的唯一识别 ID
+    scheduleId: number,     // 日程的唯一识别 ID
 }
 ```
 - 响应体：无
@@ -317,39 +309,24 @@ export default {
 - 功能说明：编辑日程信息
 - 请求方法：POST
 - 请求体：
-```js
+```ts
 {
-    id: Number,             // 这条日程的唯一识别 ID
-    year: String,           // 年份，四位整数字符串
-    month: String,          // 月份，两位整数字符串
-    day: String,            // 日，两位整数字符串
-    startHour: Number,      // 开始小时，0-23 整数
-    startMinute: Number,    // 开始分钟，0-59 整数
-    endHour: Number,        // 结束小时，0-23 整数
-    endMinute: Number,      // 结束分钟，0-59 整数
-    scheduleText: String,   // 日程的具体内容
-    hasReminder: Boolean,   // 是否开启提醒
+    scheduleId: number,
+    schedule: Schedule,
 }
 ```
 - 响应体：无
-- 其他说明：无
+- 其他说明：
+  - Schedule 实例中有什么项目更改什么项目，不存在的项目就不做更改
 
 #### `/createSchedule`
 
 - 功能说明：创建新日程
 - 请求方法：POST
 - 请求体：
-```js
+```ts
 {
-    year: String,           // 年份，四位整数字符串
-    month: String,          // 月份，两位整数字符串
-    day: String,            // 日，两位整数字符串
-    startHour: Number,      // 开始小时，0-23 整数
-    startMinute: Number,    // 开始分钟，0-59 整数
-    endHour: Number,        // 结束小时，0-23 整数
-    endMinute: Number,      // 结束分钟，0-59 整数
-    scheduleText: String,   // 日程的具体内容
-    hasReminder: Boolean,   // 是否开启提醒
+    schedule: Schedule,
 }
 ```
 - 响应体：无
@@ -360,65 +337,10 @@ export default {
 - 功能说明：根据 ID 返回对应日程信息
 - 请求方法：GET
 - 请求体：
-```js
+```ts
 {
     scheduleId: Number,     // 日程的 ID
 }
 ```
-- 响应体：
-```js
-{
-    year: String,           // 年份，四位整数字符串
-    month: String,          // 月份，两位整数字符串
-    day: String,            // 日，两位整数字符串
-    startHour: Number,      // 开始小时，0-23 整数
-    startMinute: Number,    // 开始分钟，0-59 整数
-    endHour: Number,        // 结束小时，0-23 整数
-    endMinute: Number,      // 结束分钟，0-59 整数
-    scheduleText: String,   // 日程的具体内容
-    hasReminder: Boolean,   // 是否开启提醒
-}
-```
+- 响应体：一个 [Schedule](#Schedule) 的实例
 - 其他说明：无
-
-#### `/uploadAvatar`
-
-- 功能说明：上传用户头像
-- 请求方法：POST
-- 请求体：FormData 对象，其中的域有
-  - `avatar`：文件的二进制内容
-- 响应体：无
-- 其他说明：无
-
-#### `/changePassword`
-
-- 功能说明：修改密码
-- 请求方法：POST
-- 请求体：
-```js
-{
-    password: String,           // 原密码
-    newPassword: String,        // 新密码
-    verificationCode: String,   // 验证码
-}
-```
-- 响应体：无
-- 其他说明：
-  - 如果原密码错误，返回 409
-  - 如果验证码错误，返回 403
-  - 如果新密码不合法，返回 403
-
-#### `/changeEmail`
-
-- 功能说明：修改邮箱
-- 请求方法：POST
-- 请求体：
-```js
-{
-    email: String,              // 新邮箱
-    verificationCode: String,   // 验证码
-}
-```
-- 响应体：无
-- 其他说明：
-  - 邮箱不合法或验证码错误均返回 403

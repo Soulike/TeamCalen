@@ -1,0 +1,9 @@
+export const EVENT = {
+    CONTROL_PANEL: {
+        USER_INFO_UPDATED: Symbol('USER_INFO_UPDATED'),
+    },
+    SCHEDULE: {
+        SCHEDULE_CREATED_OR_DELETED: Symbol('SCHEDULE_CREATED_OR_DELETED'),
+        SCHEDULE_MODIFIED: Symbol('SCHEDULE_MODIFIED'),
+    },
+};

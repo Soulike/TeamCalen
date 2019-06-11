@@ -1,0 +1,9 @@
+import {PAGE_ID} from '../PAGE';
+
+export const PAGE_ID_TO_NAME = {
+    [PAGE_ID.CONTROL_PANEL.SCHEDULE]: '日程管理',
+    /*[PAGE_ID.CONTROL_PANEL.NEW_PROJECT]: '新建项目',
+    [PAGE_ID.CONTROL_PANEL.MY_PROJECT]: '我的项目',
+    [PAGE_ID.CONTROL_PANEL.FRIEND_LIST]: '好友列表',*/
+    [PAGE_ID.CONTROL_PANEL.ACCOUNT_MANAGEMENT]: '帐号管理',
+};
