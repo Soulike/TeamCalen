@@ -159,7 +159,7 @@ class UserProfile
   - 500：服务器错误
 - 其他说明：无
 
-### `/sendVerificationCodeByUsername`
+#### `/sendVerificationCodeByUsername`
 
 - 功能说明：向用户邮箱发送验证码
 - 请求方法：POST
@@ -173,12 +173,12 @@ class UserProfile
 - 响应代码及提示：
   - 200：验证码已发送至邮箱
   - 400：请求解析失败
-  - 404：用户不存在
+  - 404：用户名不存在
   - 422：请求参数错误
   - 500：服务器错误
 - 其他说明：无
 
-### `/sendVerificationCodeByEmail`
+#### `/sendVerificationCodeByEmail`
 
 - 功能说明：向指定邮箱发送验证码
 - 请求方法：POST
@@ -192,6 +192,92 @@ class UserProfile
 - 响应代码及提示：
   - 200：验证码已发送至邮箱
   - 400：请求解析失败
+  - 422：请求参数错误
+  - 500：服务器错误
+- 其他说明：无
+
+#### `/signUp`
+
+- 功能说明：用户注册
+- 请求方法：POST
+- 请求体：
+```ts
+{
+    username: string,
+    password: string,
+    email: string,
+    verificationCode: string,
+}
+```
+- 响应体：无
+- 响应代码及提示：
+  - 200：注册成功
+  - 400：请求解析失败
+  - 403：用户名已存在或验证码错误
+  - 422：请求参数错误
+  - 500：服务器错误
+- 其他说明：无
+
+#### `/retrievePassword`
+
+- 功能说明：找回密码
+- 请求方法：POST
+- 请求体：
+```ts
+{
+    username: String,
+    verificationCode: String,
+    password: String,           // 新密码
+}
+```
+- 响应体：无
+- 响应代码及提示：
+  - 200：找回密码成功
+  - 400：请求解析失败
+  - 403：验证码错误
+  - 404：用户名不存在
+  - 422：请求参数错误
+  - 500：服务器错误
+- 其他说明：无
+
+#### `/changePassword`
+
+- 功能说明：修改密码
+- 请求方法：POST
+- 请求体：
+```ts
+{
+    password: string,           // 原密码
+    newPassword: string,        // 新密码
+    verificationCode: string,   // 验证码
+}
+```
+- 响应体：无
+- 响应代码及提示：
+  - 200：修改密码成功
+  - 400：请求解析失败
+  - 403：原密码或验证码错误
+  - 404：用户名不存在
+  - 422：请求参数错误
+  - 500：服务器错误
+- 其他说明：无
+
+#### `/changeEmail`
+
+- 功能说明：修改邮箱
+- 请求方法：POST
+- 请求体：
+```ts
+{
+    email: string,              // 新邮箱
+    verificationCode: string,   // 验证码
+}
+```
+- 响应体：无
+- 响应代码及提示：
+  - 200：修改邮箱成功
+  - 400：请求解析失败
+  - 403：验证码错误
   - 422：请求参数错误
   - 500：服务器错误
 - 其他说明：无

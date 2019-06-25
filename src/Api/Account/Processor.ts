@@ -20,12 +20,12 @@ export async function sendPostLoginRequestAsync(username: string, password: stri
 {
     try
     {
-        const {code} = await Function.postAsync(LOGIN, {
+        const {status} = await Function.postAsync(LOGIN, {
             username,
             password,
         });
 
-        switch (code)
+        switch (status)
         {
             case STATUS_CODE.OK:
             {
@@ -34,33 +34,27 @@ export async function sendPostLoginRequestAsync(username: string, password: stri
             }
             case STATUS_CODE.BAD_REQUEST:
             {
-                message.error('参数错误');
-                return null;
-            }
-            case STATUS_CODE.UNAUTHORIZED:
-            {
-                AuthProcessorFunction.setOffline();
-                message.error('未登录操作');
+                message.error('请求解析失败');
                 return null;
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('帐号或密码错误');
+                message.error('用户名或密码错误');
                 return null;
             }
             case STATUS_CODE.NOT_FOUND:
             {
-                message.error('帐号或密码错误');
+                message.error('用户名不存在');
                 return null;
             }
-            case STATUS_CODE.CONFLICT:
+            case STATUS_CODE.UNPROCESSABLE_ENTITY:
             {
-                message.error('帐号或密码错误');
+                message.error('请求参数错误');
                 return null;
             }
             case STATUS_CODE.INTERNAL_SERVER_ERROR:
             {
-                message.error('服务器出错');
+                message.error('服务器错误');
                 return null;
             }
             default:
@@ -82,43 +76,17 @@ export async function sendPostLogoutRequestAsync(): Promise<true | null>
 {
     try
     {
-        const {code} = await Function.postAsync(LOGOUT);
-        switch (code)
+        const {status} = await Function.postAsync(LOGOUT);
+        switch (status)
         {
             case STATUS_CODE.OK:
             {
                 message.success('退出登录成功');
                 return true;
             }
-            case STATUS_CODE.BAD_REQUEST:
-            {
-                message.error('参数错误');
-                return null;
-            }
-            case STATUS_CODE.UNAUTHORIZED:
-            {
-                AuthProcessorFunction.setOffline();
-                message.error('未登录操作');
-                return null;
-            }
-            case STATUS_CODE.FORBIDDEN:
-            {
-                message.error('退出登录操作被拒绝');
-                return null;
-            }
-            case STATUS_CODE.NOT_FOUND:
-            {
-                message.error('用户不存在');
-                return null;
-            }
-            case STATUS_CODE.CONFLICT:
-            {
-                message.error('未知错误');
-                return null;
-            }
             case STATUS_CODE.INTERNAL_SERVER_ERROR:
             {
-                message.error('服务器出错');
+                message.error('服务器错误');
                 return null;
             }
             default:
@@ -140,42 +108,22 @@ export async function sendGetUserProfileRequestAsync(): Promise<UserProfile | nu
 {
     try
     {
-        const {code, data} = await Function.getAsync(GET_USER_PROFILE, false);
-        switch (code)
+        const {status, data} = await Function.getAsync(GET_USER_PROFILE, false);
+        switch (status)
         {
             case STATUS_CODE.OK:
             {
                 return UserProfile.from(data);
             }
-            case STATUS_CODE.BAD_REQUEST:
-            {
-                message.error('参数错误');
-                return null;
-            }
-            case STATUS_CODE.UNAUTHORIZED:
-            {
-                AuthProcessorFunction.setOffline();
-                message.error('未登录操作');
-                return null;
-            }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('获取用户信息操作被拒绝');
-                return null;
-            }
-            case STATUS_CODE.NOT_FOUND:
-            {
-                message.error('用户不存在');
-                return null;
-            }
-            case STATUS_CODE.CONFLICT:
-            {
-                message.error('未知错误');
+                AuthProcessorFunction.setOffline();
+                message.error('请先登录');
                 return null;
             }
             case STATUS_CODE.INTERNAL_SERVER_ERROR:
             {
-                message.error('服务器出错');
+                message.error('服务器错误');
                 return null;
             }
             default:
@@ -200,43 +148,38 @@ export async function sendPostUploadAvatarRequestAsync(file: File): Promise<true
         const formData = new FormData();
         formData.append('avatar', file);
 
-        const {code} = await Function.putAsync(UPLOAD_AVATAR, formData);
-        switch (code)
+        const {status} = await Function.putAsync(UPLOAD_AVATAR, formData);
+        switch (status)
         {
             case STATUS_CODE.OK:
             {
-                message.success('上传成功');
+                message.success('头像上传成功');
                 return true;
             }
             case STATUS_CODE.BAD_REQUEST:
             {
-                message.error('参数错误');
-                return null;
-            }
-            case STATUS_CODE.UNAUTHORIZED:
-            {
-                AuthProcessorFunction.setOffline();
-                message.error('未登录操作');
+                message.error('请求解析失败');
                 return null;
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('上传头像操作被拒绝');
+                AuthProcessorFunction.setOffline();
+                message.error('请先登录');
                 return null;
             }
-            case STATUS_CODE.NOT_FOUND:
+            case STATUS_CODE.UNSUPPORTED_MEDIA_TYPE:
             {
-                message.error('用户不存在');
+                message.error('上传文件格式不支持');
                 return null;
             }
-            case STATUS_CODE.CONFLICT:
+            case STATUS_CODE.UNPROCESSABLE_ENTITY:
             {
-                message.error('与服务器现有资源冲突');
+                message.error('请求参数错误');
                 return null;
             }
             case STATUS_CODE.INTERNAL_SERVER_ERROR:
             {
-                message.error('服务器出错');
+                message.error('服务器错误');
                 return null;
             }
             default:
@@ -258,43 +201,27 @@ export async function sendPostSendVerificationCodeByEmailRequestAsync(email: str
 {
     try
     {
-        const {code} = await Function.postAsync(SEND_VERIFICATION_CODE_BY_EMAIL, {email});
-        switch (code)
+        const {status} = await Function.postAsync(SEND_VERIFICATION_CODE_BY_EMAIL, {email});
+        switch (status)
         {
             case STATUS_CODE.OK:
             {
-                message.success('验证码已发送到您的邮箱');
+                message.success('验证码已发送至邮箱');
                 return true;
             }
             case STATUS_CODE.BAD_REQUEST:
             {
-                message.error('参数错误');
+                message.error('请求解析失败');
                 return null;
             }
-            case STATUS_CODE.UNAUTHORIZED:
+            case STATUS_CODE.UNPROCESSABLE_ENTITY:
             {
-                AuthProcessorFunction.setOffline();
-                message.error('未登录操作');
-                return null;
-            }
-            case STATUS_CODE.FORBIDDEN:
-            {
-                message.error('获取验证码操作被拒绝');
-                return null;
-            }
-            case STATUS_CODE.NOT_FOUND:
-            {
-                message.error('未知错误');
-                return null;
-            }
-            case STATUS_CODE.CONFLICT:
-            {
-                message.error('未知错误');
+                message.error('请求参数错误');
                 return null;
             }
             case STATUS_CODE.INTERNAL_SERVER_ERROR:
             {
-                message.error('服务器出错');
+                message.error('服务器错误');
                 return null;
             }
             default:
@@ -316,13 +243,13 @@ export async function sendPostSignUpRequestAsync(username: string, password: str
 {
     try
     {
-        const {code} = await Function.postAsync(SIGN_UP, {
+        const {status} = await Function.postAsync(SIGN_UP, {
             username,
             password,
             email,
             verificationCode,
         });
-        switch (code)
+        switch (status)
         {
             case STATUS_CODE.OK:
             {
@@ -331,33 +258,22 @@ export async function sendPostSignUpRequestAsync(username: string, password: str
             }
             case STATUS_CODE.BAD_REQUEST:
             {
-                message.error('参数错误');
-                return null;
-            }
-            case STATUS_CODE.UNAUTHORIZED:
-            {
-                AuthProcessorFunction.setOffline();
-                message.error('未登录操作');
+                message.error('请求解析失败');
                 return null;
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('验证码错误');
+                message.error('用户名已存在或验证码错误');
                 return null;
             }
-            case STATUS_CODE.NOT_FOUND:
+            case STATUS_CODE.UNPROCESSABLE_ENTITY:
             {
-                message.error('未知错误');
-                return null;
-            }
-            case STATUS_CODE.CONFLICT:
-            {
-                message.error('用户名已存在');
+                message.error('请求参数错误');
                 return null;
             }
             case STATUS_CODE.INTERNAL_SERVER_ERROR:
             {
-                message.error('服务器出错');
+                message.error('服务器错误');
                 return null;
             }
             default:
@@ -379,43 +295,32 @@ export async function sendPostSendVerificationCodeByUsernameRequestAsync(usernam
 {
     try
     {
-        const {code} = await Function.postAsync(SEND_VERIFICATION_CODE_BY_USERNAME, {username});
-        switch (code)
+        const {status} = await Function.postAsync(SEND_VERIFICATION_CODE_BY_USERNAME, {username});
+        switch (status)
         {
             case STATUS_CODE.OK:
             {
-                message.success('验证码已发送到您注册时的邮箱');
+                message.success('验证码已发送至邮箱');
                 return true;
             }
             case STATUS_CODE.BAD_REQUEST:
             {
-                message.error('参数错误');
-                return null;
-            }
-            case STATUS_CODE.UNAUTHORIZED:
-            {
-                AuthProcessorFunction.setOffline();
-                message.error('未登录操作');
-                return null;
-            }
-            case STATUS_CODE.FORBIDDEN:
-            {
-                message.error('获取验证码操作被拒绝');
+                message.error('请求解析失败');
                 return null;
             }
             case STATUS_CODE.NOT_FOUND:
             {
-                message.error('用户名或邮箱不存在');
+                message.error('用户名不存在');
                 return null;
             }
-            case STATUS_CODE.CONFLICT:
+            case STATUS_CODE.UNPROCESSABLE_ENTITY:
             {
-                message.error('未知错误');
+                message.error('请求参数错误');
                 return null;
             }
             case STATUS_CODE.INTERNAL_SERVER_ERROR:
             {
-                message.error('服务器出错');
+                message.error('服务器错误');
                 return null;
             }
             default:
@@ -433,32 +338,25 @@ export async function sendPostSendVerificationCodeByUsernameRequestAsync(usernam
     }
 }
 
-
 export async function sendPostRetrievePasswordRequestAsync(username: string, verificationCode: string, password: string): Promise<true | null>
 {
     try
     {
-        const {code} = await Function.postAsync(RETRIEVE_PASSWORD, {
+        const {status} = await Function.postAsync(RETRIEVE_PASSWORD, {
             username,
             verificationCode,
             password,
         });
-        switch (code)
+        switch (status)
         {
             case STATUS_CODE.OK:
             {
-                message.success('找回密码成功，请使用新密码登录');
+                message.success('找回密码成功');
                 return true;
             }
             case STATUS_CODE.BAD_REQUEST:
             {
-                message.error('参数错误');
-                return null;
-            }
-            case STATUS_CODE.UNAUTHORIZED:
-            {
-                AuthProcessorFunction.setOffline();
-                message.error('未登录操作');
+                message.error('请求解析失败');
                 return null;
             }
             case STATUS_CODE.FORBIDDEN:
@@ -471,14 +369,14 @@ export async function sendPostRetrievePasswordRequestAsync(username: string, ver
                 message.error('用户名不存在');
                 return null;
             }
-            case STATUS_CODE.CONFLICT:
+            case STATUS_CODE.UNPROCESSABLE_ENTITY:
             {
-                message.error('未知错误');
+                message.error('请求参数错误');
                 return null;
             }
             case STATUS_CODE.INTERNAL_SERVER_ERROR:
             {
-                message.error('服务器出错');
+                message.error('服务器错误');
                 return null;
             }
             default:
@@ -500,47 +398,41 @@ export async function sendPostChangePasswordRequestAsync(password: string, newPa
 {
     try
     {
-        const {code} = await Function.postAsync(CHANGE_PASSWORD, {
+        const {status} = await Function.postAsync(CHANGE_PASSWORD, {
             password,
             newPassword,
             verificationCode,
         });
-        switch (code)
+        switch (status)
         {
             case STATUS_CODE.OK:
             {
-                message.success('修改密码成功，请重新登录');
+                message.success('修改密码成功');
                 return true;
             }
             case STATUS_CODE.BAD_REQUEST:
             {
-                message.error('参数错误');
-                return null;
-            }
-            case STATUS_CODE.UNAUTHORIZED:
-            {
-                AuthProcessorFunction.setOffline();
-                message.error('未登录操作');
+                message.error('请求解析失败');
                 return null;
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('新密码不合法或验证码错误');
+                message.error('原密码或验证码错误');
                 return null;
             }
             case STATUS_CODE.NOT_FOUND:
             {
-                message.error('用户不存在');
+                message.error('用户名不存在');
                 return null;
             }
-            case STATUS_CODE.CONFLICT:
+            case STATUS_CODE.UNPROCESSABLE_ENTITY:
             {
-                message.error('原密码错误');
+                message.error('请求参数错误');
                 return null;
             }
             case STATUS_CODE.INTERNAL_SERVER_ERROR:
             {
-                message.error('服务器出错');
+                message.error('服务器错误');
                 return null;
             }
             default:
@@ -562,11 +454,11 @@ export async function sendPostChangeEmailRequestAsync(email: string, verificatio
 {
     try
     {
-        const {code} = await Function.postAsync(CHANGE_EMAIL, {
+        const {status} = await Function.postAsync(CHANGE_EMAIL, {
             email,
             verificationCode,
         });
-        switch (code)
+        switch (status)
         {
             case STATUS_CODE.OK:
             {
@@ -575,33 +467,22 @@ export async function sendPostChangeEmailRequestAsync(email: string, verificatio
             }
             case STATUS_CODE.BAD_REQUEST:
             {
-                message.error('参数错误');
-                return null;
-            }
-            case STATUS_CODE.UNAUTHORIZED:
-            {
-                AuthProcessorFunction.setOffline();
-                message.error('未登录操作');
+                message.error('请求解析失败');
                 return null;
             }
             case STATUS_CODE.FORBIDDEN:
             {
-                message.error('新邮箱不合法或验证码错误');
+                message.error('验证码错误');
                 return null;
             }
-            case STATUS_CODE.NOT_FOUND:
+            case STATUS_CODE.UNPROCESSABLE_ENTITY:
             {
-                message.error('用户不存在');
-                return null;
-            }
-            case STATUS_CODE.CONFLICT:
-            {
-                message.error('与服务器现有资源冲突');
+                message.error('请求参数错误');
                 return null;
             }
             case STATUS_CODE.INTERNAL_SERVER_ERROR:
             {
-                message.error('服务器出错');
+                message.error('服务器错误');
                 return null;
             }
             default:
