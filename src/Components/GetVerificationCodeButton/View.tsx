@@ -1,6 +1,6 @@
 import React from 'react';
 import Style from './Style.module.scss';
-import {Spin} from 'antd';
+import Spin from 'antd/lib/spin';
 
 interface GetVerificationCodeButtonProps
 {
