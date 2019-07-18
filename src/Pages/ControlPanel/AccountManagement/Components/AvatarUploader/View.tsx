@@ -7,7 +7,7 @@ import Icon from 'antd/lib/icon';
 interface Props
 {
     onUploaderChange: (info: UploadChangeParam) => void;
-    selectedFile?: File;
+    selectedFile?: File | Blob;
     onConfirm: React.MouseEventHandler<any>,
     isUploading: boolean,
 }

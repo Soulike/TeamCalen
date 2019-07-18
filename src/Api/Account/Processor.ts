@@ -141,7 +141,7 @@ export async function sendGetUserProfileRequestAsync(): Promise<UserProfile | nu
     }
 }
 
-export async function sendPostUploadAvatarRequestAsync(file: File): Promise<true | null>
+export async function sendPostUploadAvatarRequestAsync(file: File | Blob): Promise<true | null>
 {
     try
     {

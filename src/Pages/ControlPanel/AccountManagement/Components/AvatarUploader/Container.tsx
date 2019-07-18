@@ -10,7 +10,7 @@ interface Props {}
 
 interface State
 {
-    selectedFile?: File;
+    selectedFile?: File | Blob;
     isUploading: boolean
 }
 
