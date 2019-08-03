@@ -11,58 +11,29 @@ import {
     SIGN_UP,
     UPLOAD_AVATAR,
 } from './ROUTE';
-import {STATUS_CODE} from '../../CONSTANT';
 import message from 'antd/lib/message';
-import {Function as AuthProcessorFunction} from '../../ComponentContainer/AuthProcessor';
 import {UserProfile} from '../../Class';
 
 export async function sendPostLoginRequestAsync(username: string, password: string): Promise<true | null>
 {
     try
     {
-        const {status} = await Function.postAsync(LOGIN, {
+        const {isSuccessful, message: msg} = await Function.postAsync(LOGIN, {
             username,
             password,
         });
 
-        switch (status)
+        if (isSuccessful)
         {
-            case STATUS_CODE.OK:
-            {
-                message.success('登录成功');
-                return true;
-            }
-            case STATUS_CODE.BAD_REQUEST:
-            {
-                message.error('请求解析失败');
-                return null;
-            }
-            case STATUS_CODE.FORBIDDEN:
-            {
-                message.error('用户名或密码错误');
-                return null;
-            }
-            case STATUS_CODE.NOT_FOUND:
-            {
-                message.error('用户名不存在');
-                return null;
-            }
-            case STATUS_CODE.UNPROCESSABLE_ENTITY:
-            {
-                message.error('请求参数错误');
-                return null;
-            }
-            case STATUS_CODE.INTERNAL_SERVER_ERROR:
-            {
-                message.error('服务器错误');
-                return null;
-            }
-            default:
-            {
-                message.error('未知原因的登录失败');
-                return null;
-            }
+            message.success('登录成功');
+            return true;
         }
+        else
+        {
+            message.warning(msg);
+            return null;
+        }
+
     }
     catch (e)
     {
@@ -76,24 +47,16 @@ export async function sendPostLogoutRequestAsync(): Promise<true | null>
 {
     try
     {
-        const {status} = await Function.postAsync(LOGOUT);
-        switch (status)
+        const {isSuccessful, message: msg} = await Function.postAsync(LOGOUT);
+        if (isSuccessful)
         {
-            case STATUS_CODE.OK:
-            {
-                message.success('退出登录成功');
-                return true;
-            }
-            case STATUS_CODE.INTERNAL_SERVER_ERROR:
-            {
-                message.error('服务器错误');
-                return null;
-            }
-            default:
-            {
-                message.error('未知原因的退出登录失败');
-                return null;
-            }
+            message.success('退出登录成功');
+            return true;
+        }
+        else
+        {
+            message.warning(msg);
+            return null;
         }
     }
     catch (e)
@@ -108,29 +71,15 @@ export async function sendGetUserProfileRequestAsync(): Promise<UserProfile | nu
 {
     try
     {
-        const {status, data} = await Function.getAsync(GET_USER_PROFILE, false);
-        switch (status)
+        const {isSuccessful, message: msg, data} = await Function.getAsync(GET_USER_PROFILE, false);
+        if (isSuccessful)
         {
-            case STATUS_CODE.OK:
-            {
-                return UserProfile.from(data);
-            }
-            case STATUS_CODE.FORBIDDEN:
-            {
-                AuthProcessorFunction.setOffline();
-                message.error('请先登录');
-                return null;
-            }
-            case STATUS_CODE.INTERNAL_SERVER_ERROR:
-            {
-                message.error('服务器错误');
-                return null;
-            }
-            default:
-            {
-                message.error('未知原因的获取用户信息失败');
-                return null;
-            }
+            return UserProfile.from(data);
+        }
+        else
+        {
+            message.warning(msg);
+            return null;
         }
     }
     catch (e)
@@ -148,45 +97,16 @@ export async function sendPostUploadAvatarRequestAsync(file: File | Blob): Promi
         const formData = new FormData();
         formData.append('avatar', file);
 
-        const {status} = await Function.putAsync(UPLOAD_AVATAR, formData);
-        switch (status)
+        const {isSuccessful, message: msg} = await Function.putAsync(UPLOAD_AVATAR, formData);
+        if (isSuccessful)
         {
-            case STATUS_CODE.OK:
-            {
-                message.success('头像上传成功');
-                return true;
-            }
-            case STATUS_CODE.BAD_REQUEST:
-            {
-                message.error('请求解析失败');
-                return null;
-            }
-            case STATUS_CODE.FORBIDDEN:
-            {
-                AuthProcessorFunction.setOffline();
-                message.error('请先登录');
-                return null;
-            }
-            case STATUS_CODE.UNSUPPORTED_MEDIA_TYPE:
-            {
-                message.error('上传文件格式不支持');
-                return null;
-            }
-            case STATUS_CODE.UNPROCESSABLE_ENTITY:
-            {
-                message.error('请求参数错误');
-                return null;
-            }
-            case STATUS_CODE.INTERNAL_SERVER_ERROR:
-            {
-                message.error('服务器错误');
-                return null;
-            }
-            default:
-            {
-                message.error('未知原因的上传头像失败');
-                return null;
-            }
+            message.success('头像上传成功');
+            return true;
+        }
+        else
+        {
+            message.warning(msg);
+            return null;
         }
     }
     catch (e)
@@ -201,34 +121,16 @@ export async function sendPostSendVerificationCodeByEmailRequestAsync(email: str
 {
     try
     {
-        const {status} = await Function.postAsync(SEND_VERIFICATION_CODE_BY_EMAIL, {email});
-        switch (status)
+        const {isSuccessful, message: msg} = await Function.postAsync(SEND_VERIFICATION_CODE_BY_EMAIL, {email});
+        if (isSuccessful)
         {
-            case STATUS_CODE.OK:
-            {
-                message.success('验证码已发送至邮箱');
-                return true;
-            }
-            case STATUS_CODE.BAD_REQUEST:
-            {
-                message.error('请求解析失败');
-                return null;
-            }
-            case STATUS_CODE.UNPROCESSABLE_ENTITY:
-            {
-                message.error('请求参数错误');
-                return null;
-            }
-            case STATUS_CODE.INTERNAL_SERVER_ERROR:
-            {
-                message.error('服务器错误');
-                return null;
-            }
-            default:
-            {
-                message.error('未知原因的获取验证码失败');
-                return null;
-            }
+            message.success('验证码已发送');
+            return true;
+        }
+        else
+        {
+            message.warning(msg);
+            return null;
         }
     }
     catch (e)
@@ -243,44 +145,21 @@ export async function sendPostSignUpRequestAsync(username: string, password: str
 {
     try
     {
-        const {status} = await Function.postAsync(SIGN_UP, {
+        const {isSuccessful, message: msg} = await Function.postAsync(SIGN_UP, {
             username,
             password,
             email,
             verificationCode,
         });
-        switch (status)
+        if (isSuccessful)
         {
-            case STATUS_CODE.OK:
-            {
-                message.success('注册成功');
-                return true;
-            }
-            case STATUS_CODE.BAD_REQUEST:
-            {
-                message.error('请求解析失败');
-                return null;
-            }
-            case STATUS_CODE.FORBIDDEN:
-            {
-                message.error('用户名已存在或验证码错误');
-                return null;
-            }
-            case STATUS_CODE.UNPROCESSABLE_ENTITY:
-            {
-                message.error('请求参数错误');
-                return null;
-            }
-            case STATUS_CODE.INTERNAL_SERVER_ERROR:
-            {
-                message.error('服务器错误');
-                return null;
-            }
-            default:
-            {
-                message.error('未知原因的注册失败');
-                return null;
-            }
+            message.success('注册成功');
+            return true;
+        }
+        else
+        {
+            message.warning(msg);
+            return null;
         }
     }
     catch (e)
@@ -295,39 +174,16 @@ export async function sendPostSendVerificationCodeByUsernameRequestAsync(usernam
 {
     try
     {
-        const {status} = await Function.postAsync(SEND_VERIFICATION_CODE_BY_USERNAME, {username});
-        switch (status)
+        const {isSuccessful, message: msg} = await Function.postAsync(SEND_VERIFICATION_CODE_BY_USERNAME, {username});
+        if (isSuccessful)
         {
-            case STATUS_CODE.OK:
-            {
-                message.success('验证码已发送至邮箱');
-                return true;
-            }
-            case STATUS_CODE.BAD_REQUEST:
-            {
-                message.error('请求解析失败');
-                return null;
-            }
-            case STATUS_CODE.NOT_FOUND:
-            {
-                message.error('用户名不存在');
-                return null;
-            }
-            case STATUS_CODE.UNPROCESSABLE_ENTITY:
-            {
-                message.error('请求参数错误');
-                return null;
-            }
-            case STATUS_CODE.INTERNAL_SERVER_ERROR:
-            {
-                message.error('服务器错误');
-                return null;
-            }
-            default:
-            {
-                message.error('未知原因的获取验证码失败');
-                return null;
-            }
+            message.success('验证码已发送至邮箱');
+            return true;
+        }
+        else
+        {
+            message.warning(msg);
+            return null;
         }
     }
     catch (e)
@@ -342,48 +198,20 @@ export async function sendPostRetrievePasswordRequestAsync(username: string, ver
 {
     try
     {
-        const {status} = await Function.postAsync(RETRIEVE_PASSWORD, {
+        const {isSuccessful, message: msg} = await Function.postAsync(RETRIEVE_PASSWORD, {
             username,
             verificationCode,
             password,
         });
-        switch (status)
+        if (isSuccessful)
         {
-            case STATUS_CODE.OK:
-            {
-                message.success('找回密码成功');
-                return true;
-            }
-            case STATUS_CODE.BAD_REQUEST:
-            {
-                message.error('请求解析失败');
-                return null;
-            }
-            case STATUS_CODE.FORBIDDEN:
-            {
-                message.error('验证码错误');
-                return null;
-            }
-            case STATUS_CODE.NOT_FOUND:
-            {
-                message.error('用户名不存在');
-                return null;
-            }
-            case STATUS_CODE.UNPROCESSABLE_ENTITY:
-            {
-                message.error('请求参数错误');
-                return null;
-            }
-            case STATUS_CODE.INTERNAL_SERVER_ERROR:
-            {
-                message.error('服务器错误');
-                return null;
-            }
-            default:
-            {
-                message.error('未知原因的找回密码失败');
-                return null;
-            }
+            message.success('找回密码成功，请用新密码登录');
+            return true;
+        }
+        else
+        {
+            message.warning(msg);
+            return null;
         }
     }
     catch (e)
@@ -398,48 +226,20 @@ export async function sendPostChangePasswordRequestAsync(password: string, newPa
 {
     try
     {
-        const {status} = await Function.postAsync(CHANGE_PASSWORD, {
+        const {isSuccessful, message: msg} = await Function.postAsync(CHANGE_PASSWORD, {
             password,
             newPassword,
             verificationCode,
         });
-        switch (status)
+        if (isSuccessful)
         {
-            case STATUS_CODE.OK:
-            {
-                message.success('修改密码成功');
-                return true;
-            }
-            case STATUS_CODE.BAD_REQUEST:
-            {
-                message.error('请求解析失败');
-                return null;
-            }
-            case STATUS_CODE.FORBIDDEN:
-            {
-                message.error('原密码或验证码错误');
-                return null;
-            }
-            case STATUS_CODE.NOT_FOUND:
-            {
-                message.error('用户名不存在');
-                return null;
-            }
-            case STATUS_CODE.UNPROCESSABLE_ENTITY:
-            {
-                message.error('请求参数错误');
-                return null;
-            }
-            case STATUS_CODE.INTERNAL_SERVER_ERROR:
-            {
-                message.error('服务器错误');
-                return null;
-            }
-            default:
-            {
-                message.error('未知原因的修改密码失败');
-                return null;
-            }
+            message.success('修改密码成功，请用新密码登录');
+            return true;
+        }
+        else
+        {
+            message.warning(msg);
+            return null;
         }
     }
     catch (e)
@@ -454,42 +254,19 @@ export async function sendPostChangeEmailRequestAsync(email: string, verificatio
 {
     try
     {
-        const {status} = await Function.postAsync(CHANGE_EMAIL, {
+        const {isSuccessful, message: msg} = await Function.postAsync(CHANGE_EMAIL, {
             email,
             verificationCode,
         });
-        switch (status)
+        if (isSuccessful)
         {
-            case STATUS_CODE.OK:
-            {
-                message.success('修改邮箱成功');
-                return true;
-            }
-            case STATUS_CODE.BAD_REQUEST:
-            {
-                message.error('请求解析失败');
-                return null;
-            }
-            case STATUS_CODE.FORBIDDEN:
-            {
-                message.error('验证码错误');
-                return null;
-            }
-            case STATUS_CODE.UNPROCESSABLE_ENTITY:
-            {
-                message.error('请求参数错误');
-                return null;
-            }
-            case STATUS_CODE.INTERNAL_SERVER_ERROR:
-            {
-                message.error('服务器错误');
-                return null;
-            }
-            default:
-            {
-                message.error('未知原因的修改邮箱失败');
-                return null;
-            }
+            message.success('修改邮箱成功');
+            return true;
+        }
+        else
+        {
+            message.warning(msg);
+            return null;
         }
     }
     catch (e)
