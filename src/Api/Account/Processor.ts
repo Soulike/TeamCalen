@@ -97,7 +97,7 @@ export async function sendPostUploadAvatarRequestAsync(file: File | Blob): Promi
         const formData = new FormData();
         formData.append('avatar', file);
 
-        const {isSuccessful, message: msg} = await Function.putAsync(UPLOAD_AVATAR, formData);
+        const {isSuccessful, message: msg} = await Function.postAsync(UPLOAD_AVATAR, formData);
         if (isSuccessful)
         {
             message.success('头像上传成功');
