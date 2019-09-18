@@ -6,7 +6,6 @@ export async function getAsync(url: string, allowCache: boolean = true, params =
     const {data} = await axios.get(url, allowCache ? {params} : {
         params: {
             ...params,
-            _t: Date.now(),
         }
     });
     return data;
